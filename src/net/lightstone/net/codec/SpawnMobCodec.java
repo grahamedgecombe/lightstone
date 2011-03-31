@@ -44,3 +44,4 @@ public final class SpawnMobCodec extends MessageCodec<SpawnMobMessage> {
 	}
 
 }
+

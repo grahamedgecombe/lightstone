@@ -16,3 +16,4 @@ public final class RotationMessageHandler extends MessageHandler<RotationMessage
 	}
 
 }
+

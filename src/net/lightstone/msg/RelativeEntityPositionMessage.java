@@ -28,3 +28,4 @@ public final class RelativeEntityPositionMessage extends Message {
 	}
 
 }
+

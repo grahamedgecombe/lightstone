@@ -41,3 +41,4 @@ public final class UpdateSignCodec extends MessageCodec<UpdateSignMessage> {
 	}
 
 }
+

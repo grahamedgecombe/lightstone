@@ -35,3 +35,4 @@ public final class DiggingCodec extends MessageCodec<DiggingMessage> {
 	}
 
 }
+

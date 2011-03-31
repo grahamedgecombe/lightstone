@@ -24,3 +24,4 @@ public final class LoadChunkMessage extends Message {
 	}
 
 }
+

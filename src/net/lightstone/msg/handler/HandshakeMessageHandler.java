@@ -19,3 +19,4 @@ public final class HandshakeMessageHandler extends MessageHandler<HandshakeMessa
 	}
 
 }
+

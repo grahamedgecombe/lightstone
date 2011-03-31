@@ -28,3 +28,4 @@ public final class EntityEquipmentMessage extends Message {
 	}
 
 }
+

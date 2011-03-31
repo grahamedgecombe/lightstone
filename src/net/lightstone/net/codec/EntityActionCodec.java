@@ -29,3 +29,4 @@ public final class EntityActionCodec extends MessageCodec<EntityActionMessage> {
 	}
 
 }
+

@@ -46,3 +46,4 @@ public final class SpawnItemCodec extends MessageCodec<SpawnItemMessage> {
 	}
 
 }
+

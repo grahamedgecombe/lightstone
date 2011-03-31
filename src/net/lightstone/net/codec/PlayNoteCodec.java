@@ -35,3 +35,4 @@ public final class PlayNoteCodec extends MessageCodec<PlayNoteMessage> {
 	}
 
 }
+

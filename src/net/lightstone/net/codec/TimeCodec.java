@@ -26,3 +26,4 @@ public final class TimeCodec extends MessageCodec<TimeMessage> {
 	}
 
 }
+

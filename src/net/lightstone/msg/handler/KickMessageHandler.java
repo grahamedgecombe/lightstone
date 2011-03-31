@@ -12,3 +12,4 @@ public final class KickMessageHandler extends MessageHandler<KickMessage> {
 	}
 
 }
+

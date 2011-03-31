@@ -31,3 +31,4 @@ public final class SpawnPositionCodec extends MessageCodec<SpawnPositionMessage>
 	}
 
 }
+

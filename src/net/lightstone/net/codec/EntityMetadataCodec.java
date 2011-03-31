@@ -32,3 +32,4 @@ public final class EntityMetadataCodec extends MessageCodec<EntityMetadataMessag
 	}
 
 }
+

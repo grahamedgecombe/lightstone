@@ -26,3 +26,4 @@ public final class RespawnCodec extends MessageCodec<RespawnMessage> {
 	}
 
 }
+

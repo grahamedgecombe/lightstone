@@ -24,3 +24,4 @@ public final class EntityInteractionMessage extends Message {
 	}
 
 }
+

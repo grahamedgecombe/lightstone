@@ -33,3 +33,4 @@ public final class EntityVelocityCodec extends MessageCodec<EntityVelocityMessag
 	}
 
 }
+

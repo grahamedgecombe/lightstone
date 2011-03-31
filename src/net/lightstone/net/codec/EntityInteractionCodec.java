@@ -31,3 +31,4 @@ public final class EntityInteractionCodec extends MessageCodec<EntityInteraction
 	}
 
 }
+

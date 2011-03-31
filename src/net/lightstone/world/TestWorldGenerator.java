@@ -33,3 +33,4 @@ public final class TestWorldGenerator implements WorldGenerator {
 	}
 
 }
+

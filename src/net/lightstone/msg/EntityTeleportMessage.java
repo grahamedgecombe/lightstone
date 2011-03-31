@@ -38,3 +38,4 @@ public final class EntityTeleportMessage extends Message {
 	}
 
 }
+

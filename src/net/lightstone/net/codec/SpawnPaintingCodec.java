@@ -38,3 +38,4 @@ public final class SpawnPaintingCodec extends MessageCodec<SpawnPaintingMessage>
 	}
 
 }
+

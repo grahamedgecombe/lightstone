@@ -35,3 +35,4 @@ public final class SpawnVehicleCodec extends MessageCodec<SpawnVehicleMessage> {
 	}
 
 }
+

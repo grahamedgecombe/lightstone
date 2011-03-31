@@ -26,3 +26,4 @@ public final class HandshakeCodec extends MessageCodec<HandshakeMessage> {
 	}
 
 }
+

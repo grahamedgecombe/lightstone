@@ -45,3 +45,4 @@ public final class PositionRotationMessage extends Message {
 	}
 
 }
+

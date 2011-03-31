@@ -27,3 +27,4 @@ public final class DestroyEntityCodec extends MessageCodec<DestroyEntityMessage>
 	}
 
 }
+

@@ -18,3 +18,4 @@ public final class EntityStatusMessage extends Message {
 	}
 
 }
+

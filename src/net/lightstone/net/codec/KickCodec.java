@@ -25,3 +25,4 @@ public final class KickCodec extends MessageCodec<KickMessage> {
 	}
 
 }
+

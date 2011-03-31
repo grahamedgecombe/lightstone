@@ -13,3 +13,4 @@ public final class ActivateItemMessage extends Message {
 	}
 
 }
+

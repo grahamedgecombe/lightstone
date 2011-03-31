@@ -97,3 +97,4 @@ public final class EntityManager implements Iterable<Entity> {
 	}
 
 }
+

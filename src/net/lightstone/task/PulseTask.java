@@ -32,3 +32,4 @@ public final class PulseTask extends Task {
 	}
 
 }
+

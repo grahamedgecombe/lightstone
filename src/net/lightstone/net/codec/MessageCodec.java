@@ -29,3 +29,4 @@ public abstract class MessageCodec<T extends Message> {
 	public abstract T decode(ChannelBuffer buffer) throws IOException;
 
 }
+

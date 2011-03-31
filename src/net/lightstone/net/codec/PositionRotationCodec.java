@@ -39,3 +39,4 @@ public final class PositionRotationCodec extends MessageCodec<PositionRotationMe
 	}
 
 }
+

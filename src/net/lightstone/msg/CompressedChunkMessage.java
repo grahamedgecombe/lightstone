@@ -46,3 +46,4 @@ public final class CompressedChunkMessage extends Message {
 	}
 
 }
+

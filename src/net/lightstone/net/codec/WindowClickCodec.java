@@ -47,3 +47,4 @@ public final class WindowClickCodec extends MessageCodec<WindowClickMessage> {
 	}
 
 }
+

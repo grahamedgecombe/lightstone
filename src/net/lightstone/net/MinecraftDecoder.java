@@ -33,3 +33,4 @@ public class MinecraftDecoder extends ReplayingDecoder<VoidEnum> {
 	}
 
 }
+

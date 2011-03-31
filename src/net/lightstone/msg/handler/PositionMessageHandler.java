@@ -16,3 +16,4 @@ public final class PositionMessageHandler extends MessageHandler<PositionMessage
 	}
 
 }
+

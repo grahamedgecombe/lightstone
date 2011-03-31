@@ -35,3 +35,4 @@ public final class IdentificationMessage extends Message {
 	}
 
 }
+

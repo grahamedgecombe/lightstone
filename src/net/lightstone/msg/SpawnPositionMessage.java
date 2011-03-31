@@ -23,3 +23,4 @@ public final class SpawnPositionMessage extends Message {
 	}
 
 }
+

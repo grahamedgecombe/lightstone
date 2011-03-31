@@ -31,3 +31,4 @@ public final class RotationCodec extends MessageCodec<RotationMessage> {
 	}
 
 }
+

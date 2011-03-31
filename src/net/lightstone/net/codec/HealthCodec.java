@@ -27,3 +27,4 @@ public final class HealthCodec extends MessageCodec<HealthMessage> {
 	}
 
 }
+

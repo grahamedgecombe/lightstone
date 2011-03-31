@@ -29,3 +29,4 @@ public final class AnimateEntityCodec extends MessageCodec<AnimateEntityMessage>
 	}
 
 }
+

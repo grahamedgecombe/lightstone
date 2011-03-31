@@ -32,3 +32,4 @@ public interface ChunkIoService {
 	public void write(int x, int z, Chunk chunk) throws IOException;
 
 }
+

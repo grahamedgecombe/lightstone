@@ -37,3 +37,4 @@ public final class RelativeEntityPositionRotationCodec extends MessageCodec<Rela
 	}
 
 }
+

@@ -34,3 +34,4 @@ public final class IdentificationCodec extends MessageCodec<IdentificationMessag
 	}
 
 }
+

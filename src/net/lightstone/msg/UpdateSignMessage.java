@@ -33,3 +33,4 @@ public final class UpdateSignMessage extends Message {
 	}
 
 }
+

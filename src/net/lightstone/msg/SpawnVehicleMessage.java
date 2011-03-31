@@ -33,3 +33,4 @@ public final class SpawnVehicleMessage extends Message {
 	}
 
 }
+

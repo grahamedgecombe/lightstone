@@ -27,3 +27,4 @@ public final class ActivateItemCodec extends MessageCodec<ActivateItemMessage> {
 	}
 
 }
+

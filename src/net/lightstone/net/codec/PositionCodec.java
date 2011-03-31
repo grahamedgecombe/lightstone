@@ -35,3 +35,4 @@ public final class PositionCodec extends MessageCodec<PositionMessage> {
 	}
 
 }
+

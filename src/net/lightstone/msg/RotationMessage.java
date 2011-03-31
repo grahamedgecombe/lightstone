@@ -24,3 +24,4 @@ public final class RotationMessage extends Message {
 	}
 
 }
+

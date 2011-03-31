@@ -27,3 +27,4 @@ public final class CloseWindowCodec extends MessageCodec<CloseWindowMessage> {
 	}
 
 }
+

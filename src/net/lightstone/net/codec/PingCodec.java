@@ -24,3 +24,4 @@ public final class PingCodec extends MessageCodec<PingMessage> {
 	}
 
 }
+

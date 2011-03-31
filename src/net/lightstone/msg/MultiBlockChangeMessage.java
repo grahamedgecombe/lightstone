@@ -43,3 +43,4 @@ public final class MultiBlockChangeMessage extends Message {
 	}
 
 }
+

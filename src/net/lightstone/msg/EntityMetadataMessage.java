@@ -23,3 +23,4 @@ public final class EntityMetadataMessage extends Message {
 	}
 
 }
+

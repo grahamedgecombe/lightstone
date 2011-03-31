@@ -31,3 +31,4 @@ public final class TransactionCodec extends MessageCodec<TransactionMessage> {
 	}
 
 }
+

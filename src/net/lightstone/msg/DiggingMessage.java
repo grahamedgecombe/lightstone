@@ -33,3 +33,4 @@ public final class DiggingMessage extends Message {
 	}
 
 }
+

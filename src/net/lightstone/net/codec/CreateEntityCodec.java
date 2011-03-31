@@ -27,3 +27,4 @@ public final class CreateEntityCodec extends MessageCodec<CreateEntityMessage> {
 	}
 
 }
+

@@ -26,3 +26,4 @@ public final class ChatCodec extends MessageCodec<ChatMessage> {
 	}
 
 }
+

@@ -52,3 +52,4 @@ public final class SpawnPlayerMessage extends Message {
 	}
 
 }
+

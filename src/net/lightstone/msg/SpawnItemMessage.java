@@ -51,3 +51,4 @@ public final class SpawnItemMessage extends Message {
 	}
 
 }
+

@@ -18,3 +18,4 @@ public final class AnimateEntityMessage extends Message {
 	}
 
 }
+

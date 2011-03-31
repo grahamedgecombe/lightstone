@@ -35,3 +35,4 @@ public final class BlockChangeCodec extends MessageCodec<BlockChangeMessage> {
 	}
 
 }
+

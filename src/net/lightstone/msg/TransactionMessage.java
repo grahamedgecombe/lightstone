@@ -24,3 +24,4 @@ public final class TransactionMessage extends Message {
 	}
 
 }
+

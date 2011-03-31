@@ -33,3 +33,4 @@ public final class RelativeEntityPositionCodec extends MessageCodec<RelativeEnti
 	}
 
 }
+

@@ -31,3 +31,4 @@ public final class ProgressBarCodec extends MessageCodec<ProgressBarMessage> {
 	}
 
 }
+

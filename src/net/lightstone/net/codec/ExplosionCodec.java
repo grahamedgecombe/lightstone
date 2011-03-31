@@ -38,3 +38,4 @@ public final class ExplosionCodec extends MessageCodec<ExplosionMessage> {
 	}
 
 }
+

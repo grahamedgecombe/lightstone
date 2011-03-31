@@ -22,3 +22,4 @@ public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 	}
 
 }
+
