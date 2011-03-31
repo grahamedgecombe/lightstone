@@ -49,6 +49,7 @@ Credits
  * All the people behind [JRuby](http://jruby.org),
    [Ant](http://ant.apache.org), [Ivy](http://ant.apache.org/ivy) and
    [Java](http://java.oracle.com).
+ * [Jonathan Edgecombe](http://jonathanedgecombe.com) - designed the logo.
  * [Notch](http://mojang.com/notch) and all the other people at
    [Mojang](http://mojang.com) - for making such an awesome game in the first
    place!
