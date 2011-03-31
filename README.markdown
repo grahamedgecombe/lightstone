@@ -1,6 +1,8 @@
 Lightstone
 ==========
 
+![Lightstone Logo](https://github.com/grahamedgecombe/lightstone/raw/master/etc/logo/logo-small.png)
+
 Introduction
 ------------
 
@@ -46,10 +48,10 @@ Credits
    research.
  * [Trustin Lee](http://gleamynode.net) - author of the
    [Netty](http://jboss.org/netty) library.
+ * [Jonathan Edgecombe](http://jonathanedgecombe.com) - designed the logo.
  * All the people behind [JRuby](http://jruby.org),
    [Ant](http://ant.apache.org), [Ivy](http://ant.apache.org/ivy) and
    [Java](http://java.oracle.com).
- * [Jonathan Edgecombe](http://jonathanedgecombe.com) - designed the logo.
  * [Notch](http://mojang.com/notch) and all the other people at
    [Mojang](http://mojang.com) - for making such an awesome game in the first
    place!
