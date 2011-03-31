@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="lightstone" default="build" xmlns:ivy="antlib:org.apache.ivy.ant">
   <property name="src" location="src" />
+  <property name="test" location="test" />
   <property name="bin" location="bin" />
   <property name="lib" location="lib" />
   <property name="doc" location="doc" />
@@ -22,6 +23,11 @@
 
   <fileset id="sources" dir="${src}">
     <include name="**/*.java" />
+  </fileset>
+
+  <fileset id="tests" dir="${bin}">
+    <include name="**/*Test.class" />
+    <exclude name="**/*$*.class" />
   </fileset>
 
   <target name="init">
@@ -46,14 +52,29 @@
 
   <target name="rebuild" depends="clean, build" />
 
+  <target name="test" depends="build">
+    <junit fork="true" haltonfailure="true">
+      <classpath refid="master" />
+      <formatter type="plain" usefile="false" />
+      <batchtest>
+        <fileset refid="tests" />
+      </batchtest>
+    </junit>
+  </target>
+
   <target name="run" depends="build">
     <java classpathref="master" fork="true" classname="net.lightstone.Server" />
   </target>
 
   <target name="doc" depends="init">
-    <javadoc sourcepath="${src}" classpathref="master" destdir="${doc}"
-             access="private" author="true" version="true" use="true"
-             windowtitle="Lightstone Documentation">
+    <javadoc sourcepath="${src}" classpathref="master" destdir="${doc}" access="private" windowtitle="Lightstone Documentation">
+      <doclet name="org.jboss.apiviz.APIviz" pathref="libraries">
+        <param name="-sourceclasspath" value="${bin}" />
+        <param name="-author" />
+        <param name="-version" />
+        <param name="-use" />
+        <param name="-nopackagediagram" />
+      </doclet>
       <doctitle><![CDATA[<h1>Lightstone Documentation</h1>]]></doctitle>
       <link href="http://download.oracle.com/javase/6/docs/api/" />
       <link href="http://docs.jboss.org/netty/3.2/api/" />

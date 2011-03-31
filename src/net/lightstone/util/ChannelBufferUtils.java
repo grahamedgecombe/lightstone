@@ -30,7 +30,7 @@ public final class ChannelBufferUtils {
 			int type  = parameter.getType();
 			int index = parameter.getIndex();
 
-			buf.writeByte((type << 5) | index);
+			buf.writeByte(((type & 0x07) << 5) | (index & 0x1F));
 
 			switch (type) {
 			case Parameter.TYPE_BYTE:
@@ -57,7 +57,7 @@ public final class ChannelBufferUtils {
 			}
 		}
 
-		buf.writeByte(127);
+		buf.writeByte(0x80);
 	}
 
 	/**
@@ -68,8 +68,9 @@ public final class ChannelBufferUtils {
 	public static List<Parameter<?>> readParameters(ChannelBuffer buf) {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
-		for (int b = buf.readUnsignedByte(); b != 127; ) {
-			int type  = (b & 0x0E) >> 5;
+		int b;
+		while ((b = buf.readUnsignedByte()) != 0x80) {
+			int type  = (b >> 5) & 0x07;
 			int index = b & 0x1F;
 
 			switch (type) {

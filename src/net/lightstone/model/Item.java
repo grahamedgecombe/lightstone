@@ -52,7 +52,7 @@ public class Item {
 		this.damage = damage;
 	}
 
-    /**
+	/**
      * Gets the id of this item.
      * @return The id.
      */
@@ -74,6 +74,34 @@ public class Item {
      */
 	public int getDamage() {
 		return damage;
+	}
+
+    @Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + count;
+		result = prime * result + damage;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Item other = (Item) obj;
+		if (count != other.count)
+			return false;
+		if (damage != other.damage)
+			return false;
+		if (id != other.id)
+			return false;
+		return true;
 	}
 
 }
