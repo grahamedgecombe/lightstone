@@ -66,7 +66,7 @@
     <java classpathref="master" fork="true" classname="net.lightstone.Server" />
   </target>
 
-  <target name="doc" depends="init">
+  <target name="doc" depends="build">
     <javadoc sourcepath="${src}" classpathref="master" destdir="${doc}" access="private" windowtitle="Lightstone Documentation">
       <doclet name="org.jboss.apiviz.APIviz" pathref="libraries">
         <param name="-sourceclasspath" value="${bin}" />
@@ -82,3 +82,4 @@
     </javadoc>
   </target>
 </project>
+
