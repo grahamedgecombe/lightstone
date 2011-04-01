@@ -36,6 +36,11 @@ for certain IDEs e.g. NetBeans which require an Ant target to run the project.
 Typing the command `ant run` in the terminal will do this. It will also build
 the project if the binaries are out of date.
 
+Testing
+-------
+
+The unit tests can be executed using the `ant test` command in the terminal.
+
 Documentation
 -------------
 
@@ -49,7 +54,7 @@ Credits
  * [Trustin Lee](http://gleamynode.net) - author of the
    [Netty](http://jboss.org/netty) library.
  * [Jonathan Edgecombe](http://jonathanedgecombe.com) - designed the logo.
- * All the people behind [JRuby](http://jruby.org),
+ * All the people behind [JRuby](http://jruby.org), [JUnit](http://junit.org),
    [Ant](http://ant.apache.org), [Ivy](http://ant.apache.org/ivy) and
    [Java](http://java.oracle.com).
  * [Notch](http://mojang.com/notch) and all the other people at
