@@ -22,16 +22,13 @@
     <path refid="libraries" />
   </path>
 
-  <fileset id="sources" dir="${src}">
-    <include name="**/*.java" />
-  </fileset>
-
   <fileset id="tests" dir="${bin}">
     <include name="**/*Test.class" />
   </fileset>
 
   <target name="init">
     <mkdir dir="${bin}" />
+    <mkdir dir="${doc}" />
     <mkdir dir="${lib}" />
   </target>
 
@@ -40,7 +37,9 @@
   </target>
 
   <target name="build" depends="init">
-    <javac srcdir="${src}" destdir="${bin}" includeantruntime="false">
+    <javac destdir="${bin}" includeantruntime="false">
+      <src path="${src}" />
+      <src path="${test}" />
       <classpath refid="libraries" />
     </javac>
   </target>
@@ -55,7 +54,7 @@
   <target name="test" depends="build">
     <junit fork="true" haltonfailure="true">
       <classpath refid="master" />
-      <formatter type="plain" usefile="false" />
+      <formatter type="brief" usefile="false" />
       <batchtest>
         <fileset refid="tests" />
       </batchtest>
