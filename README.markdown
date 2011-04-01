@@ -52,11 +52,12 @@ Credits
  * [The Minecraft Coalition](http://wiki.vg/wiki) - protocol and formats
    research.
  * [Trustin Lee](http://gleamynode.net) - author of the
-   [Netty](http://jboss.org/netty) library.
+   [Netty](http://jboss.org/netty) and
+   [APIviz](http://code.google.com/p/apiviz) libraries.
  * [Jonathan Edgecombe](http://jonathanedgecombe.com) - designed the logo.
  * All the people behind [JRuby](http://jruby.org), [JUnit](http://junit.org),
-   [Ant](http://ant.apache.org), [Ivy](http://ant.apache.org/ivy) and
-   [Java](http://java.oracle.com).
+   [Ant](http://ant.apache.org), [Ivy](http://ant.apache.org/ivy),
+   [Graphviz](http://graphviz.org) and [Java](http://java.oracle.com).
  * [Notch](http://mojang.com/notch) and all the other people at
    [Mojang](http://mojang.com) - for making such an awesome game in the first
    place!
