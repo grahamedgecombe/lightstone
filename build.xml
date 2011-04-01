@@ -5,6 +5,7 @@
   <property name="bin" location="bin" />
   <property name="lib" location="lib" />
   <property name="doc" location="doc" />
+  <property name="main-class" value="net.lightstone.Server" />
 
   <path id="binaries">
     <pathelement path="${bin}" />
@@ -27,7 +28,6 @@
 
   <fileset id="tests" dir="${bin}">
     <include name="**/*Test.class" />
-    <exclude name="**/*$*.class" />
   </fileset>
 
   <target name="init">
@@ -63,7 +63,7 @@
   </target>
 
   <target name="run" depends="build">
-    <java classpathref="master" fork="true" classname="net.lightstone.Server" />
+    <java classpathref="master" fork="true" classname="${main-class}" />
   </target>
 
   <target name="doc" depends="build">
