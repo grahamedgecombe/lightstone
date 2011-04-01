@@ -7,13 +7,12 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import net.lightstone.io.NbtChunkIoService;
+import net.lightstone.io.McRegionChunkIoService;
 import net.lightstone.net.MinecraftPipelineFactory;
 import net.lightstone.net.Session;
 import net.lightstone.net.SessionRegistry;
-import net.lightstone.task.PulseTask;
 import net.lightstone.task.TaskScheduler;
-import net.lightstone.world.TestWorldGenerator;
+import net.lightstone.world.FlatGrassWorldGenerator;
 import net.lightstone.world.World;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
@@ -73,12 +72,12 @@ public final class Server {
 	/**
 	 * The task scheduler used by this server.
 	 */
-	private final TaskScheduler scheduler = new TaskScheduler();
+	private final TaskScheduler scheduler = new TaskScheduler(this);
 
 	/**
 	 * The world this server is managing.
 	 */
-	private final World world = new World(new NbtChunkIoService(), new TestWorldGenerator());
+	private final World world = new World(new McRegionChunkIoService(), new FlatGrassWorldGenerator());
 
 	/**
 	 * Creates a new server.
@@ -112,7 +111,6 @@ public final class Server {
 	 * Starts this server.
 	 */
 	public void start() {
-		scheduler.schedule(new PulseTask(this));
 		logger.info("Ready for connections.");
 	}
 

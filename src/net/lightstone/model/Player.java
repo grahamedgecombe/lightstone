@@ -18,36 +18,36 @@ import net.lightstone.net.Session;
  */
 public final class Player extends Mob {
 
-    /**
-     * The normal height of a player's eyes above their feet.
-     */
+	/**
+	 * The normal height of a player's eyes above their feet.
+	 */
 	public static final double EYE_HEIGHT = 1.62D;
 
-    /**
-     * The name of this player.
-     */
+	/**
+	 * The name of this player.
+	 */
 	private final String name;
 
-    /**
-     * This player's session.
-     */
+	/**
+	 * This player's session.
+	 */
 	private final Session session;
 
-    /**
-     * The entities that the client knows about.
-     */
+	/**
+	 * The entities that the client knows about.
+	 */
 	private Set<Entity> knownEntities = new HashSet<Entity>();
 
-    /**
-     * The chunks that the client knows about.
-     */
+	/**
+	 * The chunks that the client knows about.
+	 */
 	private Set<Chunk.Key> knownChunks = new HashSet<Chunk.Key>();
 
-    /**
-     * Creates a new player and adds it to the world.
-     * @param session The player's session.
-     * @param name The player's name.
-     */
+	/**
+	 * Creates a new player and adds it to the world.
+	 * @param session The player's session.
+	 * @param name The player's name.
+	 */
 	public Player(Session session, String name) {
 		super(session.getServer().getWorld());
 		this.name = name;
@@ -59,10 +59,10 @@ public final class Player extends Mob {
 		this.session.send(new PositionRotationMessage(position.getX(), position.getY(), position.getZ(), position.getY() + EYE_HEIGHT, (float) rotation.getYaw(), (float) rotation.getPitch(), true));
 	}
 
-    /**
-     * Gets the name of this player.
-     * @return The name of this player.
-     */
+	/**
+	 * Gets the name of this player.
+	 * @return The name of this player.
+	 */
 	public String getName() {
 		return name;
 	}
@@ -70,7 +70,7 @@ public final class Player extends Mob {
 	@Override
 	public void pulse() {
 		super.pulse();
-        session.send(new PingMessage());
+		session.send(new PingMessage());
 
 		streamBlocks();
 
@@ -100,11 +100,11 @@ public final class Player extends Mob {
 		}
 	}
 
-    /**
-     * Streams chunks to the player's client.
-     */
+	/**
+	 * Streams chunks to the player's client.
+	 */
 	private void streamBlocks() {
-        Set<Chunk.Key> previousChunks = new HashSet<Chunk.Key>(knownChunks);
+		Set<Chunk.Key> previousChunks = new HashSet<Chunk.Key>(knownChunks);
 
 		int centralX = ((int) position.getX()) / Chunk.WIDTH;
 		int centralZ = ((int) position.getZ()) / Chunk.HEIGHT;
@@ -129,10 +129,10 @@ public final class Player extends Mob {
 		previousChunks.clear();
 	}
 
-    /**
-     * Gets the session.
-     * @return The session.
-     */
+	/**
+	 * Gets the session.
+	 * @return The session.
+	 */
 	public Session getSession() {
 		return session;
 	}

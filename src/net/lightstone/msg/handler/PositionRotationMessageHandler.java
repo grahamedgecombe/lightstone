@@ -6,6 +6,12 @@ import net.lightstone.model.Rotation;
 import net.lightstone.msg.PositionRotationMessage;
 import net.lightstone.net.Session;
 
+/**
+ * A {@link MessageHandler} that updates a {@link Player}'s {@link Position}
+ * and {@link Rotation} when the server receives a
+ * {@link PositionRotationMessage}.
+ * @author Graham Edgecombe
+ */
 public final class PositionRotationMessageHandler extends MessageHandler<PositionRotationMessage> {
 
 	@Override

@@ -14,30 +14,30 @@ import net.lightstone.world.World;
  */
 public final class Monster extends Mob {
 
-    /**
-     * The type of monster.
-     */
+	/**
+	 * The type of monster.
+	 */
 	private final int type;
 
-    /**
-     * The monster's metadata.
-     */
+	/**
+	 * The monster's metadata.
+	 */
 	private final List<Parameter<?>> metadata = new ArrayList<Parameter<?>>();
 
-    /**
-     * Creates a new monster.
-     * @param world The world this monster is in.
-     * @param type The type of monster.
-     */
+	/**
+	 * Creates a new monster.
+	 * @param world The world this monster is in.
+	 * @param type The type of monster.
+	 */
 	public Monster(World world, int type) {
 		super(world);
 		this.type = type;
 	}
 
-    /**
-     * Gets the type of monster.
-     * @return The type of monster.
-     */
+	/**
+	 * Gets the type of monster.
+	 * @return The type of monster.
+	 */
 	public int getType() {
 		return type;
 	}

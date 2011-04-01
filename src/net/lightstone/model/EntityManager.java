@@ -13,27 +13,27 @@ import java.util.Set;
  */
 public final class EntityManager implements Iterable<Entity> {
 
-    /**
-     * A map of all the entity ids to the corresponding entities.
-     */
+	/**
+	 * A map of all the entity ids to the corresponding entities.
+	 */
 	private final Map<Integer, Entity> entities = new HashMap<Integer, Entity>();
 
-    /**
-     * A map of entity types to a set containing all entities of that type.
-     */
+	/**
+	 * A map of entity types to a set containing all entities of that type.
+	 */
 	private final Map<Class<? extends Entity>, Set<? extends Entity>> groupedEntities = new HashMap<Class<? extends Entity>, Set<? extends Entity>>();
 
-    /**
-     * The next id to check.
-     */
+	/**
+	 * The next id to check.
+	 */
 	private int nextId = 1;
 
-    /**
-     * Gets all entities with the specified type.
-     * @param type The {@link Class} for the type.
-     * @param <T> The type of entity.
-     * @return A collection of entities with the specified type.
-     */
+	/**
+	 * Gets all entities with the specified type.
+	 * @param type The {@link Class} for the type.
+	 * @param <T> The type of entity.
+	 * @return A collection of entities with the specified type.
+	 */
 	@SuppressWarnings("unchecked")
 	public <T extends Entity> Collection<T> getAll(Class<T> type) {
 		Set<T> set = (Set<T>) groupedEntities.get(type);
@@ -44,20 +44,20 @@ public final class EntityManager implements Iterable<Entity> {
 		return set;
 	}
 
-    /**
-     * Gets an entity by its id.
-     * @param id The id.
-     * @return The entity, or {@code null} if it could not be found.
-     */
+	/**
+	 * Gets an entity by its id.
+	 * @param id The id.
+	 * @return The entity, or {@code null} if it could not be found.
+	 */
 	public Entity getEntity(int id) {
 		return entities.get(id);
 	}
 
-    /**
-     * Allocates the id for an entity.
-     * @param entity The entity.
-     * @return The id.
-     */
+	/**
+	 * Allocates the id for an entity.
+	 * @param entity The entity.
+	 * @return The id.
+	 */
 	@SuppressWarnings("unchecked")
 	int allocate(Entity entity) {
 		for (int id = nextId; id < Integer.MAX_VALUE; id++) {
@@ -82,10 +82,10 @@ public final class EntityManager implements Iterable<Entity> {
 		throw new IllegalStateException("No free entity ids");
 	}
 
-    /**
-     * Deallocates the id for an entity.
-     * @param entity The entity.
-     */
+	/**
+	 * Deallocates the id for an entity.
+	 * @param entity The entity.
+	 */
 	void deallocate(Entity entity) {
 		entities.remove(entity.getId());
 		getAll(entity.getClass()).remove(entity);

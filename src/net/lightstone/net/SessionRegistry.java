@@ -10,31 +10,31 @@ import java.util.List;
  */
 public final class SessionRegistry {
 
-    /**
-     * A list of the sessions.
-     */
+	/**
+	 * A list of the sessions.
+	 */
 	private final List<Session> sessions = new ArrayList<Session>();
 
-    /**
-     * Pulses all the sessions.
-     */
+	/**
+	 * Pulses all the sessions.
+	 */
 	public void pulse() {
 		for (Session session : sessions)
 			session.pulse();
 	}
 
-    /**
-     * Adds a new session.
-     * @param session The session to add.
-     */
+	/**
+	 * Adds a new session.
+	 * @param session The session to add.
+	 */
 	void add(Session session) {
 		sessions.add(session);
 	}
 
-    /**
-     * Removes a session.
-     * @param session The session to remove.
-     */
+	/**
+	 * Removes a session.
+	 * @param session The session to remove.
+	 */
 	void remove(Session session) {
 		sessions.remove(session);
 	}

@@ -5,6 +5,10 @@ import net.lightstone.msg.HandshakeMessage;
 import net.lightstone.net.Session;
 import net.lightstone.net.Session.State;
 
+/**
+ * A {@link MessageHandler} which performs the initial handshake with clients.
+ * @author Graham Edgecombe
+ */
 public final class HandshakeMessageHandler extends MessageHandler<HandshakeMessage> {
 
 	@Override

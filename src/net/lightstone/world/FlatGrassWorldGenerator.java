@@ -3,10 +3,10 @@ package net.lightstone.world;
 import net.lightstone.model.Chunk;
 
 /**
- * A {@link WorldGenerator} used to generate a test world.
+ * A simple {@link WorldGenerator} used to generate a "flat grass" world.
  * @author Graham Edgecombe
  */
-public final class TestWorldGenerator implements WorldGenerator {
+public final class FlatGrassWorldGenerator implements WorldGenerator {
 
 	@Override
 	public Chunk generate(int chunkX, int chunkZ) {

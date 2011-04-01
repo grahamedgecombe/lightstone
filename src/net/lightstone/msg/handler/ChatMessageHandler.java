@@ -4,6 +4,11 @@ import net.lightstone.model.Player;
 import net.lightstone.msg.ChatMessage;
 import net.lightstone.net.Session;
 
+/**
+ * A {@link MessageHandler} which handles {@link ChatMessage}s by processing
+ * commands or broadcasting messages to every player in the server.
+ * @author Graham Edgecombe
+ */
 public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 
 	@Override

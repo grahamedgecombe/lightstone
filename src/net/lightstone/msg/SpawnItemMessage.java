@@ -5,7 +5,7 @@ import net.lightstone.model.Item;
 public final class SpawnItemMessage extends Message {
 
 	private final int id, x, y, z, rotation, pitch, roll;
-    private final Item item;
+	private final Item item;
 
 	public SpawnItemMessage(int id, Item item, int x, int y, int z, int rotation, int pitch, int roll) {
 		this.id = id;

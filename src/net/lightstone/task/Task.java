@@ -24,18 +24,21 @@ public abstract class Task {
 	/**
 	 * Creates a new task with the specified number of ticks between
 	 * consecutive calls to {@link #execute()}.
-	 * @param ticks The number of ticks.
+	 * @param ticks The number of ticks. between consecutive executions.
 	 */
 	public Task(int ticks) {
-		this.ticks = ticks;
+		this.setTicks(ticks);
 		this.counter = ticks;
 	}
 
 	/**
-	 * Sets the number of ticks.
+	 * Sets the number of ticks between consecutive executions.
 	 * @param ticks The number of ticks.
 	 */
 	public void setTicks(int ticks) {
+		if (ticks < 1)
+			throw new IllegalArgumentException("The number of ticks must be positive.");
+
 		this.ticks = ticks;
 	}
 

@@ -20,20 +20,20 @@ import org.jboss.netty.channel.SimpleChannelUpstreamHandler;
  */
 public class MinecraftHandler extends SimpleChannelUpstreamHandler {
 
-    /**
-     * The logger for this class.
-     */
+	/**
+	 * The logger for this class.
+	 */
 	private static final Logger logger = Logger.getLogger(MinecraftHandler.class.getName());
 
-    /**
-     * The server.
-     */
+	/**
+	 * The server.
+	 */
 	private final Server server;
 
-    /**
-     * Creates a new network event handler.
-     * @param server The server.
-     */
+	/**
+	 * Creates a new network event handler.
+	 * @param server The server.
+	 */
 	public MinecraftHandler(Server server) {
 		this.server = server;
 	}

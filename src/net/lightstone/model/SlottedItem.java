@@ -6,38 +6,38 @@ package net.lightstone.model;
  */
 public final class SlottedItem {
 
-    /**
-     * The slot.
-     */
+	/**
+	 * The slot.
+	 */
 	private final int slot;
 
-    /**
-     * The item.
-     */
+	/**
+	 * The item.
+	 */
 	private final Item item;
 
-    /**
-     * Creates a slotted item.
-     * @param slot The slot.
-     * @param item The item.
-     */
+	/**
+	 * Creates a slotted item.
+	 * @param slot The slot.
+	 * @param item The item.
+	 */
 	public SlottedItem(int slot, Item item) {
 		this.slot = slot;
 		this.item = item;
 	}
 
-    /**
-     * Gets the slot.
-     * @return The slot.
-     */
+	/**
+	 * Gets the slot.
+	 * @return The slot.
+	 */
 	public int getSlot() {
 		return slot;
 	}
 
-    /**
-     * Gets the item.
-     * @return The item.
-     */
+	/**
+	 * Gets the item.
+	 * @return The item.
+	 */
 	public Item getItem() {
 		return item;
 	}

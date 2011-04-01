@@ -12,15 +12,15 @@ import org.jboss.netty.channel.StaticChannelPipeline;
  */
 public final class MinecraftPipelineFactory implements ChannelPipelineFactory {
 
-    /**
-     * The server.
-     */
+	/**
+	 * The server.
+	 */
 	private final Server server;
 
-    /**
-     * Creates a new Minecraft pipeline factory.
-     * @param server The server.
-     */
+	/**
+	 * Creates a new Minecraft pipeline factory.
+	 * @param server The server.
+	 */
 	public MinecraftPipelineFactory(Server server) {
 		this.server = server;
 	}

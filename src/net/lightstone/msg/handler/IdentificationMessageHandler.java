@@ -5,6 +5,11 @@ import net.lightstone.msg.IdentificationMessage;
 import net.lightstone.net.Session;
 import net.lightstone.net.Session.State;
 
+/**
+ * A {@link MessageHandler} which performs the initial identification with
+ * clients.
+ * @author Graham Edgecombe
+ */
 public final class IdentificationMessageHandler extends MessageHandler<IdentificationMessage> {
 
 	@Override

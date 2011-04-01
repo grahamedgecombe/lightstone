@@ -9,157 +9,157 @@ import net.lightstone.world.World;
  */
 public abstract class Entity {
 
-    /**
-     * The world this entity belongs to.
-     */
+	/**
+	 * The world this entity belongs to.
+	 */
 	protected final World world;
 
-    /**
-     * A flag indicating if this entity is currently active.
-     */
+	/**
+	 * A flag indicating if this entity is currently active.
+	 */
 	protected boolean active = true;
 
-    /**
-     * This entity's unique id.
-     */
+	/**
+	 * This entity's unique id.
+	 */
 	protected int id;
 
-    /**
-     * The current position.
-     */
+	/**
+	 * The current position.
+	 */
 	protected Position position = Position.ZERO;
 
-    /**
-     * The position in the last cycle.
-     */
+	/**
+	 * The position in the last cycle.
+	 */
 	protected Position previousPosition = Position.ZERO;
 
-    /**
-     * The current rotation.
-     */
+	/**
+	 * The current rotation.
+	 */
 	protected Rotation rotation = Rotation.ZERO;
 
-    /**
-     * The rotation in the last cycle.
-     */
+	/**
+	 * The rotation in the last cycle.
+	 */
 	protected Rotation previousRotation = Rotation.ZERO;
 
-    /**
-     * Creates an entity and adds it to the specified world.
-     * @param world The world.
-     */
+	/**
+	 * Creates an entity and adds it to the specified world.
+	 * @param world The world.
+	 */
 	public Entity(World world) {
 		this.world = world;
 		world.getEntities().allocate(this);
 	}
 
-    /**
-     * Checks if this entity is within the {@link Chunk#VISIBLE_RADIUS} of
-     * another.
-     * @param other The other entity.
-     * @return {@code true} if the entities can see each other, {@code false} if
-     * not.
-     */
+	/**
+	 * Checks if this entity is within the {@link Chunk#VISIBLE_RADIUS} of
+	 * another.
+	 * @param other The other entity.
+	 * @return {@code true} if the entities can see each other, {@code false} if
+	 * not.
+	 */
 	public boolean isWithinDistance(Entity other) {
 		double dx = Math.abs(position.getX() - other.position.getX());
 		double dz = Math.abs(position.getZ() - other.position.getZ());
 		return dx <= (Chunk.VISIBLE_RADIUS * Chunk.WIDTH) && dz <= (Chunk.VISIBLE_RADIUS * Chunk.HEIGHT);
 	}
 
-    /**
-     * Gets the world this entity is in.
-     * @return The world this entity is in.
-     */
+	/**
+	 * Gets the world this entity is in.
+	 * @return The world this entity is in.
+	 */
 	public World getWorld() {
 		return world;
 	}
 
-    /**
-     * Destroys this entity by removing it from the world and marking it as not
-     * being active.
-     */
+	/**
+	 * Destroys this entity by removing it from the world and marking it as not
+	 * being active.
+	 */
 	public void destroy() {
 		active = false;
 		world.getEntities().deallocate(this);
 	}
 
-    /**
-     * Checks if this entity is active.
-     * @return {@code true} if so, {@code false} if not.
-     */
+	/**
+	 * Checks if this entity is active.
+	 * @return {@code true} if so, {@code false} if not.
+	 */
 	public boolean isActive() {
 		return active;
 	}
 
-    /**
-     * Gets the id of this entity.
-     * @return The id.
-     */
+	/**
+	 * Gets the id of this entity.
+	 * @return The id.
+	 */
 	public int getId() {
 		return id;
 	}
 
-    /**
-     * Called every game cycle. Subclasses should implement this to implement
-     * periodic functionality e.g. mob AI.
-     */
+	/**
+	 * Called every game cycle. Subclasses should implement this to implement
+	 * periodic functionality e.g. mob AI.
+	 */
 	public void pulse() {
 
 	}
 
-    /**
-     * Resets the previous position and rotations of the entity to the current
-     * position and rotation.
-     */
+	/**
+	 * Resets the previous position and rotations of the entity to the current
+	 * position and rotation.
+	 */
 	public void reset() {
 		previousPosition = position;
 		previousRotation = rotation;
 	}
 
-    /**
-     * Gets this entity's position.
-     * @return The position of this entity.
-     */
+	/**
+	 * Gets this entity's position.
+	 * @return The position of this entity.
+	 */
 	public Position getPosition() {
 		return position;
 	}
 
-    /**
-     * Gets the entity's previous position.
-     * @return The previous position of this entity.
-     */
+	/**
+	 * Gets the entity's previous position.
+	 * @return The previous position of this entity.
+	 */
 	public Position getPreviousPosition() {
 		return previousPosition;
 	}
 
-    /**
-     * Sets this entity's position.
-     * @param position The new position.
-     */
+	/**
+	 * Sets this entity's position.
+	 * @param position The new position.
+	 */
 	public void setPosition(Position position) {
 		this.position = position;
 	}
 
-    /**
-     * Gets this entity's rotation.
-     * @return The rotation of this entity.
-     */
+	/**
+	 * Gets this entity's rotation.
+	 * @return The rotation of this entity.
+	 */
 	public Rotation getRotation() {
 		return rotation;
 	}
 
-    /**
-     * Gets the entity's previous rotation.
-     * @return The previous rotation of this entity.
-     */
+	/**
+	 * Gets the entity's previous rotation.
+	 * @return The previous rotation of this entity.
+	 */
 	public Rotation getPreviousRotation() {
 		return previousRotation;
 	}
 
-    /**
-     * Sets this entity's rotation.
-     * @param rotation The new rotation.
-     */
+	/**
+	 * Sets this entity's rotation.
+	 * @param rotation The new rotation.
+	 */
 	public void setRotation(Rotation rotation) {
 		this.rotation = rotation;
 	}
@@ -186,32 +186,32 @@ public abstract class Entity {
 		return true;
 	}
 
-    /**
-     * Creates a {@link Message} which can be sent to a client to spawn this
-     * entity.
-     * @return A message which can spawn this entity.
-     */
+	/**
+	 * Creates a {@link Message} which can be sent to a client to spawn this
+	 * entity.
+	 * @return A message which can spawn this entity.
+	 */
 	public abstract Message createSpawnMessage();
 
-    /**
-     * Creates a {@link Message} which can be sent to a client to update this
-     * entity.
-     * @return A message which can update this entity.
-     */
+	/**
+	 * Creates a {@link Message} which can be sent to a client to update this
+	 * entity.
+	 * @return A message which can update this entity.
+	 */
 	public abstract Message createUpdateMessage();
 
-    /**
-     * Checks if this entity has moved this cycle.
-     * @return {@code true} if so, {@code false} if not.
-     */
+	/**
+	 * Checks if this entity has moved this cycle.
+	 * @return {@code true} if so, {@code false} if not.
+	 */
 	public boolean hasMoved() {
 		return !position.equals(previousPosition);
 	}
 
-    /**
-     * Checks if this entity has rotated this cycle.
-     * @return {@code true} if so, {@code false} if not.
-     */
+	/**
+	 * Checks if this entity has rotated this cycle.
+	 * @return {@code true} if so, {@code false} if not.
+	 */
 	public boolean hasRotated() {
 		return !rotation.equals(previousRotation);
 	}

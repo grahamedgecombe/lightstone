@@ -13,10 +13,10 @@ import net.lightstone.world.World;
  */
 public abstract class Mob extends Entity {
 
-    /**
-     * Creates a mob within the specified world.
-     * @param world The world.
-     */
+	/**
+	 * Creates a mob within the specified world.
+	 * @param world The world.
+	 */
 	public Mob(World world) {
 		super(world);
 	}
