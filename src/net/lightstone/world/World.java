@@ -85,7 +85,7 @@ public class World {
 	}
 
 	/**
-	 * Broadcats a message to every player.
+	 * Broadcasts a message to every player.
 	 * @param text The message text.
 	 */
 	public void broadcastMessage(String text) {
