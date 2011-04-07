@@ -111,6 +111,7 @@ public final class Server {
 	 * Starts this server.
 	 */
 	public void start() {
+		scheduler.start();
 		logger.info("Ready for connections.");
 	}
 

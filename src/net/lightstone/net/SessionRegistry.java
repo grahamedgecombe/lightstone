@@ -1,7 +1,10 @@
 package net.lightstone.net;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Queue;
 
 /**
  * A list of all the sessions which provides a convenient {@link #pulse()}
@@ -9,6 +12,11 @@ import java.util.List;
  * @author Graham Edgecombe
  */
 public final class SessionRegistry {
+
+	/**
+	 * An array of sessions that have not yet been added.
+	 */
+	private final Queue<Session> pending = new ArrayDeque<Session>();
 
 	/**
 	 * A list of the sessions.
@@ -19,8 +27,18 @@ public final class SessionRegistry {
 	 * Pulses all the sessions.
 	 */
 	public void pulse() {
-		for (Session session : sessions)
-			session.pulse();
+		synchronized (pending) {
+			Session session;
+			while ((session = pending.poll()) != null) {
+				sessions.add(session);
+			}
+		}
+
+		for (Iterator<Session> it = sessions.iterator(); it.hasNext(); ) {
+			Session session = it.next();
+			if (!session.pulse())
+				it.remove();
+		}
 	}
 
 	/**
@@ -28,7 +46,9 @@ public final class SessionRegistry {
 	 * @param session The session to add.
 	 */
 	void add(Session session) {
-		sessions.add(session);
+		synchronized (pending) {
+			pending.add(session);
+		}
 	}
 
 	/**
@@ -36,7 +56,7 @@ public final class SessionRegistry {
 	 * @param session The session to remove.
 	 */
 	void remove(Session session) {
-		sessions.remove(session);
+		session.flagForRemoval();
 	}
 
 }

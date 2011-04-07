@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.lightstone.Server;
 
@@ -14,6 +16,11 @@ import net.lightstone.Server;
  * @author Graham Edgecombe
  */
 public final class TaskScheduler {
+
+	/**
+	 * The logger for this class.
+	 */
+	private static final Logger logger = Logger.getLogger(TaskScheduler.class.getName());
 
 	/**
 	 * The number of milliseconds between pulses.
@@ -46,11 +53,21 @@ public final class TaskScheduler {
 	 */
 	public TaskScheduler(Server server) {
 		this.server = server;
+	}
 
+	/**
+	 * Starts the task scheduler.
+	 */
+	public void start() {
 		executor.scheduleAtFixedRate(new Runnable() {
 			@Override
 			public void run() {
-				pulse();
+				try {
+					pulse();
+				} catch (Throwable t) {
+					logger.log(Level.SEVERE, "Uncaught exception in task scheduler.", t);
+					// TODO in the future consider shutting down the server at this point?
+				}
 			}
 		}, 0, PULSE_EVERY, TimeUnit.MILLISECONDS);
 	}

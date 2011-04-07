@@ -81,6 +81,11 @@ public final class Session {
 	private Player player;
 
 	/**
+	 * A flag which indicates if this session is pending removal.
+	 */
+	private boolean pendingRemoval = false;
+
+	/**
 	 * Creates a new session.
 	 * @param server The server this session belongs to.
 	 * @param channel The channel associated with this session.
@@ -128,8 +133,17 @@ public final class Session {
 		this.server.getWorld().getPlayers().add(player);
 	}
 
+	/**
+	 * Handles any queued messages for this session and increments the timeout
+	 * counter.
+	 * @return {@code true} if this session is still active, {@code false} if
+	 * it is pending removal.
+	 */
 	@SuppressWarnings("unchecked")
-	public void pulse() {
+	public boolean pulse() {
+		if (pendingRemoval)
+			return false;
+
 		timeoutCounter++;
 
 		Message message;
@@ -143,6 +157,8 @@ public final class Session {
 
 		if (timeoutCounter >= TIMEOUT_TICKS)
 			disconnect("Timed out");
+
+		return true;
 	}
 
 	/**
@@ -183,6 +199,13 @@ public final class Session {
 	 */
 	<T extends Message> void messageReceived(T message) {
 		messageQueue.add(message);
+	}
+
+	/**
+	 * Flags this session for removal.
+	 */
+	void flagForRemoval() {
+		pendingRemoval = true;
 	}
 
 	/**
