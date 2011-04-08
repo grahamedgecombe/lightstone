@@ -10,6 +10,7 @@ nbproject
 bin
 lib
 doc
+lightstone.jar
 !.gitignore
 !.gitmodules
 !.gitkeep

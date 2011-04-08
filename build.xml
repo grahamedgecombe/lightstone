@@ -5,26 +5,35 @@
   <property name="bin" location="bin" />
   <property name="lib" location="lib" />
   <property name="doc" location="doc" />
+  <property name="jar" value="lightstone.jar" />
   <property name="main-class" value="net.lightstone.Server" />
 
-  <path id="binaries">
-    <pathelement path="${bin}" />
-  </path>
-
-  <path id="libraries">
-    <fileset dir="${lib}">
-      <include name="*.jar" />
-    </fileset>
-  </path>
-
-  <path id="master">
-    <path refid="binaries" />
-    <path refid="libraries" />
-  </path>
+  <fileset id="libraries" dir="${lib}">
+    <include name="**/*.jar" />
+  </fileset>
 
   <fileset id="tests" dir="${bin}">
     <include name="**/*Test.class" />
   </fileset>
+
+  <fileset id="production-classes" dir="${bin}">
+    <include name="**/*.class" />
+    <exclude name="**/*Test.class" />
+    <exclude name="**/package-info.class" />
+  </fileset>
+
+  <path id="binary-path">
+    <pathelement path="${bin}" />
+  </path>
+
+  <path id="library-path">
+    <fileset refid="libraries" />
+  </path>
+
+  <path id="master-path">
+    <path refid="binary-path" />
+    <path refid="library-path" />
+  </path>
 
   <target name="init">
     <mkdir dir="${bin}" />
@@ -40,20 +49,21 @@
     <javac destdir="${bin}" includeantruntime="false">
       <src path="${src}" />
       <src path="${test}" />
-      <classpath refid="libraries" />
+      <classpath refid="library-path" />
     </javac>
   </target>
 
   <target name="clean">
     <delete dir="${bin}" />
     <delete dir="${doc}" />
+    <delete file="${jar}" />
   </target>
 
   <target name="rebuild" depends="clean, build" />
 
   <target name="test" depends="build">
     <junit fork="true" haltonfailure="true">
-      <classpath refid="master" />
+      <classpath refid="master-path" />
       <formatter type="brief" usefile="false" />
       <batchtest>
         <fileset refid="tests" />
@@ -62,12 +72,12 @@
   </target>
 
   <target name="run" depends="build">
-    <java classpathref="master" fork="true" classname="${main-class}" />
+    <java classpathref="master-path" fork="true" classname="${main-class}" />
   </target>
 
   <target name="doc" depends="build">
-    <javadoc sourcepath="${src}" classpathref="master" destdir="${doc}" access="private" windowtitle="Lightstone Documentation">
-      <doclet name="org.jboss.apiviz.APIviz" pathref="libraries">
+    <javadoc sourcepath="${src}" classpathref="master-path" destdir="${doc}" access="private" windowtitle="Lightstone Documentation">
+      <doclet name="org.jboss.apiviz.APIviz" pathref="library-path">
         <param name="-sourceclasspath" value="${bin}" />
         <param name="-author" />
         <param name="-version" />
@@ -79,6 +89,16 @@
       <link href="http://docs.jboss.org/netty/3.2/api/" />
       <link href="http://jruby.org/apidocs/" />
     </javadoc>
+  </target>
+
+  <target name="jar" depends="build">
+    <jar destfile="${jar}">
+      <zipgroupfileset refid="libraries" />
+      <fileset refid="production-classes" />
+      <manifest>
+        <attribute name="Main-Class" value="${main-class}" />
+      </manifest>
+    </jar>
   </target>
 </project>
 
