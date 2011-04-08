@@ -9,7 +9,8 @@ public final class Position {
 	/**
 	 * The number of integer values between each double value. For example, if
 	 * the coordinate was {@code 1.5}, this would be sent as
-	 * {@code 1.5 * 32 = 48} within certain packets.
+	 * {@code 1.5 * 32 = 48} within certain packets. This is sometimes called
+	 * the number of pixels in a block, as each block uses a 32x32 texture.
 	 */
 	public static final int GRANULARITY = 32;
 
@@ -64,7 +65,7 @@ public final class Position {
 	 * integer.
 	 * @return An integer approximation of the X coordinate.
 	 */
-	public int getIntX() {
+	public int getPixelX() {
 		return (int) (x * GRANULARITY);
 	}
 
@@ -73,7 +74,7 @@ public final class Position {
 	 * integer.
 	 * @return An integer approximation of the Y coordinate.
 	 */
-	public int getIntY() {
+	public int getPixelY() {
 		return (int) (y * GRANULARITY);
 	}
 
@@ -82,7 +83,7 @@ public final class Position {
 	 * integer.
 	 * @return An integer approximation of the Z coordinate.
 	 */
-	public int getIntZ() {
+	public int getPixelZ() {
 		return (int) (z * GRANULARITY);
 	}
 

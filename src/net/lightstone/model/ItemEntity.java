@@ -35,9 +35,9 @@ public final class ItemEntity extends Entity {
 
 	@Override
 	public Message createSpawnMessage() {
-		int x = position.getIntX();
-		int y = position.getIntY();
-		int z = position.getIntZ();
+		int x = position.getPixelX();
+		int y = position.getPixelY();
+		int z = position.getPixelZ();
 
 		int yaw = rotation.getIntYaw();
 		int pitch = rotation.getIntPitch();

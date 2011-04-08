@@ -26,13 +26,13 @@ public abstract class Mob extends Entity {
 		boolean moved = !position.equals(previousPosition);
 		boolean rotated = !rotation.equals(previousRotation);
 
-		int x = position.getIntX();
-		int y = position.getIntY();
-		int z = position.getIntZ();
+		int x = position.getPixelX();
+		int y = position.getPixelY();
+		int z = position.getPixelZ();
 
-		int dx = x - previousPosition.getIntX();
-		int dy = y - previousPosition.getIntY();
-		int dz = z - previousPosition.getIntZ();
+		int dx = x - previousPosition.getPixelX();
+		int dy = y - previousPosition.getPixelY();
+		int dz = z - previousPosition.getPixelZ();
 
 		boolean teleport = dx > Byte.MAX_VALUE || dy > Byte.MAX_VALUE || dz > Byte.MAX_VALUE || dx < Byte.MIN_VALUE || dy < Byte.MIN_VALUE || dz < Byte.MIN_VALUE;
 
