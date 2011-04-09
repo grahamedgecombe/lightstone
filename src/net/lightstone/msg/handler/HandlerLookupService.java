@@ -12,6 +12,8 @@ import net.lightstone.msg.PositionMessage;
 import net.lightstone.msg.PositionRotationMessage;
 import net.lightstone.msg.RotationMessage;
 import net.lightstone.msg.DiggingMessage;
+import net.lightstone.msg.AnimateEntityMessage;
+import net.lightstone.msg.EntityActionMessage;
 
 /**
  * A class used to look up message handlers.
@@ -37,6 +39,8 @@ public final class HandlerLookupService {
 			bind(PositionRotationMessage.class, PositionRotationMessageHandler.class);
 			bind(KickMessage.class, KickMessageHandler.class);
 			bind(DiggingMessage.class, DiggingMessageHandler.class);
+			bind(AnimateEntityMessage.class, AnimateEntityMessageHandler.class);
+			bind(EntityActionMessage.class, EntityActionMessageHandler.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
 		}

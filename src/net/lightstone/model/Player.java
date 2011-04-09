@@ -44,6 +44,8 @@ public final class Player extends Mob {
 	 */
 	private Set<Chunk.Key> knownChunks = new HashSet<Chunk.Key>();
 
+	private boolean isCrouching = false;
+
 	/**
 	 * Creates a new player and adds it to the world.
 	 * @param session The player's session.
@@ -156,5 +158,11 @@ public final class Player extends Mob {
 		return new SpawnPlayerMessage(id, name, x, y, z, yaw, pitch, 0);
 	}
 
+	public void setCrouching(boolean isCrouching){
+		this.isCrouching=isCrouching;
+	}
+	public boolean getCrouching(){
+		return isCrouching;
+	}
 }
 
