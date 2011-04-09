@@ -1,4 +1,5 @@
-//RegionFileCache.java from http://pastebin.com/jvZ1yhAd
+package net.lightstone.io.region;
+
 /*
  ** 2011 January 5
  **
@@ -8,7 +9,7 @@
  **    May you do good and not evil.
  **    May you find forgiveness for yourself and forgive others.
  **    May you share freely, never taking more than you give.
- */
+ **/
 
 /*
  * 2011 February 16
@@ -24,8 +25,6 @@
 
 // A simple cache and wrapper for efficiently multiple RegionFiles simultaneously.
 
-package net.lightstone.io.region;
-
 import java.io.*;
 import java.lang.ref.*;
 import java.util.*;
@@ -36,7 +35,7 @@ public class RegionFileCache {
 
 	private final Map<File, Reference<RegionFile>> cache = new HashMap<File, Reference<RegionFile>>();
 
-	public synchronized RegionFile getRegionFile(File basePath, int chunkX, int chunkZ) {
+	public RegionFile getRegionFile(File basePath, int chunkX, int chunkZ) throws IOException {
 		File regionDir = new File(basePath, "region");
 		File file = new File(regionDir, "r." + (chunkX >> 5) + "." + (chunkZ >> 5) + ".mcr");
 
@@ -59,30 +58,26 @@ public class RegionFileCache {
 		return reg;
 	}
 
-	public synchronized void clear() {
+	public void clear() throws IOException {
 		for (Reference<RegionFile> ref : cache.values()) {
-			try {
-				if (ref.get() != null) {
-					ref.get().close();
-				}
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (ref.get() != null) {
+				ref.get().close();
 			}
 		}
 		cache.clear();
 	}
 
-	public int getSizeDelta(File basePath, int chunkX, int chunkZ) {
+	public int getSizeDelta(File basePath, int chunkX, int chunkZ) throws IOException {
 		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getSizeDelta();
 	}
 
-	public DataInputStream getChunkDataInputStream(File basePath, int chunkX, int chunkZ) {
+	public DataInputStream getChunkDataInputStream(File basePath, int chunkX, int chunkZ) throws IOException {
 		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getChunkDataInputStream(chunkX & 31, chunkZ & 31);
 	}
 
-	public DataOutputStream getChunkDataOutputStream(File basePath, int chunkX, int chunkZ) {
+	public DataOutputStream getChunkDataOutputStream(File basePath, int chunkX, int chunkZ) throws IOException {
 		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getChunkDataOutputStream(chunkX & 31, chunkZ & 31);
 	}
