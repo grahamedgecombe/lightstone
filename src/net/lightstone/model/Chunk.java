@@ -138,6 +138,17 @@ public final class Chunk {
 	}
 
 	/**
+	 * Sets the types of all tiles within the chunk.
+	 * @param types The array of types.
+	 */
+	public void setTypes(byte[] types){
+		if (types.length != WIDTH * HEIGHT * DEPTH) {
+			throw new IllegalArgumentException();
+		}
+		System.arraycopy(types, 0, this.types, 0, types.length);
+	}
+
+	/**
 	 * Sets the type of a block within this chunk.
 	 * @param x The X coordinate.
 	 * @param z The Z coordinate.
@@ -249,12 +260,7 @@ public final class Chunk {
 
 		return (x * HEIGHT + z) * DEPTH + y;
 	}
-	public void setTypes(byte[] types){
-		if(types.length!=WIDTH*HEIGHT*DEPTH){
-			throw new IllegalArgumentException();
-		}
-		System.arraycopy(types, 0, this.types, 0, types.length);
-	}
+
 	/**
 	 * Serializes tile data into a byte array.
 	 * @return The byte array populated with the tile data.
@@ -266,22 +272,22 @@ public final class Chunk {
 
 		int pos = types.length;
 
-		for (int i = 0; i < (metaData.length / 2); i++) {
+		for (int i = 0; i < metaData.length; i += 2) {
 			byte meta1 = metaData[i];
 			byte meta2 = metaData[i + 1];
-			dest[pos++] = (byte) ((meta1 << 4) | meta2);
+			dest[pos++] = (byte) ((meta2 << 4) | meta1);
 		}
 
-		for (int i = 0; i < (skyLight.length / 2); i++) {
+		for (int i = 0; i < skyLight.length; i += 2) {
 			byte light1 = skyLight[i];
 			byte light2 = skyLight[i + 1];
-			dest[pos++] = (byte) ((light1 << 4) | light2);
+			dest[pos++] = (byte) ((light2 << 4) | light1);
 		}
 
-		for (int i = 0; i < (blockLight.length / 2); i++) {
+		for (int i = 0; i < blockLight.length; i += 2) {
 			byte light1 = blockLight[i];
 			byte light2 = blockLight[i + 1];
-			dest[pos++] = (byte) ((light1 << 4) | light2);
+			dest[pos++] = (byte) ((light2 << 4) | light1);
 		}
 
 		return dest;

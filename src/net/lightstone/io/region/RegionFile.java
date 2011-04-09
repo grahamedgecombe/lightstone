@@ -12,12 +12,12 @@
 
 /*
  * 2011 February 16
- * 
+ *
  * This source code is based on the work of Scaevolus (see notice above).
  * It has been slightly modified by Mojang AB (constants instead of magic
  * numbers, a chunk timestamp header, and auto-formatted according to our
  * formatter template).
- * 
+ *
  */
 
 // Interfaces with region files on the disk
@@ -375,3 +375,4 @@ public class RegionFile {
         file.close();
     }
 }
+
