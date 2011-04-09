@@ -30,16 +30,31 @@ public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 	private void processCommand(Session session, Player player, String message){
 		String[] command = message.substring(1).split(" ");
 		String action = command[0];
-		if(action.equals("settime")){
+		if(action.equals("time")){
+			if(command.length!=3){
+				session.send(new ChatMessage("Expected two parameters"));
+				return;
+			}
 			try{
-				player.getWorld().setTimeOfDay(Long.parseLong(command[1]));
+				long newTime;
+				if(command[1].equals("set")){
+					newTime=Long.parseLong(command[2]);
+				}
+				else if(command[1].equals("add")){
+					newTime=player.getWorld().getTimeOfDay() + Long.parseLong(command[2]);
+				}
+				else{
+					session.send(new ChatMessage("Invalid option for time command"));
+					return;
+				}
+				player.getWorld().setTimeOfDay(newTime);
 			}
 			catch(NumberFormatException numex){
 				session.send(new ChatMessage("The time you have entered is not a valid number."));
 			}
 		}
 		else if(action.equals("help")){
-			session.send(new ChatMessage("Commands: settime"));
+			session.send(new ChatMessage("Commands: time"));
 		}
 		else{
 			session.send(new ChatMessage("Unknown command."));
