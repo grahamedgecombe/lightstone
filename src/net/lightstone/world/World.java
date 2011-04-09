@@ -9,6 +9,8 @@ import net.lightstone.model.EntityManager;
 import net.lightstone.model.Player;
 import net.lightstone.model.Position;
 import net.lightstone.msg.ChatMessage;
+import net.lightstone.msg.TimeMessage;
+import net.lightstone.task.TaskScheduler;
 
 /**
  * A class which represents the in-game world.
@@ -31,6 +33,9 @@ public class World {
 	 */
 	private final EntityManager entities = new EntityManager();
 
+	private long timeOfDay = 0;
+
+
 	/**
 	 * Creates a new world with the specified chunk I/O service and world
 	 * generator.
@@ -50,6 +55,7 @@ public class World {
 
 		for (Entity entity : entities)
 			entity.reset();
+		advanceTime();
 	}
 
 	/**
@@ -94,5 +100,17 @@ public class World {
 			player.getSession().send(message);
 	}
 
+	public long getTimeOfDay(){
+		return timeOfDay;
+	}
+	public void setTimeOfDay(long newTime){
+		timeOfDay=newTime;
+		TimeMessage msg = new TimeMessage(timeOfDay);
+		for (Player player : getPlayers())
+			player.getSession().send(msg);
+	}
+	private void advanceTime(){
+		setTimeOfDay(getTimeOfDay() + (TaskScheduler.PULSE_EVERY / 50)); //50 ms per Minecraft tick
+	}
 }
 

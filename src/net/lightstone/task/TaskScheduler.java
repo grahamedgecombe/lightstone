@@ -25,7 +25,7 @@ public final class TaskScheduler {
 	/**
 	 * The number of milliseconds between pulses.
 	 */
-	private static final int PULSE_EVERY = 200;
+	public static final int PULSE_EVERY = 200;
 
 	/**
 	 * The server.
