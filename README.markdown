@@ -65,8 +65,8 @@ Credits
  * All the people behind [JRuby](http://jruby.org), [JUnit](http://junit.org),
    [Ant](http://ant.apache.org), [Ivy](http://ant.apache.org/ivy),
    [Graphviz](http://graphviz.org) and [Java](http://java.oracle.com).
- * [Scaevolus](http://minecraftforum.net/memberlist.php?mode=viewprofile&u=60394)
-   - author of the original McRegion code, upon which the Lightstone
+ * [Scaevolus](http://minecraftforum.net/memberlist.php?mode=viewprofile&u=60394) -
+   author of the original McRegion code, upon which the Lightstone
    implementation is based.
  * [Notch](http://mojang.com/notch) and all the other people at
    [Mojang](http://mojang.com) - for making such an awesome game in the first
