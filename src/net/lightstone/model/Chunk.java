@@ -249,7 +249,12 @@ public final class Chunk {
 
 		return (x * HEIGHT + z) * DEPTH + y;
 	}
-
+	public void setTypes(byte[] types){
+		if(types.length!=WIDTH*HEIGHT*DEPTH){
+			throw new IllegalArgumentException();
+		}
+		System.arraycopy(types, 0, this.types, 0, types.length);
+	}
 	/**
 	 * Serializes tile data into a byte array.
 	 * @return The byte array populated with the tile data.
