@@ -10,13 +10,17 @@ import net.lightstone.model.Player;
 import net.lightstone.model.Position;
 import net.lightstone.msg.ChatMessage;
 import net.lightstone.msg.TimeMessage;
-import net.lightstone.task.TaskScheduler;
 
 /**
  * A class which represents the in-game world.
  * @author Graham Edgecombe
  */
 public class World {
+
+	/**
+	 * The number of pulses in a Minecraft day.
+	 */
+	private static final int PULSES_PER_DAY = 24000;
 
 	/**
 	 * The spawn position.
@@ -116,7 +120,7 @@ public class World {
 	 * @param time The current time.
 	 */
 	public void setTime(long time){
-		this.time = time;
+		this.time = time % PULSES_PER_DAY;
 
 		TimeMessage msg = new TimeMessage(time);
 		for (Player player : getPlayers())
@@ -127,8 +131,7 @@ public class World {
 	 * Advances the time forwards, should be called every pulse.
 	 */
 	private void advanceTime() {
-		time += TaskScheduler.PULSE_EVERY / 50; // 50 ms per Minecraft tick
-
+		time = (time + 1) % PULSES_PER_DAY;
 		// TODO: every now and again we should broadcast the time to all
 		//       players to keep things in sync
 	}
