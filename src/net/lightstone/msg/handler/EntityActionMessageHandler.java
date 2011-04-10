@@ -26,6 +26,5 @@ public final class EntityActionMessageHandler extends MessageHandler<EntityActio
 		}
 	}
 
-
 }
 

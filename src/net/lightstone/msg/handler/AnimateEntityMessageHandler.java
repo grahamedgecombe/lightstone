@@ -24,4 +24,3 @@ public final class AnimateEntityMessageHandler extends MessageHandler<AnimateEnt
 
 }
 
-
