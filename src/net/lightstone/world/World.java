@@ -33,8 +33,10 @@ public class World {
 	 */
 	private final EntityManager entities = new EntityManager();
 
-	private long timeOfDay = 0;
-
+	/**
+	 * The current time.
+	 */
+	private long time = 0;
 
 	/**
 	 * Creates a new world with the specified chunk I/O service and world
@@ -55,6 +57,7 @@ public class World {
 
 		for (Entity entity : entities)
 			entity.reset();
+
 		advanceTime();
 	}
 
@@ -100,17 +103,35 @@ public class World {
 			player.getSession().send(message);
 	}
 
-	public long getTimeOfDay(){
-		return timeOfDay;
+	/**
+	 * Gets the current time.
+	 * @return The current time.
+	 */
+	public long getTime() {
+		return time;
 	}
-	public void setTimeOfDay(long newTime){
-		timeOfDay=newTime;
-		TimeMessage msg = new TimeMessage(timeOfDay);
+
+	/**
+	 * Sets the current time.
+	 * @param time The current time.
+	 */
+	public void setTime(long time){
+		this.time = time;
+
+		TimeMessage msg = new TimeMessage(time);
 		for (Player player : getPlayers())
 			player.getSession().send(msg);
 	}
-	private void advanceTime(){
-		setTimeOfDay(getTimeOfDay() + (TaskScheduler.PULSE_EVERY / 50)); //50 ms per Minecraft tick
+
+	/**
+	 * Advances the time forwards, should be called every pulse.
+	 */
+	private void advanceTime() {
+		time += TaskScheduler.PULSE_EVERY / 50; // 50 ms per Minecraft tick
+
+		// TODO: every now and again we should broadcast the time to all
+		//       players to keep things in sync
 	}
+
 }
 

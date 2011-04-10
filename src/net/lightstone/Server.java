@@ -7,6 +7,7 @@ import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import net.lightstone.cmd.CommandManager;
 import net.lightstone.io.McRegionChunkIoService;
 import net.lightstone.net.MinecraftPipelineFactory;
 import net.lightstone.net.Session;
@@ -75,6 +76,11 @@ public final class Server {
 	private final TaskScheduler scheduler = new TaskScheduler(this);
 
 	/**
+	 * The command manager.
+	 */
+	private final CommandManager commandManager = new CommandManager();
+
+	/**
 	 * The world this server is managing.
 	 */
 	private final World world = new World(new McRegionChunkIoService(), new FlatGrassWorldGenerator());
@@ -137,6 +143,14 @@ public final class Server {
 	 */
 	public TaskScheduler getScheduler() {
 		return scheduler;
+	}
+
+	/**
+	 * Gets the command manager.
+	 * @return The {@link CommandManager}.
+	 */
+	public CommandManager getCommandManager() {
+		return commandManager;
 	}
 
 	/**

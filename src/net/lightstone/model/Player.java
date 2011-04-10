@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import net.lightstone.msg.ChatMessage;
 import net.lightstone.msg.DestroyEntityMessage;
 import net.lightstone.msg.LoadChunkMessage;
 import net.lightstone.msg.Message;
@@ -65,6 +66,14 @@ public final class Player extends Mob {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * A convenience method for sending a message to this player.
+	 * @param message The message.
+	 */
+	public void sendMessage(String message) {
+		session.send(new ChatMessage(message));
 	}
 
 	@Override
