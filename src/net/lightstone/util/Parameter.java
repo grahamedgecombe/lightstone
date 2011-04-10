@@ -38,6 +38,11 @@ public class Parameter<T> {
 	public static final int TYPE_ITEM = 5;
 
 	/**
+	 * The id which represents a coordinate parameter.
+	 */
+	public static final int TYPE_COORDINATE = 6;
+
+	/**
 	 * The type of parameter.
 	 */
 	private final int type;

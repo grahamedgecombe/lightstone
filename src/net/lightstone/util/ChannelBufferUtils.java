@@ -4,6 +4,7 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.lightstone.model.Coordinate;
 import net.lightstone.model.Item;
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -54,6 +55,12 @@ public final class ChannelBufferUtils {
 				buf.writeByte(item.getCount());
 				buf.writeShort(item.getDamage());
 				break;
+			case Parameter.TYPE_COORDINATE:
+				Coordinate coord = ((Parameter<Coordinate>) parameter).getValue();
+				buf.writeInt(coord.getX());
+				buf.writeInt(coord.getY());
+				buf.writeInt(coord.getZ());
+				break;
 			}
 		}
 
@@ -95,6 +102,13 @@ public final class ChannelBufferUtils {
 				int damage = buf.readShort();
 				Item item = new Item(id, count, damage);
 				parameters.add(new Parameter<Item>(type, index, item));
+				break;
+			case Parameter.TYPE_COORDINATE:
+				int x = buf.readInt();
+				int y = buf.readInt();
+				int z = buf.readInt();
+				Coordinate coordinate = new Coordinate(x, y, z);
+				parameters.add(new Parameter<Coordinate>(type, index, coordinate));
 				break;
 			}
 		}

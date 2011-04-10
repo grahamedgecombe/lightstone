@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.lightstone.model.Coordinate;
 import net.lightstone.model.Item;
 
 import org.jboss.netty.buffer.ChannelBuffer;
@@ -31,8 +32,9 @@ public final class ChannelBufferUtilsTest {
 		params.add(new Parameter<Float>(Parameter.TYPE_FLOAT, 3, 1234.5678F));
 		params.add(new Parameter<String>(Parameter.TYPE_STRING, 4, "test"));
 		params.add(new Parameter<Item>(Parameter.TYPE_ITEM, 5, new Item(1, 64, 0)));
+		params.add(new Parameter<Coordinate>(Parameter.TYPE_COORDINATE, 6, new Coordinate(10, 11, 12)));
 
-		ChannelBuffer buffer = ChannelBuffers.buffer(29);
+		ChannelBuffer buffer = ChannelBuffers.buffer(42);
 		ChannelBufferUtils.writeParameters(buffer, params);
 
 		assertEquals(0x00, buffer.readUnsignedByte());
@@ -55,6 +57,11 @@ public final class ChannelBufferUtilsTest {
 		assertEquals(64, buffer.readUnsignedByte());
 		assertEquals(0, buffer.readUnsignedShort());
 
+		assertEquals(0xC6, buffer.readUnsignedByte());
+		assertEquals(10, buffer.readInt());
+		assertEquals(11, buffer.readInt());
+		assertEquals(12, buffer.readInt());
+
 		assertEquals(0x80, buffer.readUnsignedByte());
 	}
 
@@ -64,7 +71,7 @@ public final class ChannelBufferUtilsTest {
 	 */
 	@Test
 	public void testReadParameters() {
-		ChannelBuffer buffer = ChannelBuffers.buffer(29);
+		ChannelBuffer buffer = ChannelBuffers.buffer(42);
 		buffer.writeByte(0x00); // type 0 index 0
 		buffer.writeByte(0x12);
 
@@ -85,10 +92,15 @@ public final class ChannelBufferUtilsTest {
 		buffer.writeByte(64);
 		buffer.writeShort(0);
 
+		buffer.writeByte(0xC6); // type 6 index 6
+		buffer.writeInt(10);
+		buffer.writeInt(11);
+		buffer.writeInt(12);
+
 		buffer.writeByte(0x80); // end of list
 
 		List<Parameter<?>> params = ChannelBufferUtils.readParameters(buffer);
-		assertEquals(6, params.size());
+		assertEquals(7, params.size());
 
 		for (int index = 0; index < params.size(); index++) {
 			assertEquals(index, params.get(index).getIndex());
@@ -117,6 +129,10 @@ public final class ChannelBufferUtilsTest {
 		Parameter<?> itemParam = params.get(5);
 		assertEquals(Parameter.TYPE_ITEM, itemParam.getType());
 		assertEquals(new Item(1, 64, 0), itemParam.getValue());
+
+		Parameter<?> coordinateParam = params.get(6);
+		assertEquals(Parameter.TYPE_COORDINATE, coordinateParam.getType());
+		assertEquals(new Coordinate(10, 11, 12), coordinateParam.getValue());
 	}
 
 	/**
