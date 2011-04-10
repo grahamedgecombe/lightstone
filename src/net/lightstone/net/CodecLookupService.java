@@ -54,6 +54,7 @@ import net.lightstone.net.codec.TimeCodec;
 import net.lightstone.net.codec.TransactionCodec;
 import net.lightstone.net.codec.PlayNoteCodec;
 import net.lightstone.net.codec.UpdateSignCodec;
+import net.lightstone.net.codec.UseBedCodec;
 import net.lightstone.net.codec.WindowClickCodec;
 
 /**
@@ -96,6 +97,7 @@ public final class CodecLookupService {
 			/* 0x0E */ bind(DiggingCodec.class);
 			/* 0x0F */ bind(BlockPlacementCodec.class);
 			/* 0x10 */ bind(ActivateItemCodec.class);
+			/* 0x11 */ bind(UseBedCodec.class);
 			/* 0x12 */ bind(AnimateEntityCodec.class);
 			/* 0x13 */ bind(EntityActionCodec.class);
 			/* 0x14 */ bind(SpawnPlayerCodec.class);
