@@ -36,8 +36,10 @@ public final class SessionRegistry {
 
 		for (Iterator<Session> it = sessions.iterator(); it.hasNext(); ) {
 			Session session = it.next();
-			if (!session.pulse())
+			if (!session.pulse()) {
 				it.remove();
+				session.dispose();
+			}
 		}
 	}
 

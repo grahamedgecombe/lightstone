@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import net.lightstone.msg.ChatMessage;
 import net.lightstone.msg.DestroyEntityMessage;
 import net.lightstone.msg.LoadChunkMessage;
 import net.lightstone.msg.Message;
@@ -21,7 +22,12 @@ public final class Player extends Mob {
 	/**
 	 * The normal height of a player's eyes above their feet.
 	 */
-	public static final double EYE_HEIGHT = 1.62D;
+	public static final double NORMAL_EYE_HEIGHT = 1.62D;
+
+	/**
+	 * The height of a player's eyes above their feet when they are crouching.
+	 */
+	public static final double CROUCH_EYE_HEIGHT = 1.42D;
 
 	/**
 	 * The name of this player.
@@ -46,6 +52,11 @@ public final class Player extends Mob {
 	private boolean isCrouching = false;
 
 	/**
+	 * A flag that indicates if this player is crouching.
+	 */
+	private boolean crouching = false;
+
+	/**
 	 * Creates a new player and adds it to the world.
 	 * @param session The player's session.
 	 * @param name The player's name.
@@ -58,7 +69,8 @@ public final class Player extends Mob {
 		// stream the initial set of blocks and teleport us
 		this.streamBlocks();
 		this.position = world.getSpawnPosition();
-		this.session.send(new PositionRotationMessage(position.getX(), position.getY(), position.getZ(), position.getY() + EYE_HEIGHT, (float) rotation.getYaw(), (float) rotation.getPitch(), true));
+		this.sendMessage("§eWelcome to Lightstone, " + name + "!");
+		this.session.send(new PositionRotationMessage(position.getX(), position.getY(), position.getZ(), position.getY() + NORMAL_EYE_HEIGHT, (float) rotation.getYaw(), (float) rotation.getPitch(), true));
 	}
 
 	/**
@@ -67,6 +79,14 @@ public final class Player extends Mob {
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * A convenience method for sending a message to this player.
+	 * @param message The message.
+	 */
+	public void sendMessage(String message) {
+		session.send(new ChatMessage(message));
 	}
 
 	@Override
@@ -149,11 +169,22 @@ public final class Player extends Mob {
 		return new SpawnPlayerMessage(id, name, x, y, z, yaw, pitch, 0);
 	}
 
-	public void setCrouching(boolean isCrouching){
-		this.isCrouching=isCrouching;
+	/**
+	 * Sets the crouching flag.
+	 * @param crouching The crouching flag.
+	 */
+	public void setCrouching(boolean crouching) {
+		// TODO: update other clients, needs to be figured out
+		this.crouching = crouching;
 	}
-	public boolean getCrouching(){
-		return isCrouching;
+
+	/**
+	 * Gets the crouching flag.
+	 * @return The crouching flag.
+	 */
+	public boolean isCrouching() {
+		return crouching;
 	}
+
 }
 

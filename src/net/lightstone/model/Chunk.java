@@ -13,7 +13,7 @@ public final class Chunk {
 	 * The radius (not including the current chunk) of the chunks that the
 	 * player can see.
 	 */
-	public static final int VISIBLE_RADIUS = 8;
+	public static final int VISIBLE_RADIUS = 10;
 
 	/**
 	 * A chunk key represents the X and Z coordinates of a chunk and implements
