@@ -37,9 +37,6 @@ public class World {
 	 */
 	private final EntityManager entities = new EntityManager();
 
-	private long timeOfDay = 0;
-
-
 	/**
 	 * The current time.
 	 */
@@ -64,6 +61,7 @@ public class World {
 
 		for (Entity entity : entities)
 			entity.reset();
+
 		advanceTime();
 	}
 

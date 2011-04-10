@@ -49,8 +49,6 @@ public final class Player extends Mob {
 	 */
 	private Set<Chunk.Key> knownChunks = new HashSet<Chunk.Key>();
 
-	private boolean isCrouching = false;
-
 	/**
 	 * A flag that indicates if this player is crouching.
 	 */
