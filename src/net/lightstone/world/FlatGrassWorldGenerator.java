@@ -6,7 +6,7 @@ import net.lightstone.model.Chunk;
  * A simple {@link WorldGenerator} used to generate a "flat grass" world.
  * @author Graham Edgecombe
  */
-public final class FlatGrassWorldGenerator implements WorldGenerator {
+public class FlatGrassWorldGenerator implements WorldGenerator {
 
 	@Override
 	public Chunk generate(int chunkX, int chunkZ) {
