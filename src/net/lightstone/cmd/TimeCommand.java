@@ -20,7 +20,7 @@ public final class TimeCommand extends Command {
 	@Override
 	public void execute(Player player, String[] args) {
 		if (args.length != 2) {
-			player.sendMessage("§eUsage: /time [add|set] [value]");
+			player.sendMessage("§eUsage: /time <add|set> <value>");
 			return;
 		}
 

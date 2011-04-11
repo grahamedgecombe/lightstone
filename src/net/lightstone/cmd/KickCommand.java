@@ -1,8 +1,8 @@
 package net.lightstone.cmd;
 
 import net.lightstone.model.Player;
-import net.lightstone.world.World;
 import net.lightstone.msg.KickMessage;
+import net.lightstone.world.World;
 
 /**
  * A command that kicks a user off the server.
@@ -19,21 +19,24 @@ public final class KickCommand extends Command {
 
 	@Override
 	public void execute(Player player, String[] args) {
+		// TODO check if the player executing this command is an admin
 		if (args.length != 1) {
-			player.sendMessage("§eUsage: /kick [username]");
+			player.sendMessage("§eUsage: /kick <username>");
 			return;
 		}
 
-		String username = args[0].toLowerCase();
+		World world = player.getWorld();
+		String name = args[0];
 
-		for(Player p: player.getWorld().getPlayers()){
-			if(p.getName().toLowerCase().equals(username)){
-				player.getWorld().broadcastMessage("§eKicking " + p.getName());
+		for (Player p : world.getPlayers()) {
+			if (p.getName().equalsIgnoreCase(name)) {
+				player.sendMessage("§eKicking " + p.getName());
 				p.getSession().send(new KickMessage("Kicked by " + player.getName()));
 				return;
 			}
 		}
-		player.sendMessage("User not found.");
+
+		player.sendMessage("§eCan't find user " + name + ". No kick.");
 	}
 
 }

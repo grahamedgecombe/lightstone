@@ -1,4 +1,4 @@
-package net.lightstone. cmd;
+package net.lightstone.cmd;
 
 import java.util.Collection;
 import java.util.Collections;
