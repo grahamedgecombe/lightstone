@@ -11,6 +11,7 @@ bin
 lib
 doc
 lightstone.jar
+world
 !.gitignore
 !.gitmodules
 !.gitkeep
