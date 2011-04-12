@@ -64,7 +64,7 @@ public final class ChannelBufferUtils {
 			}
 		}
 
-		buf.writeByte(0x80);
+		buf.writeByte(0x7F);
 	}
 
 	/**
@@ -76,7 +76,7 @@ public final class ChannelBufferUtils {
 		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
 
 		int b;
-		while ((b = buf.readUnsignedByte()) != 0x80) {
+		while ((b = buf.readUnsignedByte()) != 0x7F) {
 			int type  = (b >> 5) & 0x07;
 			int index = b & 0x1F;
 

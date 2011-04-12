@@ -62,7 +62,7 @@ public final class ChannelBufferUtilsTest {
 		assertEquals(11, buffer.readInt());
 		assertEquals(12, buffer.readInt());
 
-		assertEquals(0x80, buffer.readUnsignedByte());
+		assertEquals(0x7F, buffer.readUnsignedByte());
 	}
 
 	/**
@@ -97,7 +97,7 @@ public final class ChannelBufferUtilsTest {
 		buffer.writeInt(11);
 		buffer.writeInt(12);
 
-		buffer.writeByte(0x80); // end of list
+		buffer.writeByte(0x7F); // end of list
 
 		List<Parameter<?>> params = ChannelBufferUtils.readParameters(buffer);
 		assertEquals(7, params.size());
