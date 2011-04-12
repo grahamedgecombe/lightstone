@@ -13,9 +13,9 @@ public final class ForestWorldGenerator extends FlatGrassWorldGenerator {
 
 	private static final int MAX_TREES = 2;
 
-	private static final int TREE_MIN_HEIGHT = 5;
+	private static final int TREE_MIN_HEIGHT = 6;
 
-	private static final int TREE_MAX_HEIGHT = 8;
+	private static final int TREE_MAX_HEIGHT = 9;
 
 	private static final int TREE_CANOPY_HEIGHT = 5;
 
