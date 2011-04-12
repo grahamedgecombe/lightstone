@@ -52,6 +52,7 @@ Credits
 ### Contributors
 
  * [Graham Edgecombe](https://github.com/grahamedgecombe)
+ * [Jonathan Edgecombe](http://jonathanedgecombe.com)
  * [Zhuowei Zhang](https://github.com/zhuowei)
 
 ### Miscellaneous Credits
