@@ -44,6 +44,11 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			id = item.getId();
 			damage = item.getDamage();
 		}
+		if(id>0x100){
+			System.out.println("Placing non-items not implemented");
+			player.sendMessage("Not implemented");
+			return;
+		}
 		int x = msgX;
 		int z = msgZ;
 		int y = msgY;
@@ -70,7 +75,6 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		// Copied from DiggingMessageHandler
 		int chunkX = x / Chunk.WIDTH + ((x < 0 && x % Chunk.WIDTH != 0) ? -1 : 0);
 		int chunkZ = z / Chunk.HEIGHT + ((z < 0 && z % Chunk.HEIGHT != 0) ? -1 : 0);
-
 		try{
 		Chunk chunk = world.getChunks().getChunk(chunkX, chunkZ);
 		int[] chunkCoords = chunk.globalToLocal(x, z);
