@@ -81,6 +81,7 @@ public class Inventory{
 		int newCount = oldItem.getCount() - count;
 		if(newCount == 0){
 			clear(slot);
+			return;
 		}
 		Item newItem = new Item(oldItem.getId(), newCount, oldItem.getDamage());
 		set(new SlottedItem(slot, newItem));

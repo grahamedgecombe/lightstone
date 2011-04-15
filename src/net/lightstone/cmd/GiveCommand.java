@@ -1,6 +1,7 @@
 package net.lightstone.cmd;
 
 import net.lightstone.model.Player;
+import net.lightstone.model.Blocks;
 import net.lightstone.world.World;
 import net.lightstone.model.Inventory;
 import net.lightstone.model.Item;
@@ -34,6 +35,10 @@ public final class GiveCommand extends Command {
 		}
 		catch(Exception e){
 			player.sendMessage("§eNot valid numbers! ");
+			return;
+		}
+		if(!(itemId>0 && (itemId<=Blocks.NUMBER_OF_BLOCKS||itemId>=0x100))){
+			player.sendMessage("Invalid item id: " + itemId);
 			return;
 		}
 		for (Player p : world.getPlayers()) {

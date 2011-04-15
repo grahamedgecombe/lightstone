@@ -22,7 +22,7 @@ public final class SetWindowSlotCodec extends MessageCodec<SetWindowSlotMessage>
 			return new SetWindowSlotMessage(id, slot);
 		} else {
 			int count = buffer.readUnsignedByte();
-			int damage = buffer.readUnsignedByte();
+			int damage = buffer.readShort();
 			return new SetWindowSlotMessage(id, slot, item, count, damage);
 		}
 	}

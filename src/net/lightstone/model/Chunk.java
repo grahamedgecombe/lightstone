@@ -261,6 +261,15 @@ public final class Chunk {
 		return (x * HEIGHT + z) * DEPTH + y;
 	}
 
+	public int[] globalToLocal(int x, int z){
+		int localX = (x - getX() * Chunk.WIDTH) % Chunk.WIDTH;
+		int localZ = (z - getZ() * Chunk.HEIGHT) % Chunk.HEIGHT;
+		int[] retval = new int[2];
+		retval[0] = localX;
+		retval[1] = localZ;
+		return retval;
+	}
+
 	/**
 	 * Serializes tile data into a byte array.
 	 * @return The byte array populated with the tile data.
