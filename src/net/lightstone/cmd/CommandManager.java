@@ -26,6 +26,7 @@ public final class CommandManager {
 		bind(new MeCommand());
 		bind(new TimeCommand());
 		bind(new KickCommand());
+		bind(new GiveCommand());
 		bind(new HelpCommand(this));
 	}
 

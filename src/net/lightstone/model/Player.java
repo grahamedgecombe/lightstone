@@ -54,6 +54,8 @@ public final class Player extends Mob {
 	 */
 	private boolean crouching = false;
 
+	private Inventory inventory = new Inventory(this);
+
 	/**
 	 * Creates a new player and adds it to the world.
 	 * @param session The player's session.
@@ -184,5 +186,8 @@ public final class Player extends Mob {
 		return crouching;
 	}
 
+	public Inventory getInventory() {
+		return inventory;
+	}
 }
 
