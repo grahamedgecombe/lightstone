@@ -17,7 +17,7 @@ public final class IdentificationMessageHandler extends MessageHandler<Identific
 		Session.State state = session.getState();
 		if (state == Session.State.EXCHANGE_IDENTIFICATION) {
 			session.setState(State.GAME);
-			session.send(new IdentificationMessage(0, "", "", 0, 0));
+			session.send(new IdentificationMessage(0, "", "", 0, (session.getServer().isNetherWorld()? -1: 0)));
 			session.setPlayer(new Player(session, message.getName())); // TODO case-correct the name
 		} else {
 			boolean game = state == State.GAME;

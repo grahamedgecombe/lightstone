@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.io.File;
 
 import net.lightstone.cmd.CommandManager;
 import net.lightstone.io.McRegionChunkIoService;
@@ -14,6 +15,7 @@ import net.lightstone.net.Session;
 import net.lightstone.net.SessionRegistry;
 import net.lightstone.task.TaskScheduler;
 import net.lightstone.world.ForestWorldGenerator;
+import net.lightstone.world.SimpleNetherWorldGenerator;
 import net.lightstone.world.World;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
@@ -40,8 +42,14 @@ public final class Server {
 	 * @param args The command-line arguments.
 	 */
 	public static void main(String[] args) {
+		boolean netherMode = false;
+		if(args.length > 0 && args[0] != null){
+			if(args[0].equals("nether")){
+				netherMode = true;
+			}
+		}
 		try {
-			Server server = new Server();
+			Server server = new Server(netherMode);
 			server.bind(new InetSocketAddress(25565));
 			server.start();
 		} catch (Throwable t) {
@@ -83,12 +91,27 @@ public final class Server {
 	/**
 	 * The world this server is managing.
 	 */
-	private final World world = new World(new McRegionChunkIoService(), new ForestWorldGenerator());
+	private final World world;
+
+	private final boolean netherWorld;
 
 	/**
 	 * Creates a new server.
 	 */
-	public Server() {
+
+	public Server(){
+		this(false);
+	}
+
+	public Server(boolean netherWorld) {
+		this.netherWorld = netherWorld;
+		if(!netherWorld) {
+			world = new World(new McRegionChunkIoService(), new ForestWorldGenerator());
+		}
+		else {
+			//TODO: save the netherWorld variable so that it can be sent as part of the login packet
+			world = new World(new McRegionChunkIoService(new File("world" + File.separator + "DIM-1")), new SimpleNetherWorldGenerator());
+		}
 		logger.info("Starting Lightstone...");
 		init();
 	}
@@ -161,5 +184,8 @@ public final class Server {
 		return world;
 	}
 
+	public boolean isNetherWorld(){
+		return netherWorld;
+	}
 }
 

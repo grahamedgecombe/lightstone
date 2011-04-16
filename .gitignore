@@ -12,6 +12,7 @@ lib
 doc
 lightstone.jar
 world
+!src/net/lightstone/world/
 !.gitignore
 !.gitmodules
 !.gitkeep
