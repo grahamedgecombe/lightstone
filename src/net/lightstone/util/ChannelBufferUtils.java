@@ -1,6 +1,5 @@
 package net.lightstone.util;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,11 +13,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
  * @author Graham Edgecombe
  */
 public final class ChannelBufferUtils {
-
-	/**
-	 * The UTF-8 character set.
-	 */
-	private static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
 
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
@@ -124,13 +118,15 @@ public final class ChannelBufferUtils {
 	 * <em>after</em> it is encoded.
 	 */
 	public static void writeString(ChannelBuffer buf, String str) {
-		byte[] bytes = str.getBytes(CHARSET_UTF8);
-		if (bytes.length >= 65536) {
-			throw new IllegalArgumentException("Encoded UTF-8 string too long.");
+		int len = str.length();
+		if (len >= 65536) {
+			throw new IllegalArgumentException("String too long.");
 		}
 
-		buf.writeShort(bytes.length);
-		buf.writeBytes(bytes);
+		buf.writeShort(len);
+		for (int i = 0; i < len; i++) {
+			buf.writeChar(str.charAt(i));
+		}
 	}
 
 	/**
@@ -139,12 +135,14 @@ public final class ChannelBufferUtils {
 	 * @return The string.
 	 */
 	public static String readString(ChannelBuffer buf) {
-		int length = buf.readUnsignedShort();
+		int len = buf.readUnsignedShort();
 
-		byte[] bytes = new byte[length];
-		buf.readBytes(bytes);
+		char[] characters = new char[len];
+		for (int i = 0; i < len; i++) {
+			characters[i] = buf.readChar();
+		}
 
-		return new String(bytes, CHARSET_UTF8);
+		return new String(characters);
 	}
 
 	/**
