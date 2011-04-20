@@ -19,6 +19,10 @@ public final class ChannelBufferUtils {
 	 * The UTF-8 character set.
 	 */
 	private static final Charset CHARSET_UTF8 = Charset.forName("UTF-8");
+	/** 
+	 * The UTF-16BE character set, used by Minecraft 1.5.
+	 */
+	private static final Charset CHARSET_UTF16 = Charset.forName("UTF-16BE");
 
 	/**
 	 * Writes a list of parameters (e.g. mob metadata) to the buffer.
@@ -124,12 +128,12 @@ public final class ChannelBufferUtils {
 	 * <em>after</em> it is encoded.
 	 */
 	public static void writeString(ChannelBuffer buf, String str) {
-		byte[] bytes = str.getBytes(CHARSET_UTF8);
+		byte[] bytes = str.getBytes(CHARSET_UTF16);
 		if (bytes.length >= 65536) {
-			throw new IllegalArgumentException("Encoded UTF-8 string too long.");
+			throw new IllegalArgumentException("Encoded UTF-16 string too long.");
 		}
 
-		buf.writeShort(bytes.length);
+		buf.writeShort(str.length());
 		buf.writeBytes(bytes);
 	}
 
@@ -141,10 +145,10 @@ public final class ChannelBufferUtils {
 	public static String readString(ChannelBuffer buf) {
 		int length = buf.readUnsignedShort();
 
-		byte[] bytes = new byte[length];
+		byte[] bytes = new byte[length * 2];
 		buf.readBytes(bytes);
 
-		return new String(bytes, CHARSET_UTF8);
+		return new String(bytes, CHARSET_UTF16);
 	}
 
 	/**
