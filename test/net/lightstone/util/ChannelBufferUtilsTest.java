@@ -34,7 +34,7 @@ public final class ChannelBufferUtilsTest {
 		params.add(new Parameter<Item>(Parameter.TYPE_ITEM, 5, new Item(1, 64, 0)));
 		params.add(new Parameter<Coordinate>(Parameter.TYPE_COORDINATE, 6, new Coordinate(10, 11, 12)));
 
-		ChannelBuffer buffer = ChannelBuffers.buffer(42);
+		ChannelBuffer buffer = ChannelBuffers.buffer(46);
 		ChannelBufferUtils.writeParameters(buffer, params);
 
 		assertEquals(0x00, buffer.readUnsignedByte());
@@ -71,7 +71,7 @@ public final class ChannelBufferUtilsTest {
 	 */
 	@Test
 	public void testReadParameters() {
-		ChannelBuffer buffer = ChannelBuffers.buffer(42);
+		ChannelBuffer buffer = ChannelBuffers.buffer(46);
 		buffer.writeByte(0x00); // type 0 index 0
 		buffer.writeByte(0x12);
 
@@ -136,13 +136,48 @@ public final class ChannelBufferUtilsTest {
 	}
 
 	/**
-	 * Tests the {@link ChannelBufferUtils#writeString(ChannelBuffer, String)}
-	 * method.
+	 * Tests the
+	 * {@link ChannelBufferUtils#writeString(ChannelBuffer, String)} method.
 	 */
 	@Test
 	public void testWriteString() {
-		ChannelBuffer buffer = ChannelBuffers.buffer(7);
+		ChannelBuffer buffer = ChannelBuffers.buffer(12);
 		ChannelBufferUtils.writeString(buffer, "hello");
+
+		assertEquals(5, buffer.readUnsignedShort());
+		assertEquals('h', buffer.readChar());
+		assertEquals('e', buffer.readChar());
+		assertEquals('l', buffer.readChar());
+		assertEquals('l', buffer.readChar());
+		assertEquals('o', buffer.readChar());
+	}
+
+	/**
+	 * Tests the {@link ChannelBufferUtils#readString(ChannelBuffer)}
+	 * method.
+	 */
+	@Test
+	public void testReadString() {
+		ChannelBuffer buffer = ChannelBuffers.buffer(12);
+		buffer.writeShort(5);
+		buffer.writeChar('h');
+		buffer.writeChar('e');
+		buffer.writeChar('l');
+		buffer.writeChar('l');
+		buffer.writeChar('o');
+
+		assertEquals("hello", ChannelBufferUtils.readString(buffer));
+	}
+
+	/**
+	 * Tests the
+	 * {@link ChannelBufferUtils#writeUtf8String(ChannelBuffer, String)}
+	 * method.
+	 */
+	@Test
+	public void testWriteUtf8String() {
+		ChannelBuffer buffer = ChannelBuffers.buffer(7);
+		ChannelBufferUtils.writeUtf8String(buffer, "hello");
 
 		assertEquals(5, buffer.readUnsignedShort());
 		assertEquals('h', buffer.readUnsignedByte());
@@ -153,15 +188,16 @@ public final class ChannelBufferUtilsTest {
 	}
 
 	/**
-	 * Tests the {@link ChannelBufferUtils#readString(ChannelBuffer)} method.
+	 * Tests the {@link ChannelBufferUtils#readUtf8String(ChannelBuffer)}
+	 * method.
 	 */
 	@Test
-	public void testReadString() {
+	public void testReadUtf8String() {
 		ChannelBuffer buffer = ChannelBuffers.buffer(7);
 		buffer.writeShort(5);
 		buffer.writeBytes("hello".getBytes());
 
-		assertEquals("hello", ChannelBufferUtils.readString(buffer));
+		assertEquals("hello", ChannelBufferUtils.readUtf8String(buffer));
 	}
 
 }
