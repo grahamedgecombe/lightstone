@@ -34,6 +34,7 @@ import net.lightstone.net.codec.OpenWindowCodec;
 import net.lightstone.net.codec.PingCodec;
 import net.lightstone.net.codec.BlockPlacementCodec;
 import net.lightstone.net.codec.DiggingCodec;
+import net.lightstone.net.codec.Packet1BCodec;
 import net.lightstone.net.codec.PositionCodec;
 import net.lightstone.net.codec.PositionRotationCodec;
 import net.lightstone.net.codec.ProgressBarCodec;
@@ -106,6 +107,7 @@ public final class CodecLookupService {
 			/* 0x17 */ bind(SpawnVehicleCodec.class);
 			/* 0x18 */ bind(SpawnMobCodec.class);
 			/* 0x19 */ bind(SpawnPaintingCodec.class);
+			/* 0x1B */ bind(Packet1BCodec.class);
 			/* 0x1C */ bind(EntityVelocityCodec.class);
 			/* 0x1D */ bind(DestroyEntityCodec.class);
 			/* 0x1E */ bind(CreateEntityCodec.class);
