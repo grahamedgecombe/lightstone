@@ -8,6 +8,7 @@ import net.lightstone.net.codec.ActivateItemCodec;
 import net.lightstone.net.codec.AnimateEntityCodec;
 import net.lightstone.net.codec.AttachEntityCodec;
 import net.lightstone.net.codec.BlockChangeCodec;
+import net.lightstone.net.codec.ChangeStateCodec;
 import net.lightstone.net.codec.ChatCodec;
 import net.lightstone.net.codec.CloseWindowCodec;
 import net.lightstone.net.codec.CollectItemCodec;
