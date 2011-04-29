@@ -59,6 +59,7 @@ import net.lightstone.net.codec.PlayNoteCodec;
 import net.lightstone.net.codec.UpdateSignCodec;
 import net.lightstone.net.codec.UseBedCodec;
 import net.lightstone.net.codec.WindowClickCodec;
+import net.lightstone.net.codec.WeatherCodec;
 
 /**
  * A class used to lookup message codecs.
@@ -126,6 +127,8 @@ public final class CodecLookupService {
 			/* 0x35 */ bind(BlockChangeCodec.class);
 			/* 0x36 */ bind(PlayNoteCodec.class);
 			/* 0x3C */ bind(ExplosionCodec.class);
+			/* 0x46 */ bind(ChangeStateCodec.class);
+			/* 0x47 */ bind(WeatherCodec.class);
 			/* 0x64 */ bind(OpenWindowCodec.class);
 			/* 0x65 */ bind(CloseWindowCodec.class);
 			/* 0x66 */ bind(WindowClickCodec.class);
