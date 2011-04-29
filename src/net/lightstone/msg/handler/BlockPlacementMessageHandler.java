@@ -45,7 +45,7 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 			damage = item.getDamage();
 		}
 		if(id>0x100){
-			System.out.println("Placing non-items not implemented");
+			System.out.println("Placing items not implemented");
 			player.sendMessage("Not implemented");
 			return;
 		}

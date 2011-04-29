@@ -21,20 +21,31 @@ public final class GiveCommand extends Command {
 
 	@Override
 	public void execute(Player player, String[] args) {
-		if (args.length != 3) {
-			player.sendMessage("§eUsage: /give <username> <id> <count>");
+		if (!(args.length >= 2 && args.length <= 4)) {
+			player.sendMessage("§eUsage: /give <name> <id> [count] [damage]");
 			return;
 		}
 
 		World world = player.getWorld();
 		String name = args[0];
-		int itemId, itemCount;
+		int itemId;
+		int itemCount = 1;
+		int itemDamage = 0;
 		try{
 			itemId = Integer.parseInt(args[1]);
-			itemCount = Integer.parseInt(args[2]);
+			if(args.length>=3){
+				itemCount = Integer.parseInt(args[2]);
+				if(args.length==4){
+					itemDamage = Integer.parseInt(args[3]);
+					if(itemDamage < 0 || itemDamage >= 16){
+						player.sendMessage("§eInvalid damage! ");
+						return;
+					}
+				}
+			}
 		}
 		catch(Exception e){
-			player.sendMessage("§eNot valid numbers! ");
+			player.sendMessage("§eInvalid parameters! ");
 			return;
 		}
 		if(!(itemId>0 && (itemId<=Blocks.NUMBER_OF_BLOCKS||itemId>=0x100))){
@@ -44,7 +55,7 @@ public final class GiveCommand extends Command {
 		for (Player p : world.getPlayers()) {
 			if (p.getName().equalsIgnoreCase(name)) {
 				player.sendMessage("§eGiving " + p.getName() + " some " + args[1]);
-				p.getInventory().add(new Item(itemId, itemCount));
+				p.getInventory().add(new Item(itemId, itemCount, itemDamage));
 				return;
 			}
 		}
