@@ -27,6 +27,7 @@ import net.lightstone.net.codec.GroundCodec;
 import net.lightstone.net.codec.HandshakeCodec;
 import net.lightstone.net.codec.HealthCodec;
 import net.lightstone.net.codec.IdentificationCodec;
+import net.lightstone.net.codec.IncrementStatisticCodec;
 import net.lightstone.net.codec.KickCodec;
 import net.lightstone.net.codec.LoadChunkCodec;
 import net.lightstone.net.codec.MessageCodec;
@@ -133,6 +134,7 @@ public final class CodecLookupService {
 			/* 0x69 */ bind(ProgressBarCodec.class);
 			/* 0x6A */ bind(TransactionCodec.class);
 			/* 0x82 */ bind(UpdateSignCodec.class);
+			/* 0xC8 */ bind(IncrementStatisticCodec.class);
 			/* 0xFF */ bind(KickCodec.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
