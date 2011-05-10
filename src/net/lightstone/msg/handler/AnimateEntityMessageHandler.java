@@ -8,12 +8,16 @@ import net.lightstone.net.Session;
 /**
  * A {@link MessageHandler} which handles {@link Entity} animations.
  * @author Zhuowei Zhang
+ * @author Joe Pritzel
  */
 public final class AnimateEntityMessageHandler extends MessageHandler<AnimateEntityMessage> {
 
 	@Override
 	public void handle(Session session, Player player, AnimateEntityMessage message) {
-		// TODO check the animation id is valid?
+		if(!message.isValid()) {
+			return;
+		}
+		
 		message = new AnimateEntityMessage(player.getId(), message.getAnimation());
 		for (Player p : player.getWorld().getPlayers()) {
 			if (p != player) {
@@ -23,4 +27,3 @@ public final class AnimateEntityMessageHandler extends MessageHandler<AnimateEnt
 	}
 
 }
-
