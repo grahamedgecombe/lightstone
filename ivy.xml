@@ -1,11 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ivy-module version="2.0">
-  <info organisation="net.lightstone" module="lightstone" />
-  <dependencies>
-    <dependency org="org.jboss.netty" name="netty" rev="3.2.4.Final" />
-    <dependency org="org.jruby" name="jruby-complete" rev="1.6.0" />
-    <dependency org="junit" name="junit" rev="4.8.2" />
-    <dependency org="org.jboss.apiviz" name="apiviz" rev="1.3.1.GA" />
-    <dependency org="commons-collections" name="commons-collections" rev="3.2.1" />
-  </dependencies>
-</ivy-module>
+<ivysettings>
+  <settings defaultResolver="resolvers" />
+  <resolvers>
+    <chain name="resolvers">
+      <url name="maven-r1" m2compatible="true">
+        <artifact pattern="http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+      </url>
+      <url name="maven-r2" m2compatible="true">
+        <artifact pattern="http://repo2.maven.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+      </url>
+      <url name="jboss" m2compatible="true">
+        <artifact pattern="http://repository.jboss.org/nexus/content/groups/public-jboss/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+      </url>
+      <url name="jboss-old" m2compatible="true">
+        <artifact pattern="http://repository.jboss.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
+      </url>
+      <url name="commons-collections" m2compatible="true">
+        <artifact pattern="http://ftp.wayne.edu/apache//commons/collections/binaries/[module]-[revision]-bin.zip" />
+      </url>
+    </chain>
+  </resolvers>
+</ivysettings>
