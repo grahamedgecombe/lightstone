@@ -1,12 +1,10 @@
 package net.lightstone.model;
 
 import java.io.IOException;
-import java.util.Map;
 
+import net.lightstone.cache.ChunkCache;
 import net.lightstone.io.ChunkIoService;
 import net.lightstone.world.WorldGenerator;
-
-import org.apache.commons.collections.map.ReferenceMap;
 
 /**
  * A class which manages the {@link Chunk}s currently loaded in memory.
@@ -28,12 +26,9 @@ public final class ChunkManager {
 	private final WorldGenerator generator;
 
 	/**
-	 * A map of chunks currently loaded in memory.
+	 * The chunk cache for this ChunkManager.
 	 */
-	// ReferenceMap's 'generics' weren't done properly...
-	@SuppressWarnings("unchecked")
-	private final Map<Chunk.Key, Chunk> chunks = new ReferenceMap(
-			ReferenceMap.SOFT, ReferenceMap.SOFT);
+	private final ChunkCache chunks;
 
 	/**
 	 * Creates a new chunk manager with the specified I/O service and world
@@ -47,6 +42,7 @@ public final class ChunkManager {
 	public ChunkManager(ChunkIoService service, WorldGenerator generator) {
 		this.service = service;
 		this.generator = generator;
+		this.chunks = new ChunkCache();
 	}
 
 	/**

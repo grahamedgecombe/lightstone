@@ -3,7 +3,7 @@
   <settings defaultResolver="resolvers" />
   <resolvers>
     <chain name="resolvers">
-      <url name="maven-r1" m2compatible="true">
+      <url name="maven-r1" m2compatible="true ">
         <artifact pattern="http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
       </url>
       <url name="maven-r2" m2compatible="true">
@@ -15,7 +15,12 @@
       <url name="jboss-old" m2compatible="true">
         <artifact pattern="http://repository.jboss.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
       </url>
+      <url name="infinispan" m2compatible="true">
+        <artifact pattern="https://repository.jboss.org/nexus/content/groups/public/org/[module]/[module]-core/[revision]/[module]-core-[revision].jar" />
+      </url>
+      <url name="pluginAnnotations" m2compatible="true">
+      	<artifact pattern="https://repository.jboss.org/nexus/content/groups/public/org/rhq/helpers/rhq-[module]/[revision]/rhq-pluginAnnotations-[revision].jar" />
+      </url>
     </chain>
   </resolvers>
 </ivysettings>
-
