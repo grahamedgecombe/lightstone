@@ -6,6 +6,7 @@ import net.lightstone.world.World;
 /**
  * Represents some entity in the world such as an item on the floor or a player.
  * @author Graham Edgecombe
+ * @author Joe Pritzel
  */
 public abstract class Entity {
 
@@ -63,6 +64,20 @@ public abstract class Entity {
 	public boolean isWithinDistance(Entity other) {
 		double dx = Math.abs(position.getX() - other.position.getX());
 		double dz = Math.abs(position.getZ() - other.position.getZ());
+		return dx <= (Chunk.VISIBLE_RADIUS * Chunk.WIDTH) && dz <= (Chunk.VISIBLE_RADIUS * Chunk.HEIGHT);
+	}
+	
+	/**
+	 * Checks if this entity is within the {@link Chunk#VISIBLE_RADIUS} of
+	 * the specified coordinates.
+	 * @param x
+	 * @param z
+	 * @return {@code true} if the entities can see each other, {@code false} if
+	 * not.
+	 */
+	public boolean isWithinDistance(double x, double z) {
+		double dx = Math.abs(position.getX() - x);
+		double dz = Math.abs(position.getZ() - z);
 		return dx <= (Chunk.VISIBLE_RADIUS * Chunk.WIDTH) && dz <= (Chunk.VISIBLE_RADIUS * Chunk.HEIGHT);
 	}
 

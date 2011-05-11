@@ -42,6 +42,7 @@ public final class ChunkManager {
 	 * @param generator
 	 *            The world generator.
 	 */
+	@SuppressWarnings("unchecked")
 	public ChunkManager(ChunkIoService service, WorldGenerator generator) {
 		this.service = service;
 		this.generator = generator;
