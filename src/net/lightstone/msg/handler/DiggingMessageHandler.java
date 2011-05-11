@@ -1,6 +1,7 @@
 package net.lightstone.msg.handler;
 
 import net.lightstone.model.Blocks;
+import net.lightstone.model.ChunkManager;
 import net.lightstone.model.Player;
 import net.lightstone.msg.DiggingMessage;
 import net.lightstone.model.Chunk;
@@ -27,8 +28,8 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			int y = message.getY();
 
 			// TODO it might be nice to move these calculations somewhere else since they will need to be reused
-			int chunkX = x / Chunk.WIDTH + ((x < 0 && x % Chunk.WIDTH != 0) ? -1 : 0);
-			int chunkZ = z / Chunk.HEIGHT + ((z < 0 && z % Chunk.HEIGHT != 0) ? -1 : 0);
+			int chunkX = ChunkManager.getChunkX(x);
+			int chunkZ = ChunkManager.getChunkZ(z);
 
 			int localX = (x - chunkX * Chunk.WIDTH) % Chunk.WIDTH;
 			int localZ = (z - chunkZ * Chunk.HEIGHT) % Chunk.HEIGHT;

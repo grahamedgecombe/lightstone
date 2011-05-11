@@ -25,24 +25,32 @@ package net.lightstone.io.region;
 
 // A simple cache and wrapper for efficiently multiple RegionFiles simultaneously.
 
-import java.io.*;
-import java.lang.ref.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
+
+import net.lightstone.cache.GenericCache;
+
+import org.infinispan.Cache;
 
 public class RegionFileCache {
 
 	private final int MAX_CACHE_SIZE = 256;
 
-	private final Map<File, Reference<RegionFile>> cache = new HashMap<File, Reference<RegionFile>>();
+	@SuppressWarnings("unchecked")
+	private final Cache<File, RegionFile> cache = (Cache<File, RegionFile>) new GenericCache();
 
-	public RegionFile getRegionFile(File basePath, int chunkX, int chunkZ) throws IOException {
+	public RegionFile getRegionFile(File basePath, int chunkX, int chunkZ)
+			throws IOException {
 		File regionDir = new File(basePath, "region");
-		File file = new File(regionDir, "r." + (chunkX >> 5) + "." + (chunkZ >> 5) + ".mcr");
+		File file = new File(regionDir, "r." + (chunkX >> 5) + "."
+				+ (chunkZ >> 5) + ".mcr");
 
-		Reference<RegionFile> ref = cache.get(file);
+		RegionFile reg = cache.get(file);
 
-		if (ref != null && ref.get() != null) {
-			return ref.get();
+		if (reg != null) {
+			return reg;
 		}
 
 		if (!regionDir.exists()) {
@@ -53,34 +61,36 @@ public class RegionFileCache {
 			clear();
 		}
 
-		RegionFile reg = new RegionFile(file);
-		cache.put(file, new SoftReference<RegionFile>(reg));
+		reg = new RegionFile(file);
+		cache.put(file, reg);
 		return reg;
 	}
 
 	public void clear() throws IOException {
-		for (Reference<RegionFile> ref : cache.values()) {
-			if (ref.get() != null) {
-				ref.get().close();
+		for (RegionFile ref : cache.values()) {
+			if (ref != null) {
+				ref.close();
 			}
 		}
 		cache.clear();
 	}
 
-	public int getSizeDelta(File basePath, int chunkX, int chunkZ) throws IOException {
+	public int getSizeDelta(File basePath, int chunkX, int chunkZ)
+			throws IOException {
 		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getSizeDelta();
 	}
 
-	public DataInputStream getChunkDataInputStream(File basePath, int chunkX, int chunkZ) throws IOException {
+	public DataInputStream getChunkDataInputStream(File basePath, int chunkX,
+			int chunkZ) throws IOException {
 		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getChunkDataInputStream(chunkX & 31, chunkZ & 31);
 	}
 
-	public DataOutputStream getChunkDataOutputStream(File basePath, int chunkX, int chunkZ) throws IOException {
+	public DataOutputStream getChunkDataOutputStream(File basePath, int chunkX,
+			int chunkZ) throws IOException {
 		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getChunkDataOutputStream(chunkX & 31, chunkZ & 31);
 	}
 
 }
-

@@ -2,8 +2,11 @@ package net.lightstone.model;
 
 import java.io.IOException;
 
-import net.lightstone.cache.ChunkCache;
+import org.infinispan.Cache;
+
+import net.lightstone.cache.GenericCache;
 import net.lightstone.io.ChunkIoService;
+import net.lightstone.model.Chunk.Key;
 import net.lightstone.world.WorldGenerator;
 
 /**
@@ -28,7 +31,7 @@ public final class ChunkManager {
 	/**
 	 * The chunk cache for this ChunkManager.
 	 */
-	private final ChunkCache chunks;
+	private final Cache<Chunk.Key, Chunk> chunks;
 
 	/**
 	 * Creates a new chunk manager with the specified I/O service and world
@@ -42,7 +45,7 @@ public final class ChunkManager {
 	public ChunkManager(ChunkIoService service, WorldGenerator generator) {
 		this.service = service;
 		this.generator = generator;
-		this.chunks = new ChunkCache();
+		this.chunks = (Cache<Key, Chunk>) new GenericCache().getCache();
 	}
 
 	/**
@@ -57,7 +60,7 @@ public final class ChunkManager {
 	 */
 	public Chunk getChunk(int x, int z) {
 		Chunk.Key key = new Chunk.Key(x, z);
-		Chunk chunk = chunks.get(key);
+		Chunk chunk = (Chunk) chunks.get(key);
 		if (chunk == null) {
 			try {
 				chunk = service.read(x, z);
@@ -72,6 +75,14 @@ public final class ChunkManager {
 			chunks.put(key, chunk);
 		}
 		return chunk;
+	}
+	
+	public static int getChunkX(int x) {
+		return x / Chunk.WIDTH + ((x < 0 && x % Chunk.WIDTH != 0) ? -1 : 0);
+	}
+
+	public static int getChunkZ(int z) {
+		return z / Chunk.HEIGHT + ((z < 0 && z % Chunk.HEIGHT != 0) ? -1 : 0);
 	}
 
 }
