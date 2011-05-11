@@ -148,6 +148,10 @@ public final class Player extends Mob {
 
 		previousChunks.clear();
 	}
+	
+	public boolean awareOfChunk(Chunk.Key c) {
+		return knownChunks.contains(c);
+	}
 
 	/**
 	 * Gets the session.

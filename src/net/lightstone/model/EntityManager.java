@@ -7,8 +7,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import net.lightstone.util.Predicate;
+
 /**
  * A class which manages all of the entities within a world.
+ * 
  * @author Graham Edgecombe
  */
 public final class EntityManager implements Iterable<Entity> {
@@ -30,8 +33,11 @@ public final class EntityManager implements Iterable<Entity> {
 
 	/**
 	 * Gets all entities with the specified type.
-	 * @param type The {@link Class} for the type.
-	 * @param <T> The type of entity.
+	 * 
+	 * @param type
+	 *            The {@link Class} for the type.
+	 * @param <T>
+	 *            The type of entity.
 	 * @return A collection of entities with the specified type.
 	 */
 	@SuppressWarnings("unchecked")
@@ -46,7 +52,9 @@ public final class EntityManager implements Iterable<Entity> {
 
 	/**
 	 * Gets an entity by its id.
-	 * @param id The id.
+	 * 
+	 * @param id
+	 *            The id.
 	 * @return The entity, or {@code null} if it could not be found.
 	 */
 	public Entity getEntity(int id) {
@@ -55,7 +63,9 @@ public final class EntityManager implements Iterable<Entity> {
 
 	/**
 	 * Allocates the id for an entity.
-	 * @param entity The entity.
+	 * 
+	 * @param entity
+	 *            The entity.
 	 * @return The id.
 	 */
 	@SuppressWarnings("unchecked")
@@ -70,7 +80,8 @@ public final class EntityManager implements Iterable<Entity> {
 			}
 		}
 
-		for (int id = Integer.MIN_VALUE; id < -1; id++) { // as -1 is used as a special value
+		for (int id = Integer.MIN_VALUE; id < -1; id++) { // as -1 is used as a
+															// special value
 			if (!entities.containsKey(id)) {
 				entities.put(id, entity);
 				((Collection<Entity>) getAll(entity.getClass())).add(entity);
@@ -84,11 +95,33 @@ public final class EntityManager implements Iterable<Entity> {
 
 	/**
 	 * Deallocates the id for an entity.
-	 * @param entity The entity.
+	 * 
+	 * @param entity
+	 *            The entity.
 	 */
 	void deallocate(Entity entity) {
 		entities.remove(entity.getId());
 		getAll(entity.getClass()).remove(entity);
+	}
+	
+	public Collection<Entity> filter(Predicate<Entity> filter) {
+		final Collection<Entity> ents = entities.values();
+		for(final Entity e : ents) {
+			if(!filter.apply(e)) {
+				ents.remove(e);
+			}
+		}
+		return ents;
+	}
+	
+	public Collection<Player> filterPlayers(Predicate<Player> filter) {
+		final Collection<Player> ents = getAll(Player.class);
+		for(final Player e : ents) {
+			if(!filter.apply(e)) {
+				ents.remove(e);
+			}
+		}
+		return ents;
 	}
 
 	@Override
@@ -97,4 +130,3 @@ public final class EntityManager implements Iterable<Entity> {
 	}
 
 }
-

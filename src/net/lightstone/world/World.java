@@ -25,7 +25,7 @@ public class World {
 	/**
 	 * The spawn position.
 	 */
-	private final Position spawnPosition = new Position(0, 120, 0);
+	private final Position spawnPosition = new Position(0, 60, 0);
 
 	/**
 	 * The chunk manager.

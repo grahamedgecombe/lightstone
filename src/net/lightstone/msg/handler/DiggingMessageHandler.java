@@ -9,6 +9,8 @@ import net.lightstone.model.Chunk;
 import net.lightstone.msg.BlockChangeMessage;
 import net.lightstone.net.Session;
 import net.lightstone.util.MathUtils;
+import net.lightstone.util.MsgUtils;
+import net.lightstone.util.Predicate;
 import net.lightstone.world.World;
 
 /**
@@ -37,23 +39,24 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 				return;
 			}
 			
-			int chunkX = ChunkManager.getChunkX(x);
-			int chunkZ = ChunkManager.getChunkZ(z);
+			final int chunkX = ChunkManager.getChunkX(x);
+			final int chunkZ = ChunkManager.getChunkZ(z);
 
-			int localX = (x - chunkX * Chunk.WIDTH) % Chunk.WIDTH;
-			int localZ = (z - chunkZ * Chunk.HEIGHT) % Chunk.HEIGHT;
+			final int localX = (x - chunkX * Chunk.WIDTH) % Chunk.WIDTH;
+			final int localZ = (z - chunkZ * Chunk.HEIGHT) % Chunk.HEIGHT;
 
-			Chunk chunk = world.getChunks().getChunk(chunkX, chunkZ);
+			final Chunk chunk = world.getChunks().getChunk(chunkX, chunkZ);
 			chunk.setType(localX, localZ, y, Blocks.TYPE_AIR);
 
-			// TODO this should also be somewhere else as well... perhaps in the
-			// chunk.setType() method itself?
-			BlockChangeMessage bcmsg = new BlockChangeMessage(x, y, z, 0, 0);
-			for (Player p : world.getPlayers()) {
-				if (p.isWithinDistance(x, z)) {
-					p.getSession().send(bcmsg);
+			final BlockChangeMessage bcmsg = new BlockChangeMessage(x, y, z, 0, 0);
+			MsgUtils.broadcastMessageToWorld(world, bcmsg, new Predicate<Player>() {
+
+				@Override
+				public boolean apply(Player p) {
+					return p.awareOfChunk(new Chunk.Key(chunkX, chunkZ));
 				}
-			}
+				
+			});
 		}
 	}
 
