@@ -103,25 +103,35 @@ public final class EntityManager implements Iterable<Entity> {
 		entities.remove(entity.getId());
 		getAll(entity.getClass()).remove(entity);
 	}
-	
-	public Collection<Entity> filter(Predicate<Entity> filter) {
+
+	/**
+	 * 
+	 * @param predicate
+	 * @return A collection of Entities that satisfy the predicate.
+	 */
+	public Collection<Entity> filter(Predicate<Entity> predicate) {
 		final Collection<Entity> ents = entities.values();
-		for(final Entity e : ents) {
-			if(!filter.apply(e)) {
+		for (final Entity e : ents) {
+			if (!predicate.apply(e)) {
 				ents.remove(e);
 			}
 		}
 		return ents;
 	}
-	
-	public Collection<Player> filterPlayers(Predicate<Player> filter) {
-		final Collection<Player> ents = getAll(Player.class);
-		for(final Player e : ents) {
-			if(!filter.apply(e)) {
-				ents.remove(e);
+
+	/**
+	 * 
+	 * @param predicate
+	 * @return A collection of Players that satisfy the predicate.
+	 */
+	public Collection<Player> filterPlayers(Predicate<Player> predicate) {
+		final Collection<Player> players = getAll(Player.class);
+		for (final Player e : players) {
+			if (!predicate.apply(e)) {
+				players.remove(e);
 			}
 		}
-		return ents;
+		return players;
 	}
 
 	@Override

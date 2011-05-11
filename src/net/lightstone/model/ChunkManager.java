@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.infinispan.Cache;
 
 import net.lightstone.cache.GenericCache;
-import net.lightstone.io.ChunkIoService;
+import net.lightstone.io.service.ChunkIoService;
 import net.lightstone.model.Chunk.Key;
 import net.lightstone.world.WorldGenerator;
 

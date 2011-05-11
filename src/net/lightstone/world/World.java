@@ -2,7 +2,7 @@ package net.lightstone.world;
 
 import java.util.Collection;
 
-import net.lightstone.io.ChunkIoService;
+import net.lightstone.io.service.ChunkIoService;
 import net.lightstone.model.ChunkManager;
 import net.lightstone.model.Entity;
 import net.lightstone.model.EntityManager;

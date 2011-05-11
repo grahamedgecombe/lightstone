@@ -1,4 +1,4 @@
-package net.lightstone.io;
+package net.lightstone.io.service.impl;
 
 import java.io.File;
 import java.io.DataInputStream;
@@ -7,7 +7,9 @@ import java.util.Map;
 
 import net.lightstone.io.region.RegionFile;
 import net.lightstone.io.region.RegionFileCache;
+import net.lightstone.io.service.ChunkIoService;
 import net.lightstone.model.Chunk;
+import net.lightstone.model.Coordinate;
 import net.lightstone.util.nbt.ByteArrayTag;
 import net.lightstone.util.nbt.CompoundTag;
 import net.lightstone.util.nbt.NBTInputStream;
@@ -17,13 +19,14 @@ import net.lightstone.util.nbt.Tag;
  * An implementation of the {@link ChunkIoService} which reads and writes
  * McRegion maps.
  * <p />
- * Information on the McRegion file format can be found on the
- * <a href="http://mojang.com/2011/02/16/minecraft-save-file-format-in-beta-1-3">Mojang</a>
- * blog.
+ * Information on the McRegion file format can be found on the <a
+ * href="http://mojang.com/2011/02/16/minecraft-save-file-format-in-beta-1-3"
+ * >Mojang</a> blog.
+ * 
  * @author Zhuowei Zhang
  * @author Graham Edgecombe
  */
-public final class McRegionChunkIoService implements ChunkIoService {
+public final class McRegionChunkIoService extends ChunkIoService {
 
 	/**
 	 * The size of a region - a 32x32 group of chunks.
@@ -51,11 +54,19 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	}
 
 	@Override
-	public Chunk read(int x, int z) throws IOException {
+	protected Chunk read(Object key) throws IOException {
+		if (!(key instanceof Coordinate)) {
+			return null;
+		}
+
+		final Coordinate coord = (Coordinate) key;
+		int x = coord.getX();
+		int z = coord.getZ();
+
 		RegionFile region = cache.getRegionFile(dir, x, z);
 		int regionX = x & (REGION_SIZE - 1);
 		int regionZ = z & (REGION_SIZE - 1);
-		if (!region.hasChunk(regionX, regionZ)){
+		if (!region.hasChunk(regionX, regionZ)) {
 			return null;
 		}
 
@@ -64,19 +75,23 @@ public final class McRegionChunkIoService implements ChunkIoService {
 
 		NBTInputStream nbt = new NBTInputStream(in, false);
 		CompoundTag tag = (CompoundTag) nbt.readTag();
-		Map<String, Tag> levelTags = ((CompoundTag) tag.getValue().get("Level")).getValue();
+		Map<String, Tag> levelTags = ((CompoundTag) tag.getValue().get("Level"))
+				.getValue();
 
 		byte[] tileData = ((ByteArrayTag) levelTags.get("Blocks")).getValue();
 		chunk.setTypes(tileData);
 
-		byte[] skyLightData = ((ByteArrayTag) levelTags.get("SkyLight")).getValue();
-		byte[] blockLightData = ((ByteArrayTag) levelTags.get("BlockLight")).getValue();
+		byte[] skyLightData = ((ByteArrayTag) levelTags.get("SkyLight"))
+				.getValue();
+		byte[] blockLightData = ((ByteArrayTag) levelTags.get("BlockLight"))
+				.getValue();
 		byte[] metaData = ((ByteArrayTag) levelTags.get("Data")).getValue();
 
 		for (int cx = 0; cx < Chunk.WIDTH; cx++) {
 			for (int cz = 0; cz < Chunk.HEIGHT; cz++) {
 				for (int cy = 0; cy < Chunk.DEPTH; cy++) {
-					boolean mostSignificantNibble = ((cx * Chunk.HEIGHT + cz) * Chunk.DEPTH + cy) % 2 == 1;
+					boolean mostSignificantNibble = ((cx * Chunk.HEIGHT + cz)
+							* Chunk.DEPTH + cy) % 2 == 1;
 					int offset = ((cx * Chunk.HEIGHT + cz) * Chunk.DEPTH + cy) / 2;
 
 					int skyLight, blockLight, meta;
@@ -101,9 +116,9 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	}
 
 	@Override
-	public void write(int x, int z, Chunk chunk) throws IOException {
-		// TODO
+	protected Chunk write(Object key, Chunk value) throws IOException {
+		// TODO write this
+		return null;
 	}
 
 }
-
