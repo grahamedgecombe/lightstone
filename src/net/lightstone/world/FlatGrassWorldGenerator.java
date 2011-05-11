@@ -19,6 +19,8 @@ public class FlatGrassWorldGenerator implements WorldGenerator {
 						id = 2;
 					else if (y >= 55 && y < 60)
 						id = 3;
+					else if (y == 0)
+						id = 7; //Bedrock
 					else if (y < 55)
 						id = 1;
 
