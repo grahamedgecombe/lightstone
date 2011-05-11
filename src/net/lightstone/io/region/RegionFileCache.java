@@ -43,8 +43,8 @@ public class RegionFileCache {
 
 	public RegionFile getRegionFile(File basePath, int chunkX, int chunkZ)
 			throws IOException {
-		File regionDir = new File(basePath, "region");
-		File file = new File(regionDir, "r." + (chunkX >> 5) + "."
+		final File regionDir = new File(basePath, "region");
+		final File file = new File(regionDir, "r." + (chunkX >> 5) + "."
 				+ (chunkZ >> 5) + ".mcr");
 
 		RegionFile reg = cache.get(file);
@@ -67,7 +67,7 @@ public class RegionFileCache {
 	}
 
 	public void clear() throws IOException {
-		for (RegionFile ref : cache.values()) {
+		for (final RegionFile ref : cache.values()) {
 			if (ref != null) {
 				ref.close();
 			}
@@ -77,19 +77,19 @@ public class RegionFileCache {
 
 	public int getSizeDelta(File basePath, int chunkX, int chunkZ)
 			throws IOException {
-		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
+		final RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getSizeDelta();
 	}
 
 	public DataInputStream getChunkDataInputStream(File basePath, int chunkX,
 			int chunkZ) throws IOException {
-		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
+		final RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getChunkDataInputStream(chunkX & 31, chunkZ & 31);
 	}
 
 	public DataOutputStream getChunkDataOutputStream(File basePath, int chunkX,
 			int chunkZ) throws IOException {
-		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
+		final RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getChunkDataOutputStream(chunkX & 31, chunkZ & 31);
 	}
 

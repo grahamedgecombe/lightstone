@@ -14,6 +14,12 @@ import org.infinispan.manager.EmbeddedCacheManager;
 public class CacheManager {
 	private static final EmbeddedCacheManager manager = new DefaultCacheManager();
 
+	/**
+	 * Creates a {@link Cache} with the supplied {@link Configuration}
+	 * @param name
+	 * @param config
+	 * @return
+	 */
 	public static Cache<?, ?> createCache(final String name,
 			final Configuration config) {
 		manager.defineConfiguration(name, config);
