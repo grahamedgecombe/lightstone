@@ -35,12 +35,11 @@ public final class BlockPlacementMessageHandler extends MessageHandler<BlockPlac
 		}
 		int id, damage;
 		int slot = player.getActiveSlot();
-		SlottedItem slotItem = player.getInventory().get(slot);
-		if(slotItem == null){
+		Item item = player.getInventory().get(slot);
+		if(item == null){
 			return;
 		}
 		else{
-			Item item = slotItem.getItem();
 			id = item.getId();
 			damage = item.getDamage();
 		}

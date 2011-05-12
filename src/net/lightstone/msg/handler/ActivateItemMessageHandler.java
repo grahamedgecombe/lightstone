@@ -9,7 +9,7 @@ import net.lightstone.msg.EntityEquipmentMessage;
 import net.lightstone.net.Session;
 
 /**
- * A {@link MessageHandler} which handles {@link Entity} animations.
+ * A {@link MessageHandler} which handles ActivateItemMessages.
  * @author Zhuowei Zhang
  */
 public final class ActivateItemMessageHandler extends MessageHandler<ActivateItemMessage> {
@@ -18,14 +18,13 @@ public final class ActivateItemMessageHandler extends MessageHandler<ActivateIte
 	public void handle(Session session, Player player, ActivateItemMessage message) {
 		int slot = message.getSlot();
 		player.setActiveSlot(slot);
-		SlottedItem slotItem = player.getInventory().get(slot);
+		Item item = player.getInventory().get(slot);
 		int id, damage;
-		if(slotItem == null){
+		if(item == null){
 			id = -1;
 			damage = 0;
 		}
 		else{
-			Item item = slotItem.getItem();
 			id = item.getId();
 			damage = item.getDamage();
 		}
