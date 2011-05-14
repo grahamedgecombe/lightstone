@@ -27,6 +27,7 @@ public final class CommandManager {
 		bind(new TimeCommand());
 		bind(new KickCommand());
 		bind(new GiveCommand());
+		bind(new SpawnMobCommand());
 		bind(new HelpCommand(this));
 	}
 
