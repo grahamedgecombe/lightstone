@@ -15,6 +15,7 @@ import net.lightstone.msg.EntityMetadataMessage;
 import net.lightstone.net.Session;
 import net.lightstone.util.Parameter;
 import net.lightstone.msg.ChangeStateMessage;
+import net.lightstone.msg.TimeMessage;
 
 /**
  * Represents an in-game player.
@@ -79,6 +80,7 @@ public final class Player extends Mob {
 		if(world.isRaining()){
 			this.session.send(new ChangeStateMessage(ChangeStateMessage.START_RAINING));
 		}
+		this.session.send(new TimeMessage(world.getTime()));
 	}
 
 	/**
