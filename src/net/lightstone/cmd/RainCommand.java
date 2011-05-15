@@ -11,7 +11,7 @@ import net.lightstone.world.World;
 public final class RainCommand extends Command {
 
 	/**
-	 * Creates the {@code /kick} command.
+	 * Creates the {@code /rain} command.
 	 */
 	public RainCommand() {
 		super("rain");
@@ -26,22 +26,14 @@ public final class RainCommand extends Command {
 
 		World world = player.getWorld();
 		String action = args[0];
-		int state;
 		if(action.equals("on")){
-			state = ChangeStateMessage.START_RAINING;
+			world.setRaining(true);
 		}
 		else if(action.equals("off")){
-			state = ChangeStateMessage.STOP_RAINING;
+			world.setRaining(false);
 		}
 		else{
 			player.sendMessage("§cInvalid parameter. §eUsage: /rain <on|off>");
-			return;
-		}
-
-		ChangeStateMessage msg = new ChangeStateMessage(state);
-		/* Of course, new players won't get rained on. However, this is just a test anyway. */
-		for (Player p : world.getPlayers()) {
-			p.getSession().send(msg);
 		}
 
 	}

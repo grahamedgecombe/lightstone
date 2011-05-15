@@ -14,6 +14,7 @@ import net.lightstone.msg.SpawnPlayerMessage;
 import net.lightstone.msg.EntityMetadataMessage;
 import net.lightstone.net.Session;
 import net.lightstone.util.Parameter;
+import net.lightstone.msg.ChangeStateMessage;
 
 /**
  * Represents an in-game player.
@@ -75,6 +76,9 @@ public final class Player extends Mob {
 		this.position = world.getSpawnPosition();
 		this.sendMessage("§eWelcome to Lightstone, " + name + "!");
 		this.session.send(new PositionRotationMessage(position.getX(), position.getY(), position.getZ(), position.getY() + NORMAL_EYE_HEIGHT, (float) rotation.getYaw(), (float) rotation.getPitch(), true));
+		if(world.isRaining()){
+			this.session.send(new ChangeStateMessage(ChangeStateMessage.START_RAINING));
+		}
 	}
 
 	/**
