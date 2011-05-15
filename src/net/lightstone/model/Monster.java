@@ -19,10 +19,7 @@ public final class Monster extends Mob {
 	 */
 	private final int type;
 
-	/**
-	 * The monster's metadata.
-	 */
-	private final List<Parameter<?>> metadata = new ArrayList<Parameter<?>>();
+
 
 	/**
 	 * Creates a new monster.
