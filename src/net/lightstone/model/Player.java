@@ -11,7 +11,9 @@ import net.lightstone.msg.Message;
 import net.lightstone.msg.PingMessage;
 import net.lightstone.msg.PositionRotationMessage;
 import net.lightstone.msg.SpawnPlayerMessage;
+import net.lightstone.msg.EntityMetadataMessage;
 import net.lightstone.net.Session;
+import net.lightstone.util.Parameter;
 
 /**
  * Represents an in-game player.
@@ -178,6 +180,14 @@ public final class Player extends Mob {
 	public void setCrouching(boolean crouching) {
 		// TODO: update other clients, needs to be figured out
 		this.crouching = crouching;
+		setMetadata(new Parameter(Parameter.TYPE_BYTE, 0, new Byte((byte)(crouching? 0x02: 0))));
+		//FIXME: other bits in the bitmask would be wiped out
+		EntityMetadataMessage message = new EntityMetadataMessage(id, metadata);
+		for (Player player : world.getPlayers()){
+			if(player != this){
+				player.getSession().send(message);
+			}
+		}
 	}
 
 	/**
