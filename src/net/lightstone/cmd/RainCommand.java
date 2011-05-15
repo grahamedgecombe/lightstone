@@ -1,7 +1,6 @@
 package net.lightstone.cmd;
 
 import net.lightstone.model.Player;
-import net.lightstone.msg.ChangeStateMessage;
 import net.lightstone.world.World;
 
 /**
