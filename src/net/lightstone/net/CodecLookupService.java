@@ -8,6 +8,7 @@ import net.lightstone.net.codec.ActivateItemCodec;
 import net.lightstone.net.codec.AnimateEntityCodec;
 import net.lightstone.net.codec.AttachEntityCodec;
 import net.lightstone.net.codec.BlockChangeCodec;
+import net.lightstone.net.codec.ChangeStateCodec;
 import net.lightstone.net.codec.ChatCodec;
 import net.lightstone.net.codec.CloseWindowCodec;
 import net.lightstone.net.codec.CollectItemCodec;
@@ -26,6 +27,7 @@ import net.lightstone.net.codec.GroundCodec;
 import net.lightstone.net.codec.HandshakeCodec;
 import net.lightstone.net.codec.HealthCodec;
 import net.lightstone.net.codec.IdentificationCodec;
+import net.lightstone.net.codec.IncrementStatisticCodec;
 import net.lightstone.net.codec.KickCodec;
 import net.lightstone.net.codec.LoadChunkCodec;
 import net.lightstone.net.codec.MessageCodec;
@@ -34,6 +36,7 @@ import net.lightstone.net.codec.OpenWindowCodec;
 import net.lightstone.net.codec.PingCodec;
 import net.lightstone.net.codec.BlockPlacementCodec;
 import net.lightstone.net.codec.DiggingCodec;
+import net.lightstone.net.codec.Packet1BCodec;
 import net.lightstone.net.codec.PositionCodec;
 import net.lightstone.net.codec.PositionRotationCodec;
 import net.lightstone.net.codec.ProgressBarCodec;
@@ -56,6 +59,7 @@ import net.lightstone.net.codec.PlayNoteCodec;
 import net.lightstone.net.codec.UpdateSignCodec;
 import net.lightstone.net.codec.UseBedCodec;
 import net.lightstone.net.codec.WindowClickCodec;
+import net.lightstone.net.codec.WeatherCodec;
 
 /**
  * A class used to lookup message codecs.
@@ -106,6 +110,7 @@ public final class CodecLookupService {
 			/* 0x17 */ bind(SpawnVehicleCodec.class);
 			/* 0x18 */ bind(SpawnMobCodec.class);
 			/* 0x19 */ bind(SpawnPaintingCodec.class);
+			/* 0x1B */ bind(Packet1BCodec.class);
 			/* 0x1C */ bind(EntityVelocityCodec.class);
 			/* 0x1D */ bind(DestroyEntityCodec.class);
 			/* 0x1E */ bind(CreateEntityCodec.class);
@@ -122,6 +127,8 @@ public final class CodecLookupService {
 			/* 0x35 */ bind(BlockChangeCodec.class);
 			/* 0x36 */ bind(PlayNoteCodec.class);
 			/* 0x3C */ bind(ExplosionCodec.class);
+			/* 0x46 */ bind(ChangeStateCodec.class);
+			/* 0x47 */ bind(WeatherCodec.class);
 			/* 0x64 */ bind(OpenWindowCodec.class);
 			/* 0x65 */ bind(CloseWindowCodec.class);
 			/* 0x66 */ bind(WindowClickCodec.class);
@@ -130,6 +137,7 @@ public final class CodecLookupService {
 			/* 0x69 */ bind(ProgressBarCodec.class);
 			/* 0x6A */ bind(TransactionCodec.class);
 			/* 0x82 */ bind(UpdateSignCodec.class);
+			/* 0xC8 */ bind(IncrementStatisticCodec.class);
 			/* 0xFF */ bind(KickCodec.class);
 		} catch (Exception ex) {
 			throw new ExceptionInInitializerError(ex);
