@@ -186,7 +186,7 @@ public final class Player extends Mob {
 	public void setCrouching(boolean crouching) {
 		// TODO: update other clients, needs to be figured out
 		this.crouching = crouching;
-		setMetadata(new Parameter(Parameter.TYPE_BYTE, 0, new Byte((byte)(crouching? 0x02: 0))));
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, new Byte((byte)(crouching? 0x02: 0))));
 		//FIXME: other bits in the bitmask would be wiped out
 		EntityMetadataMessage message = new EntityMetadataMessage(id, metadata);
 		for (Player player : world.getPlayers()){
