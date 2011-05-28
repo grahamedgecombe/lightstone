@@ -31,6 +31,7 @@ public final class CommandManager {
 		bind(new SpawnMobCommand());
 		bind(new TellCommand());
 		bind(new TeleportCommand());
+		bind(new DimensionCommand());
 		bind(new HelpCommand(this));
 	}
 

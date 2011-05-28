@@ -6,9 +6,11 @@ import java.util.Queue;
 import net.lightstone.Server;
 import net.lightstone.model.Player;
 import net.lightstone.msg.KickMessage;
+import net.lightstone.msg.RespawnMessage;
 import net.lightstone.msg.Message;
 import net.lightstone.msg.handler.HandlerLookupService;
 import net.lightstone.msg.handler.MessageHandler;
+import net.lightstone.world.World;
 
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFutureListener;
@@ -85,14 +87,22 @@ public final class Session {
 	 */
 	private boolean pendingRemoval = false;
 
+	private int dimension;
+
+	public Session(Server server, Channel channel){
+		this(server, channel, 0);
+	}
+
 	/**
 	 * Creates a new session.
 	 * @param server The server this session belongs to.
 	 * @param channel The channel associated with this session.
+	 * @param dimension The world (regular or nether) that the session is currently on.
 	 */
-	public Session(Server server, Channel channel) {
+	public Session(Server server, Channel channel, int dimension) {
 		this.server = server;
 		this.channel = channel;
+		this.dimension = dimension;
 	}
 
 	/**
@@ -130,7 +140,7 @@ public final class Session {
 			throw new IllegalStateException();
 
 		this.player = player;
-		this.server.getWorld().getPlayers().add(player);
+		player.getWorld().getPlayers().add(player);
 	}
 
 	/**
@@ -186,6 +196,25 @@ public final class Session {
 	public Server getServer() {
 		return server;
 	}
+
+	public int getDimension() {
+		return dimension;
+	}
+
+	public void moveToDimension(int dimension) throws IllegalArgumentException {
+		World newworld = server.getWorld(dimension);
+		if(newworld == null){
+			throw new IllegalArgumentException("World " + dimension + " does not exist");
+		}
+		this.dimension = dimension;
+		//remove the current player
+		Player oldplayer = player;
+		send(new RespawnMessage(dimension));
+		oldplayer.destroy();
+		player = new Player(this, oldplayer.getName());
+		player.getWorld().getPlayers().add(player);
+	}
+		
 
 	@Override
 	public String toString() {

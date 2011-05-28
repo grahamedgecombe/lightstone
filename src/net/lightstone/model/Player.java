@@ -68,7 +68,7 @@ public final class Player extends Mob {
 	 * @param name The player's name.
 	 */
 	public Player(Session session, String name) {
-		super(session.getServer().getWorld());
+		super(session.getServer().getWorld(session.getDimension()));
 		this.name = name;
 		this.session = session;
 

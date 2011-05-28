@@ -163,18 +163,8 @@ public final class Server {
 	}
 
 	/**
-	 * Gets world 0 of this server.
-	 * @deprecated use {@link #getWorld(int)} instead.
-	 * @return The {@link World} this server manages.
-	 */
-	@Deprecated
-	public World getWorld() {
-		logger.info("getWorld() is deprecated, use getWorld(int index) instead");
-		return getWorld(0);
-	}
-
-	/**
 	 * Gets a world managed by this server.
+	 * @return a {@link World} this server manages.
 	 */
 	public World getWorld(int index){
 		return worlds.get(new Integer(index));

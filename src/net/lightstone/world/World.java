@@ -18,6 +18,13 @@ import net.lightstone.msg.ChangeStateMessage;
  */
 public class World {
 
+	/** The dimension of the normal game world. */
+	public static final int DIM_NORMAL = 0;
+
+	/** The dimension number of the nether world. */
+	public static final int DIM_NETHER = -1;
+
+
 	/**
 	 * The number of pulses in a Minecraft day.
 	 */
