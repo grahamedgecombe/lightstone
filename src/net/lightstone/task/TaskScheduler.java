@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.lightstone.Server;
+import net.lightstone.world.World;
 
 /**
  * A class which schedules {@link Task}s.
@@ -105,7 +106,9 @@ public final class TaskScheduler {
 		}
 
 		// handle general game logic
-		server.getWorld().pulse();
+		for(World w: server.getWorlds().values()){
+			w.pulse();
+		}
 	}
 
 }
