@@ -17,18 +17,23 @@ public final class Packet1BMessage extends Message {
 	public float getFirst(){
 		return first;
 	}
+
 	public float getSecond(){
 		return second;
 	}
+
 	public float getThird(){
 		return third;
 	}
+
 	public float getFourth(){
 		return fourth;
 	}
+
 	public boolean getFifth(){
 		return fifth;
 	}
+
 	public boolean getSixth(){
 		return sixth;
 	}
