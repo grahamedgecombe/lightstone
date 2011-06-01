@@ -6,7 +6,6 @@ import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
 
 import net.lightstone.msg.WeatherMessage;
-import net.lightstone.util.ChannelBufferUtils;
 
 public final class WeatherCodec extends MessageCodec<WeatherMessage> {
 

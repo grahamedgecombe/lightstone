@@ -18,7 +18,7 @@ public final class IdentificationMessageHandler extends MessageHandler<Identific
 		if (state == Session.State.EXCHANGE_IDENTIFICATION) {
 			session.setState(State.GAME);
 			session.send(new IdentificationMessage(0, "", 0, 0));
-			session.setPlayer(new Player(session, message.getName())); 
+			session.setPlayer(new Player(session, message.getName())); // TODO case-correct the name
 		} else {
 			boolean game = state == State.GAME;
 			session.disconnect(game ? "Identification already exchanged." : "Handshake not yet exchanged.");

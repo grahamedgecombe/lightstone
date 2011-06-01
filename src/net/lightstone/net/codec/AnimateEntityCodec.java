@@ -7,8 +7,7 @@ import org.jboss.netty.buffer.ChannelBuffers;
 
 import net.lightstone.msg.AnimateEntityMessage;
 
-public final class AnimateEntityCodec extends
-		MessageCodec<AnimateEntityMessage> {
+public final class AnimateEntityCodec extends MessageCodec<AnimateEntityMessage> {
 
 	public AnimateEntityCodec() {
 		super(AnimateEntityMessage.class, 0x12);
@@ -22,8 +21,7 @@ public final class AnimateEntityCodec extends
 	}
 
 	@Override
-	public ChannelBuffer encode(AnimateEntityMessage message)
-			throws IOException {
+	public ChannelBuffer encode(AnimateEntityMessage message) throws IOException {
 		ChannelBuffer buffer = ChannelBuffers.buffer(5);
 		buffer.writeInt(message.getId());
 		buffer.writeByte(message.getAnimation());
@@ -31,3 +29,4 @@ public final class AnimateEntityCodec extends
 	}
 
 }
+

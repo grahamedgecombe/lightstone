@@ -1,23 +1,16 @@
 package net.lightstone.msg.handler;
 
 import net.lightstone.model.Blocks;
-import net.lightstone.model.ChunkManager;
 import net.lightstone.model.Player;
-import net.lightstone.model.Position;
 import net.lightstone.msg.DiggingMessage;
 import net.lightstone.model.Chunk;
 import net.lightstone.msg.BlockChangeMessage;
 import net.lightstone.net.Session;
-import net.lightstone.util.MathUtils;
-import net.lightstone.util.MsgUtils;
-import net.lightstone.util.Predicate;
 import net.lightstone.world.World;
 
 /**
  * A {@link MessageHandler} which processes digging messages.
- * 
  * @author Zhuowei Zhang
- * @author Joe Pritzel
  */
 public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> {
 
@@ -32,32 +25,24 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			int x = message.getX();
 			int z = message.getZ();
 			int y = message.getY();
-			
-			final Position pos = player.getPosition();
-			
-			if(MathUtils.distance(x, z, y, pos.getX(), pos.getZ(), pos.getY()) > 7) {
-				return;
-			}
-			
-			final int chunkX = ChunkManager.getChunkX(x);
-			final int chunkZ = ChunkManager.getChunkZ(z);
 
-			final int localX = (x - chunkX * Chunk.WIDTH) % Chunk.WIDTH;
-			final int localZ = (z - chunkZ * Chunk.HEIGHT) % Chunk.HEIGHT;
+			// TODO it might be nice to move these calculations somewhere else since they will need to be reused
+			int chunkX = x / Chunk.WIDTH + ((x < 0 && x % Chunk.WIDTH != 0) ? -1 : 0);
+			int chunkZ = z / Chunk.HEIGHT + ((z < 0 && z % Chunk.HEIGHT != 0) ? -1 : 0);
 
-			final Chunk chunk = world.getChunks().getChunk(chunkX, chunkZ);
+			int localX = (x - chunkX * Chunk.WIDTH) % Chunk.WIDTH;
+			int localZ = (z - chunkZ * Chunk.HEIGHT) % Chunk.HEIGHT;
+
+			Chunk chunk = world.getChunks().getChunk(chunkX, chunkZ);
 			chunk.setType(localX, localZ, y, Blocks.TYPE_AIR);
 
-			final BlockChangeMessage bcmsg = new BlockChangeMessage(x, y, z, 0, 0);
-			MsgUtils.broadcastMessageToWorld(world, bcmsg, new Predicate<Player>() {
-
-				@Override
-				public boolean apply(Player p) {
-					return p.awareOfChunk(new Chunk.Key(chunkX, chunkZ));
-				}
-				
-			});
+			// TODO this should also be somewhere else as well... perhaps in the chunk.setType() method itself?
+			BlockChangeMessage bcmsg = new BlockChangeMessage(x, y, z, 0, 0);
+			for (Player p: world.getPlayers()) {
+				p.getSession().send(bcmsg);
+			}
 		}
 	}
 
 }
+

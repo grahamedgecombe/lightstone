@@ -3,7 +3,7 @@
   <settings defaultResolver="resolvers" />
   <resolvers>
     <chain name="resolvers">
-      <url name="maven-r1" m2compatible="true ">
+      <url name="maven-r1" m2compatible="true">
         <artifact pattern="http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact]-[revision].[ext]" />
       </url>
       <url name="maven-r2" m2compatible="true">
@@ -18,3 +18,4 @@
     </chain>
   </resolvers>
 </ivysettings>
+

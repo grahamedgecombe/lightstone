@@ -13,7 +13,6 @@ import net.lightstone.Server;
 
 /**
  * A class which schedules {@link Task}s.
- * 
  * @author Graham Edgecombe
  */
 public final class TaskScheduler {
@@ -21,8 +20,7 @@ public final class TaskScheduler {
 	/**
 	 * The logger for this class.
 	 */
-	private static final Logger logger = Logger.getLogger(TaskScheduler.class
-			.getName());
+	private static final Logger logger = Logger.getLogger(TaskScheduler.class.getName());
 
 	/**
 	 * The number of milliseconds between pulses.
@@ -37,8 +35,7 @@ public final class TaskScheduler {
 	/**
 	 * The scheduled executor service which backs this scheduler.
 	 */
-	private final ScheduledExecutorService executor = Executors
-			.newSingleThreadScheduledExecutor();
+	private final ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
 	/**
 	 * A list of new tasks to be added.
@@ -52,9 +49,7 @@ public final class TaskScheduler {
 
 	/**
 	 * Creates a new task scheduler.
-	 * 
-	 * @param server
-	 *            The server.
+	 * @param server The server.
 	 */
 	public TaskScheduler(Server server) {
 		this.server = server;
@@ -70,16 +65,8 @@ public final class TaskScheduler {
 				try {
 					pulse();
 				} catch (Throwable t) {
-					logger.log(Level.SEVERE,
-							"Uncaught exception in task scheduler.", t);
-					// TODO in the future consider shutting down the server at
-					// this point?
-
-					// I don't see why you would shut it down here...
-					// The only thing you can gather from this call is that
-					// there was an error from within the pulse method, which
-					// really doesn't indicate if it was a catastrophic failure
-					// or not.
+					logger.log(Level.SEVERE, "Uncaught exception in task scheduler.", t);
+					// TODO in the future consider shutting down the server at this point?
 				}
 			}
 		}, 0, PULSE_EVERY, TimeUnit.MILLISECONDS);
@@ -87,9 +74,7 @@ public final class TaskScheduler {
 
 	/**
 	 * Schedules the specified task.
-	 * 
-	 * @param task
-	 *            The task.
+	 * @param task The task.
 	 */
 	public void schedule(Task task) {
 		synchronized (newTasks) {
@@ -112,7 +97,7 @@ public final class TaskScheduler {
 			newTasks.clear();
 		}
 
-		for (Iterator<Task> it = tasks.iterator(); it.hasNext();) {
+		for (Iterator<Task> it = tasks.iterator(); it.hasNext(); ) {
 			Task task = it.next();
 			if (!task.pulse()) {
 				it.remove();
@@ -124,3 +109,4 @@ public final class TaskScheduler {
 	}
 
 }
+

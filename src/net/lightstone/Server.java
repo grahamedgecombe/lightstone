@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.lightstone.cmd.CommandManager;
-import net.lightstone.io.service.impl.McRegionChunkIoService;
+import net.lightstone.io.McRegionChunkIoService;
 import net.lightstone.net.MinecraftPipelineFactory;
 import net.lightstone.net.Session;
 import net.lightstone.net.SessionRegistry;
