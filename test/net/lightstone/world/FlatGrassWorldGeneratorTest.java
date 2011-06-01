@@ -24,7 +24,9 @@ public final class FlatGrassWorldGeneratorTest {
 			for (int z = 0; z < Chunk.HEIGHT; z++) {
 				assertEquals(2, chunk.getType(x, z, 60));
 
-				for (int y = 0; y < 55; y++)
+				assertEquals(7, chunk.getType(x, z, 0));
+
+				for (int y = 1; y < 55; y++)
 					assertEquals(1, chunk.getType(x, z, y));
 
 				for (int y = 55; y < 60; y++)
