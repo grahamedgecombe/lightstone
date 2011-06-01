@@ -80,6 +80,12 @@ The original Lightstone source code can be found on
 [GitHub](https://github.com/grahamedgecombe/lightstone). Feedback and patches
 are welcome!
 
+IRC
+---
+
+There is an IRC channel on `irc.freenode.net` - `#lightstone` - for discussing
+development. Feel free to drop by some time.
+
 Copyright
 ---------
 
