@@ -17,7 +17,7 @@ public abstract class Mob extends Entity {
 	/**
 	 * The mob's metadata.
 	 */
-	protected final Parameter<?>[] metadata = new Parameter<?>[32];
+	protected final Parameter<?>[] metadata = new Parameter<?>[Parameter.METADATA_SIZE];
 
 	/**
 	 * Creates a mob within the specified world.

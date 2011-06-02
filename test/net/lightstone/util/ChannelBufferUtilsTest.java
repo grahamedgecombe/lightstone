@@ -24,7 +24,7 @@ public final class ChannelBufferUtilsTest {
 	 */
 	@Test
 	public void testWriteParameters() {
-		Parameter<?>[] params = new Parameter<?>[32];
+		Parameter<?>[] params = new Parameter<?>[Parameter.METADATA_SIZE];
 		params[0] = new Parameter<Byte>(Parameter.TYPE_BYTE, 0, (byte) 0x12);
 		params[1] = new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 0x1234);
 		params[2] = new Parameter<Integer>(Parameter.TYPE_INT, 2, (int) 0x12345678);

@@ -74,7 +74,7 @@ public final class ChannelBufferUtils {
 	 * @return The parameters.
 	 */
 	public static Parameter<?>[] readParameters(ChannelBuffer buf) {
-		Parameter<?>[] parameters = new Parameter<?>[32];
+		Parameter<?>[] parameters = new Parameter<?>[Parameter.METADATA_SIZE];
 
 		int b;
 		while ((b = buf.readUnsignedByte()) != 0x7F) {
