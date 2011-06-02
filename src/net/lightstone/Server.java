@@ -85,12 +85,19 @@ public final class Server {
 	 */
 	private final World world = new World(new McRegionChunkIoService(), new ForestWorldGenerator());
 
+	/** Whether the server should automatically save chunks, e.g. at shutdown. */
+
+	//Does this belong in a different class e.g. the chunk IO service or the chunk manager?
+
+	private boolean saveEnabled = true;
+
 	/**
 	 * Creates a new server.
 	 */
 	public Server() {
 		logger.info("Starting Lightstone...");
 		init();
+		Runtime.getRuntime().addShutdownHook(new ServerShutdownHandler());
 	}
 
 	/**
@@ -159,6 +166,25 @@ public final class Server {
 	 */
 	public World getWorld() {
 		return world;
+	}
+
+	public boolean isSaveEnabled(){
+		return saveEnabled;
+	}
+
+	public void setSaveEnabled(boolean value){
+		saveEnabled = value;
+	}
+
+	private class ServerShutdownHandler extends Thread{
+		@Override
+		public void run(){
+			//Save chunks on shutdown.
+			if(saveEnabled){
+				logger.info("Saving chunks");
+				world.getChunks().saveAll();
+			}
+		}
 	}
 
 }
