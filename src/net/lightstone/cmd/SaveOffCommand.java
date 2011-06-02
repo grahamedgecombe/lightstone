@@ -2,7 +2,6 @@ package net.lightstone.cmd;
 
 import net.lightstone.model.Player;
 
-
 /**
  * A command that turns automatic saving of chunks off.
  * @author Zhuowei Zhang
