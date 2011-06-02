@@ -49,15 +49,9 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	 */
 	private RegionFileCache cache = new RegionFileCache();
 
+	private String name;
+
 	// TODO: consider the session.lock file
-
-	public McRegionChunkIoService() {
-		this(new File("world"));
-	}
-
-	public McRegionChunkIoService(File dir) {
-		this.dir = dir;
-	}
 
 	@Override
 	public Chunk read(int x, int z) throws IOException {
@@ -188,6 +182,17 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	private ListTag<CompoundTag> chunkTileEntitiesToTag(Chunk chunk){
 		List<CompoundTag> entityTags = new ArrayList<CompoundTag>();
 		return new ListTag<CompoundTag>("TileEntities", CompoundTag.class, entityTags);
+	}
+
+	@Override
+	public String getWorldName() {
+		return name;
+	}
+
+	@Override
+	public void setWorldName(String name) {
+		this.name = name;
+		dir = new File(this.name);
 	}
 
 }

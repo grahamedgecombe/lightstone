@@ -193,6 +193,10 @@ public final class Player extends Mob {
 	public boolean isCrouching() {
 		return crouching;
 	}
+	
+	public Set<Chunk.Key> getKnownChunks() {
+		return knownChunks;
+	}
 
 }
 

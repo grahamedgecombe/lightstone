@@ -3,6 +3,8 @@ package net.lightstone;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -34,6 +36,11 @@ public final class Server {
 	 * The logger for this class.
 	 */
 	private static final Logger logger = Logger.getLogger(Server.class.getName());
+	
+	/**
+	 * A map of servers.
+	 */
+	private static Map<String, Server> servers = new HashMap<String, Server>();
 
 	/**
 	 * Creates a new server on TCP port 25565 and starts listening for
@@ -42,7 +49,8 @@ public final class Server {
 	 */
 	public static void main(String[] args) {
 		try {
-			Server server = new Server();
+			Server server = new Server("main");
+			servers.put(server.getName(), server);
 			server.bind(new InetSocketAddress(25565));
 			server.start();
 		} catch (Throwable t) {
@@ -84,7 +92,12 @@ public final class Server {
 	/**
 	 * The world this server is managing.
 	 */
-	private final World world = new World(new McRegionChunkIoService(), new ForestWorldGenerator());
+	private final World world;
+
+	/**
+	 * The name of this server.
+	 */
+	private final String name;
 
 	/**
 	 * Whether the server should automatically save chunks, e.g. at shutdown.
@@ -93,8 +106,11 @@ public final class Server {
 
 	/**
 	 * Creates a new server.
+	 * @param string 
 	 */
-	public Server() {
+	public Server(String name) {
+		this.name = name;
+		world = new World(this.name, new McRegionChunkIoService(), new ForestWorldGenerator());
 		logger.info("Starting Lightstone...");
 		init();
 	}
@@ -169,6 +185,14 @@ public final class Server {
 	 */
 	public World getWorld() {
 		return world;
+	}
+	
+	public static Server getServer(String name) {
+		return servers.get(name);
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	/**
