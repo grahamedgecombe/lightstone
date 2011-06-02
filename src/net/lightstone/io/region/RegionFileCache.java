@@ -20,6 +20,8 @@ package net.lightstone.io.region;
  * number of file handles). The region files are postfixed with ".mcr"
  * (Minecraft region file) instead of ".data" to differentiate from the
  * original McRegion files.
+ * 
+ * It has been further modified by Joe Pritzel to use a concurrent LRU map to act as the cache. 
  *
  */
 
@@ -29,11 +31,13 @@ import java.io.*;
 import java.lang.ref.*;
 import java.util.*;
 
+import net.lightstone.cache.ConcurrentLRUMap;
+
 public class RegionFileCache {
 
 	private final int MAX_CACHE_SIZE = 256;
 
-	private final Map<File, Reference<RegionFile>> cache = new HashMap<File, Reference<RegionFile>>();
+	private final Map<File, Reference<RegionFile>> cache = new ConcurrentLRUMap<File, Reference<RegionFile>>(MAX_CACHE_SIZE);
 
 	public RegionFile getRegionFile(File basePath, int chunkX, int chunkZ) throws IOException {
 		File regionDir = new File(basePath, "region");
@@ -49,24 +53,11 @@ public class RegionFileCache {
 			regionDir.mkdirs();
 		}
 
-		if (cache.size() >= MAX_CACHE_SIZE) {
-			clear();
-		}
-
 		RegionFile reg = new RegionFile(file);
 		cache.put(file, new SoftReference<RegionFile>(reg));
 		return reg;
 	}
-
-	public void clear() throws IOException {
-		for (Reference<RegionFile> ref : cache.values()) {
-			if (ref.get() != null) {
-				ref.get().close();
-			}
-		}
-		cache.clear();
-	}
-
+	
 	public int getSizeDelta(File basePath, int chunkX, int chunkZ) throws IOException {
 		RegionFile r = getRegionFile(basePath, chunkX, chunkZ);
 		return r.getSizeDelta();
