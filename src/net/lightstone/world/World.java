@@ -10,12 +10,20 @@ import net.lightstone.model.Player;
 import net.lightstone.model.Position;
 import net.lightstone.msg.ChatMessage;
 import net.lightstone.msg.TimeMessage;
+import net.lightstone.msg.ChangeStateMessage;
 
 /**
  * A class which represents the in-game world.
  * @author Graham Edgecombe
  */
 public class World {
+
+	/** The dimension of the normal game world. */
+	public static final int DIM_NORMAL = 0;
+
+	/** The dimension number of the nether world. */
+	public static final int DIM_NETHER = -1;
+
 
 	/**
 	 * The number of pulses in a Minecraft day.
@@ -41,6 +49,10 @@ public class World {
 	 * The current time.
 	 */
 	private long time = 0;
+
+	/** Whether it is raining. */
+
+	private boolean raining = false;
 
 	/**
 	 * Creates a new world with the specified chunk I/O service and world
@@ -134,6 +146,16 @@ public class World {
 		time = (time + 1) % PULSES_PER_DAY;
 		// TODO: every now and again we should broadcast the time to all
 		//       players to keep things in sync
+	}
+
+	public void setRaining(boolean raining){
+		this.raining = raining;
+		ChangeStateMessage msg = new ChangeStateMessage(raining? ChangeStateMessage.START_RAINING: ChangeStateMessage.STOP_RAINING);
+		for (Player player : getPlayers())
+			player.getSession().send(msg);
+	}
+	public boolean isRaining(){
+		return raining;
 	}
 
 }

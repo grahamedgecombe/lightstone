@@ -1,17 +1,28 @@
 package net.lightstone.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.lightstone.msg.EntityRotationMessage;
 import net.lightstone.msg.EntityTeleportMessage;
 import net.lightstone.msg.Message;
 import net.lightstone.msg.RelativeEntityPositionMessage;
 import net.lightstone.msg.RelativeEntityPositionRotationMessage;
+import net.lightstone.msg.EntityMetadataMessage;
 import net.lightstone.world.World;
+import net.lightstone.util.Parameter;
 
 /**
  * A Mob is a {@link Player} or {@link Monster}.
  * @author Graham Edgecombe.
  */
 public abstract class Mob extends Entity {
+
+
+	/**
+	 * The mob's metadata.
+	 */
+	protected final List<Parameter<?>> metadata = new ArrayList<Parameter<?>>();
 
 	/**
 	 * Creates a mob within the specified world.
@@ -51,6 +62,20 @@ public abstract class Mob extends Entity {
 
 		return null;
 	}
+
+	public Parameter<?> getMetadata(int index){
+		return metadata.get(index);
+	}
+
+	public void setMetadata(Parameter<?> data){
+		if(data.getIndex() < metadata.size()){
+			metadata.set(data.getIndex(), data);
+		}
+		else{
+			metadata.add(data);
+		}
+	}
+
 
 }
 

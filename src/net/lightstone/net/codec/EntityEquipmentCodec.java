@@ -18,13 +18,13 @@ public final class EntityEquipmentCodec extends MessageCodec<EntityEquipmentMess
 		int id = buffer.readInt();
 		int slot = buffer.readUnsignedShort();
 		int item = buffer.readUnsignedShort();
-		int damage = buffer.readUnsignedByte();
+		int damage = buffer.readUnsignedShort();
 		return new EntityEquipmentMessage(id, slot, item, damage);
 	}
 
 	@Override
 	public ChannelBuffer encode(EntityEquipmentMessage message) throws IOException {
-		ChannelBuffer buffer = ChannelBuffers.buffer(8);
+		ChannelBuffer buffer = ChannelBuffers.buffer(10);
 		buffer.writeInt(message.getId());
 		buffer.writeShort(message.getSlot());
 		buffer.writeShort(message.getItem());

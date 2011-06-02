@@ -2,6 +2,10 @@ package net.lightstone;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.io.File;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Collections;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -14,6 +18,7 @@ import net.lightstone.net.Session;
 import net.lightstone.net.SessionRegistry;
 import net.lightstone.task.TaskScheduler;
 import net.lightstone.world.ForestWorldGenerator;
+import net.lightstone.world.SimpleNetherWorldGenerator;
 import net.lightstone.world.World;
 
 import org.jboss.netty.bootstrap.ServerBootstrap;
@@ -81,15 +86,19 @@ public final class Server {
 	private final CommandManager commandManager = new CommandManager();
 
 	/**
-	 * The world this server is managing.
+	 * The worlds this server is managing.
 	 */
-	private final World world = new World(new McRegionChunkIoService(), new ForestWorldGenerator());
+	private final Map<Integer, World> worlds = new HashMap<Integer, World>();
+
 
 	/**
 	 * Creates a new server.
 	 */
 	public Server() {
 		logger.info("Starting Lightstone...");
+		worlds.put(new Integer(0), new World(new McRegionChunkIoService(), new ForestWorldGenerator()));
+		worlds.put(new Integer(-1), new World(new McRegionChunkIoService(new File("world" + File.separator + "DIM-1")),
+			new SimpleNetherWorldGenerator()));
 		init();
 	}
 
@@ -154,11 +163,15 @@ public final class Server {
 	}
 
 	/**
-	 * Gets the world this server manages.
-	 * @return The {@link World} this server manages.
+	 * Gets a world managed by this server.
+	 * @return a {@link World} this server manages.
 	 */
-	public World getWorld() {
-		return world;
+	public World getWorld(int index){
+		return worlds.get(new Integer(index));
+	}
+
+	public Map<Integer, World> getWorlds(){
+		return Collections.unmodifiableMap(worlds);
 	}
 
 }

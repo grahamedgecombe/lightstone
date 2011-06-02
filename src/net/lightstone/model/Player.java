@@ -11,7 +11,11 @@ import net.lightstone.msg.Message;
 import net.lightstone.msg.PingMessage;
 import net.lightstone.msg.PositionRotationMessage;
 import net.lightstone.msg.SpawnPlayerMessage;
+import net.lightstone.msg.EntityMetadataMessage;
 import net.lightstone.net.Session;
+import net.lightstone.util.Parameter;
+import net.lightstone.msg.ChangeStateMessage;
+import net.lightstone.msg.TimeMessage;
 
 /**
  * Represents an in-game player.
@@ -54,13 +58,17 @@ public final class Player extends Mob {
 	 */
 	private boolean crouching = false;
 
+	private Inventory inventory = new Inventory(this);
+
+	private int activeSlot = 0;
+
 	/**
 	 * Creates a new player and adds it to the world.
 	 * @param session The player's session.
 	 * @param name The player's name.
 	 */
 	public Player(Session session, String name) {
-		super(session.getServer().getWorld());
+		super(session.getServer().getWorld(session.getDimension()));
 		this.name = name;
 		this.session = session;
 
@@ -69,6 +77,10 @@ public final class Player extends Mob {
 		this.position = world.getSpawnPosition();
 		this.sendMessage("§eWelcome to Lightstone, " + name + "!");
 		this.session.send(new PositionRotationMessage(position.getX(), position.getY(), position.getZ(), position.getY() + NORMAL_EYE_HEIGHT, (float) rotation.getYaw(), (float) rotation.getPitch(), true));
+		if(world.isRaining()){
+			this.session.send(new ChangeStateMessage(ChangeStateMessage.START_RAINING));
+		}
+		this.session.send(new TimeMessage(world.getTime()));
 	}
 
 	/**
@@ -174,6 +186,14 @@ public final class Player extends Mob {
 	public void setCrouching(boolean crouching) {
 		// TODO: update other clients, needs to be figured out
 		this.crouching = crouching;
+		setMetadata(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, new Byte((byte)(crouching? 0x02: 0))));
+		//FIXME: other bits in the bitmask would be wiped out
+		EntityMetadataMessage message = new EntityMetadataMessage(id, metadata);
+		for (Player player : world.getPlayers()){
+			if(player != this){
+				player.getSession().send(message);
+			}
+		}
 	}
 
 	/**
@@ -184,5 +204,18 @@ public final class Player extends Mob {
 		return crouching;
 	}
 
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public int getActiveSlot() {
+		return activeSlot;
+	}
+	public void setActiveSlot(int slot) {
+		if(!(slot>=0 && slot<=9)){
+			throw new IllegalArgumentException("Not a valid slot");
+		}
+		activeSlot = slot;
+	}
 }
 

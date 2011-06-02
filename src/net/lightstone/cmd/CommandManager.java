@@ -24,8 +24,14 @@ public final class CommandManager {
 	 */
 	public CommandManager() {
 		bind(new MeCommand());
+		bind(new RainCommand());
 		bind(new TimeCommand());
 		bind(new KickCommand());
+		bind(new GiveCommand());
+		bind(new SpawnMobCommand());
+		bind(new TellCommand());
+		bind(new TeleportCommand());
+		bind(new DimensionCommand());
 		bind(new HelpCommand(this));
 	}
 
