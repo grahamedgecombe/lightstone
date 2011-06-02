@@ -2,7 +2,9 @@ package net.lightstone.io;
 
 import java.io.File;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 import net.lightstone.io.region.RegionFile;
@@ -10,7 +12,9 @@ import net.lightstone.io.region.RegionFileCache;
 import net.lightstone.model.Chunk;
 import net.lightstone.util.nbt.ByteArrayTag;
 import net.lightstone.util.nbt.CompoundTag;
+import net.lightstone.util.nbt.IntTag;
 import net.lightstone.util.nbt.NBTInputStream;
+import net.lightstone.util.nbt.NBTOutputStream;
 import net.lightstone.util.nbt.Tag;
 
 /**
@@ -100,9 +104,55 @@ public final class McRegionChunkIoService implements ChunkIoService {
 		return chunk;
 	}
 
+
+	/** Writes a chunk to a McRegion file.
+	 * WARNING! The files written by this method probably won't load in the Notchian server. Make backups.
+	 */
+
 	@Override
 	public void write(int x, int z, Chunk chunk) throws IOException {
-		// TODO
+		CompoundTag levelTag = chunkToTag(chunk);
+		RegionFile region = cache.getRegionFile(dir, x, z);
+		int regionX = x & (REGION_SIZE - 1);
+		int regionZ = z & (REGION_SIZE - 1);
+		DataOutputStream out = region.getChunkDataOutputStream(regionX, regionZ);
+		NBTOutputStream nbtOut = new NBTOutputStream(out, false);
+		Map<String, Tag> tagMap = new HashMap<String, Tag>(1);
+		tagMap.put("Level", levelTag);
+		CompoundTag tag = new CompoundTag("", tagMap);
+		nbtOut.writeTag(tag);
+		out.close();
+		//TODO: Close the regionfile
+	}
+
+	private CompoundTag chunkToTag(Chunk chunk){
+		byte[] tileData = new byte[Chunk.WIDTH * Chunk.HEIGHT * Chunk.DEPTH];
+		byte[] skyLightData = new byte[(Chunk.WIDTH * Chunk.HEIGHT * Chunk.DEPTH) / 2];
+		byte[] blockLightData = new byte[(Chunk.WIDTH * Chunk.HEIGHT * Chunk.DEPTH) / 2];
+		byte[] metaData = new byte[(Chunk.WIDTH * Chunk.HEIGHT * Chunk.DEPTH) / 2];
+		for (int cx = 0; cx < Chunk.WIDTH; cx++) {
+			for (int cz = 0; cz < Chunk.HEIGHT; cz++) {
+				for (int cy = 0; cy < Chunk.DEPTH; cy+=2) {
+					int blockOffset = ((cx * Chunk.HEIGHT + cz) * Chunk.DEPTH + cy);
+					int offset = blockOffset / 2;
+					tileData[blockOffset] = (byte) chunk.getType(cx, cz, cy);
+					tileData[blockOffset + 1] = (byte) chunk.getType(cx, cz, cy + 1);
+					skyLightData[offset] = (byte) ((chunk.getSkyLight(cx, cz, cy + 1) << 4) | chunk.getSkyLight(cx, cz, cy));
+					blockLightData[offset] = (byte) ((chunk.getBlockLight(cx, cz, cy + 1) << 4) | chunk.getBlockLight(cx, cz, cy));
+					metaData[offset] = (byte) ((chunk.getMetaData(cx, cz, cy + 1) << 4) | chunk.getMetaData(cx, cz, cy));
+				}
+			}
+		}
+		Map<String, Tag> levelTags = new HashMap<String, Tag>();
+		levelTags.put("Blocks", new ByteArrayTag("Blocks", tileData));
+		levelTags.put("Data", new ByteArrayTag("Data", metaData));
+		levelTags.put("SkyLight", new ByteArrayTag("SkyLight", skyLightData));
+		levelTags.put("BlockLight", new ByteArrayTag("BlockLight", blockLightData));
+		//TODO: Heightmap, entities, tileentities, lastupdate
+		levelTags.put("xPos", new IntTag("xPos", chunk.getX()));
+		levelTags.put("zPos", new IntTag("zPos", chunk.getZ()));
+		//TODO: terrainpopulated
+		return new CompoundTag("Level", levelTags);
 	}
 
 }
