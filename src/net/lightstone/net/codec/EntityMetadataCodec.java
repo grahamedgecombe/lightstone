@@ -1,7 +1,6 @@
 package net.lightstone.net.codec;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -19,7 +18,7 @@ public final class EntityMetadataCodec extends MessageCodec<EntityMetadataMessag
 	@Override
 	public EntityMetadataMessage decode(ChannelBuffer buffer) throws IOException {
 		int id = buffer.readInt();
-		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
+		Parameter<?>[] parameters = ChannelBufferUtils.readParameters(buffer);
 		return new EntityMetadataMessage(id, parameters);
 	}
 

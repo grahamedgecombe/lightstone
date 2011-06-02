@@ -1,7 +1,6 @@
 package net.lightstone.net.codec;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.buffer.ChannelBuffers;
@@ -25,7 +24,7 @@ public final class SpawnMobCodec extends MessageCodec<SpawnMobMessage> {
 		int z = buffer.readInt();
 		int rotation = buffer.readUnsignedByte();
 		int pitch = buffer.readUnsignedByte();
-		List<Parameter<?>> parameters = ChannelBufferUtils.readParameters(buffer);
+		Parameter<?>[] parameters = ChannelBufferUtils.readParameters(buffer);
 		return new SpawnMobMessage(id, type, x, y, z, rotation, pitch, parameters);
 	}
 
