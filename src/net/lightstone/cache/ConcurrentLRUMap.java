@@ -176,7 +176,7 @@ public class ConcurrentLRUMap<K, V> extends AbstractMap<K, V> {
 	@Override
 	public V put(Object arg0, Object arg1) {
 		final Value<V> val = map.put((K) arg0, new Value<V>((V) arg1));
-		if (map.size() >= maxSize.get()) {
+		if (map.size() > maxSize.get()) {
 			Map.Entry<K, Value<V>> e1 = getLRU();
 			if (shouldRemoveLRU(e1.getKey(), e1.getValue().get())) {
 				tryRemove(e1.getKey(), e1.getValue().get());
