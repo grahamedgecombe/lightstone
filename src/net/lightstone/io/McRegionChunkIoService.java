@@ -40,15 +40,9 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	 */
 	private RegionFileCache cache = new RegionFileCache();
 
+	private String name;
+
 	// TODO: consider the session.lock file
-
-	public McRegionChunkIoService() {
-		this(new File("world"));
-	}
-
-	public McRegionChunkIoService(File dir) {
-		this.dir = dir;
-	}
 
 	@Override
 	public Chunk read(int x, int z) throws IOException {
@@ -103,6 +97,17 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	@Override
 	public void write(int x, int z, Chunk chunk) throws IOException {
 		// TODO
+	}
+
+	@Override
+	public String getWorldName() {
+		return name;
+	}
+
+	@Override
+	public void setWorldName(String name) {
+		this.name = name;
+		dir = new File(this.name);
 	}
 
 }

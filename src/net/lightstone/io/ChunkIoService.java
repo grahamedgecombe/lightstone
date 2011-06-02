@@ -12,6 +12,9 @@ import net.lightstone.model.Chunk;
  * @author Graham Edgecombe
  */
 public interface ChunkIoService {
+	
+	public String getWorldName();
+	public void setWorldName(String name);
 
 	/**
 	 * Reads a single chunk.

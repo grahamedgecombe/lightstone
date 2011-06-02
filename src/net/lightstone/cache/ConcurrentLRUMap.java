@@ -11,16 +11,23 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * This is a generic implementation of a thread-safe LRU map.
+ * 
+ * @author Joe Pritzel
+ * 
+ * @param <K>
+ * @param <V>
+ */
 public class ConcurrentLRUMap<K, V> extends AbstractMap<K, V> {
 
 	private static final float DEFAULT_LOAD_FACTOR = 0.75f;
 	private static final int DEFAULT_MAX_SIZE = 100;
 
-	private transient final int maxSize;
-	private transient final float loadFactor;
+	private AtomicInteger maxSize = new AtomicInteger(0);;
+	private final float loadFactor;
 
 	private final Map<K, Value<V>> map;
-	private final AtomicInteger size = new AtomicInteger(0);
 
 	public ConcurrentLRUMap() {
 		this(DEFAULT_MAX_SIZE, DEFAULT_LOAD_FACTOR);
@@ -31,32 +38,96 @@ public class ConcurrentLRUMap<K, V> extends AbstractMap<K, V> {
 	}
 
 	public ConcurrentLRUMap(final int maxSize, final float loadFactor) {
-		this.maxSize = maxSize;
+		this.maxSize.set(maxSize);
 		this.loadFactor = loadFactor;
-		map = new ConcurrentHashMap<K, Value<V>>(this.maxSize, this.loadFactor);
+		map = new ConcurrentHashMap<K, Value<V>>(this.maxSize.get(),
+				this.loadFactor);
 	}
 
-	private void removeLRU() {
-		K k = null;
+	/**
+	 * @return The max size for the LRUMap
+	 */
+	protected int getMaxSize() {
+		return maxSize.get();
+	}
+
+	/**
+	 * Increases the max size for the LRUMap by one.
+	 * @return The new max size
+	 */
+	protected int incrementMaxSize() {
+		return maxSize.incrementAndGet();
+	}
+
+	/**
+	 * Decreases the max size for the LRUMap by one.
+	 * @return
+	 */
+	protected int decrementMaxSize() {
+		return maxSize.decrementAndGet();
+	}
+
+	/**
+	 * @return The LRU entry.
+	 */
+	private Map.Entry<K, Value<V>> getLRU() {
+		Map.Entry<K, Value<V>> e1 = null;
 		long t = Long.MAX_VALUE;
 		final Set<Map.Entry<K, Value<V>>> m = map.entrySet();
 		for (Map.Entry<K, Value<V>> e : m) {
-			if (e.getValue().getTime() < t) {
-				k = e.getKey();
+			if (e.getValue().getTime() <= t) {
+				e1 = e;
 				t = e.getValue().getTime();
 			}
 		}
-		if (k != null)
+		return e1;
+	}
+
+	/**
+	 * Removes entry if shouldRemove the key is non-null, and shouldRemove returns true.
+	 */
+	protected boolean tryRemove(K k, V v) {
+		if (k != null && shouldRemove(k, v)) {
 			map.remove(k);
-		System.out.println("Removed " + k);
+			dispose(k, v);
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * This method is called when an entry is removed due to it being the least
+	 * recently used.
+	 * 
+	 * @param k
+	 * @param v
+	 */
+	protected void dispose(K k, V v) {
+	}
+	
+	/**
+	 * This method is called from the tryRemove method.
+	 * @param key
+	 * @param value
+	 * @return
+	 */
+	protected boolean shouldRemove(K key, V value) {
+		return true;
+	}
+
+	/**
+	 * This method is called when the size of the LRU map is
+	 * greater-than-or-equal-to the max size, and a new entry is being added.
+	 * 
+	 * @return If the LRU entry should be removed.
+	 */
+	protected boolean shouldRemoveLRU(K key, V value) {
+		return true;
 	}
 
 	@Override
 	public void clear() {
-		for (Value<V> v : map.values()) {
-			v.set(null);
-			size.decrementAndGet();
-		}
+		map.clear();
 	}
 
 	@Override
@@ -93,7 +164,7 @@ public class ConcurrentLRUMap<K, V> extends AbstractMap<K, V> {
 
 	@Override
 	public boolean isEmpty() {
-		return size.get() == 0;
+		return map.isEmpty();
 	}
 
 	@Override
@@ -104,10 +175,13 @@ public class ConcurrentLRUMap<K, V> extends AbstractMap<K, V> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public V put(Object arg0, Object arg1) {
-		if (size.get() >= maxSize)
-			removeLRU();
-		size.incrementAndGet();
 		final Value<V> val = map.put((K) arg0, new Value<V>((V) arg1));
+		if (map.size() >= maxSize.get()) {
+			Map.Entry<K, Value<V>> e1 = getLRU();
+			if (shouldRemoveLRU(e1.getKey(), e1.getValue().get())) {
+				tryRemove(e1.getKey(), e1.getValue().get());
+			}
+		}
 		if (val != null)
 			return val.get();
 		return null;
@@ -122,13 +196,12 @@ public class ConcurrentLRUMap<K, V> extends AbstractMap<K, V> {
 
 	@Override
 	public V remove(Object arg0) {
-		size.decrementAndGet();
 		return map.remove(arg0).get();
 	}
 
 	@Override
 	public int size() {
-		return size.get();
+		return map.size();
 	}
 
 	@Override
@@ -161,17 +234,6 @@ public class ConcurrentLRUMap<K, V> extends AbstractMap<K, V> {
 
 		public long getTime() {
 			return t.get();
-		}
-
-		public V1 set(V1 v) {
-			return set(v, System.nanoTime()).get();
-		}
-
-		public Value<V1> set(V1 v, long t) {
-			final Value<V1> v1 = this;
-			this.v.set(v);
-			this.t.set(t);
-			return v1;
 		}
 
 	}
