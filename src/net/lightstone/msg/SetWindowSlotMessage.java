@@ -2,6 +2,8 @@ package net.lightstone.msg;
 
 public final class SetWindowSlotMessage extends Message {
 
+	public static final int ID_INVENTORY = 0;
+
 	private final int id, slot, item, count, damage;
 
 	public SetWindowSlotMessage(int id, int slot) {

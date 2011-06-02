@@ -24,7 +24,7 @@ public final class BlockPlacementCodec extends MessageCodec<BlockPlacementMessag
 			return new BlockPlacementMessage(x, y, z, direction);
 		} else {
 			int count = buffer.readUnsignedByte();
-			int damage = buffer.readUnsignedByte();
+			int damage = buffer.readShort();
 			return new BlockPlacementMessage(x, y, z, direction, id, count, damage);
 		}
 	}

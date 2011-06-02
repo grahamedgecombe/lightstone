@@ -56,6 +56,10 @@ public final class Player extends Mob {
 	 */
 	private boolean crouching = false;
 
+	private Inventory inventory = new Inventory(this);
+
+	private int activeSlot = 0;
+
 	/**
 	 * Creates a new player and adds it to the world.
 	 * @param session The player's session.
@@ -194,5 +198,18 @@ public final class Player extends Mob {
 		return crouching;
 	}
 
+	public Inventory getInventory() {
+		return inventory;
+	}
+
+	public int getActiveSlot() {
+		return activeSlot;
+	}
+	public void setActiveSlot(int slot) {
+		if(!(slot>=0 && slot<=9)){
+			throw new IllegalArgumentException("Not a valid slot");
+		}
+		activeSlot = slot;
+	}
 }
 
