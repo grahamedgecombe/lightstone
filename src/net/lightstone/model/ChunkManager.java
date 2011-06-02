@@ -67,7 +67,7 @@ public final class ChunkManager {
 	}
 
 	/**
-	 * Saves all chunks loaded. 
+	 * Saves all chunks loaded.
 	 * @throws IOException if an I/O error occurs.
 	 */
 	public void saveAll() throws IOException {

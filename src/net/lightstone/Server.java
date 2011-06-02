@@ -188,7 +188,7 @@ public final class Server {
 	}
 
 	/**
-	 * A {@link Runnable} which saves chunks on shutdown. 
+	 * A {@link Runnable} which saves chunks on shutdown.
 	 * @author Zhuowei Zhang
 	 * @author Graham Edgecombe
 	 */

@@ -124,10 +124,10 @@ public final class McRegionChunkIoService implements ChunkIoService {
 		DataOutputStream out = region.getChunkDataOutputStream(regionX, regionZ);
 		try {
 			NBTOutputStream nbtOut = new NBTOutputStream(out, false);
-	
+
 			Map<String, Tag> tagMap = new HashMap<String, Tag>(1);
 			tagMap.put("Level", levelTag);
-	
+
 			CompoundTag tag = new CompoundTag("", tagMap);
 			nbtOut.writeTag(tag);
 		} finally {
