@@ -64,7 +64,7 @@ public final class McRegionChunkIoService implements ChunkIoService {
 		RegionFile region = cache.getRegionFile(dir, x, z);
 		int regionX = x & (REGION_SIZE - 1);
 		int regionZ = z & (REGION_SIZE - 1);
-		if (!region.hasChunk(regionX, regionZ)){
+		if (!region.hasChunk(regionX, regionZ)) {
 			return null;
 		}
 
@@ -179,13 +179,13 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	}
 
 	// TODO
-	private ListTag<CompoundTag> chunkEntitiesToTag(Chunk chunk){
+	private ListTag<CompoundTag> chunkEntitiesToTag(Chunk chunk) {
 		List<CompoundTag> entityTags = new ArrayList<CompoundTag>();
 		return new ListTag<CompoundTag>("Entities", CompoundTag.class, entityTags);
 	}
 
 	// TODO
-	private ListTag<CompoundTag> chunkTileEntitiesToTag(Chunk chunk){
+	private ListTag<CompoundTag> chunkTileEntitiesToTag(Chunk chunk) {
 		List<CompoundTag> entityTags = new ArrayList<CompoundTag>();
 		return new ListTag<CompoundTag>("TileEntities", CompoundTag.class, entityTags);
 	}
