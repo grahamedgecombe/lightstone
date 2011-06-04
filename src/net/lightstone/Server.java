@@ -3,7 +3,6 @@ package net.lightstone;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -26,6 +25,8 @@ import org.jboss.netty.channel.group.ChannelGroup;
 import org.jboss.netty.channel.group.DefaultChannelGroup;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 
+import com.google.common.collect.MapMaker;
+
 /**
  * The core class of the Lightstone server.
  * @author Graham Edgecombe
@@ -41,7 +42,7 @@ public final class Server {
 	/**
 	 * A map of servers.
 	 */
-	private static Map<String, Server> servers = new HashMap<String, Server>();
+	private static Map<String, Server> servers = new MapMaker().weakValues().makeMap();
 
 	/**
 	 * Creates a new server on TCP port 25565 and starts listening for
