@@ -31,5 +31,8 @@ public interface ChunkIoService {
 	 */
 	public void write(int x, int z, Chunk chunk) throws IOException;
 
+	public void setWorldName(String name);
+	public String getWorldName();
+
 }
 

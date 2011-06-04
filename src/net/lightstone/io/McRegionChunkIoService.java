@@ -48,15 +48,18 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	 * The region file cache.
 	 */
 	private RegionFileCache cache = new RegionFileCache();
+	
+	private String name;
 
 	// TODO: consider the session.lock file
 
 	public McRegionChunkIoService() {
-		this(new File("world"));
+		this("world");
 	}
 
-	public McRegionChunkIoService(File dir) {
-		this.dir = dir;
+	public McRegionChunkIoService(String name2) {
+		this.name = name2;
+		this.dir = new File(name);
 	}
 
 	@Override
@@ -188,6 +191,17 @@ public final class McRegionChunkIoService implements ChunkIoService {
 	private ListTag<CompoundTag> chunkTileEntitiesToTag(Chunk chunk) {
 		List<CompoundTag> entityTags = new ArrayList<CompoundTag>();
 		return new ListTag<CompoundTag>("TileEntities", CompoundTag.class, entityTags);
+	}
+	
+	@Override
+	public String getWorldName() {
+		return name;
+	}
+
+	@Override
+	public void setWorldName(String name) {
+		this.name = name;
+		dir = new File(this.name);
 	}
 
 }

@@ -1,15 +1,18 @@
 package net.lightstone.model;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
+import net.lightstone.Server;
+import net.lightstone.cache.ConcurrentLRUMap;
 import net.lightstone.io.ChunkIoService;
+import net.lightstone.model.Chunk.Key;
 import net.lightstone.world.WorldGenerator;
 
 /**
  * A class which manages the {@link Chunk}s currently loaded in memory.
  * @author Graham Edgecombe
+ * @author Joe Pritzel
  */
 public final class ChunkManager {
 
@@ -27,7 +30,51 @@ public final class ChunkManager {
 	/**
 	 * A map of chunks currently loaded in memory.
 	 */
-	private final Map<Chunk.Key, Chunk> chunks = new HashMap<Chunk.Key, Chunk>();
+	private final Map<Key, Chunk> chunks = new ConcurrentLRUMap<Chunk.Key, Chunk>(
+			0) {
+
+		// Writes the chunk to disk.
+		// TODO: Do I/O on a different thread.
+		public void dispose(Chunk.Key k, Chunk v) {
+			try {
+				service.write(v.getX(), v.getZ(), v);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		// Doesn't remove the Chunk if a player knows about it.
+		public boolean shouldRemove(Chunk.Key k, Chunk v) {
+			for (final Player p : Server.getServer(service.getWorldName())
+					.getWorld().getPlayers()) {
+				if (p.getKnownChunks().contains(k)) {
+					return false;
+				}
+			}
+			return true;
+		}
+
+		// Increases the max size of the LRU map if there are no Chunks that can
+		// be un-loaded.
+		public boolean shouldRemoveLRU(Chunk.Key ck, Chunk c) {
+			boolean ret = true;
+			for (final Player p : Server.getServer(service.getWorldName())
+					.getWorld().getPlayers()) {
+				if (p.getKnownChunks().contains(ck)) {
+					ret = false;
+					break;
+				}
+			}
+			if (!ret) {
+				for (Map.Entry<Key, Chunk> e : entrySet()) {
+					if (tryRemove(e.getKey(), e.getValue()))
+						return false;
+				}
+				return false;
+			}
+			return true;
+		}
+	};
 
 	/**
 	 * Creates a new chunk manager with the specified I/O service and world

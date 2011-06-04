@@ -45,10 +45,12 @@ public class World {
 	/**
 	 * Creates a new world with the specified chunk I/O service and world
 	 * generator.
+	 * @param name 
 	 * @param service The chunk I/O service.
 	 * @param generator The world generator.
 	 */
-	public World(ChunkIoService service, WorldGenerator generator) {
+	public World(String name, ChunkIoService service, WorldGenerator generator) {
+		service.setWorldName(name);
 		chunks = new ChunkManager(service, generator);
 	}
 

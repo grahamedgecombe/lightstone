@@ -194,5 +194,9 @@ public final class Player extends Mob {
 		return crouching;
 	}
 
+	public Set<Chunk.Key> getKnownChunks() {
+		return knownChunks;
+	}
+
 }
 
