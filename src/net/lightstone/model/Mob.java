@@ -6,12 +6,18 @@ import net.lightstone.msg.Message;
 import net.lightstone.msg.RelativeEntityPositionMessage;
 import net.lightstone.msg.RelativeEntityPositionRotationMessage;
 import net.lightstone.world.World;
+import net.lightstone.util.Parameter;
 
 /**
  * A Mob is a {@link Player} or {@link Monster}.
  * @author Graham Edgecombe.
  */
 public abstract class Mob extends Entity {
+
+	/**
+	 * The mob's metadata.
+	 */
+	protected final Parameter<?>[] metadata = new Parameter<?>[Parameter.METADATA_SIZE];
 
 	/**
 	 * Creates a mob within the specified world.
@@ -50,6 +56,14 @@ public abstract class Mob extends Entity {
 		}
 
 		return null;
+	}
+
+	public Parameter<?> getMetadata(int index) {
+		return metadata[index];
+	}
+
+	public void setMetadata(Parameter<?> data) {
+		metadata[data.getIndex()] = data;
 	}
 
 }

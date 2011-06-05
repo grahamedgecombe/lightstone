@@ -14,27 +14,27 @@ public final class Packet1BMessage extends Message {
 		this.sixth = sixth;
 	}
 
-	public float getFirst(){
+	public float getFirst() {
 		return first;
 	}
 
-	public float getSecond(){
+	public float getSecond() {
 		return second;
 	}
 
-	public float getThird(){
+	public float getThird() {
 		return third;
 	}
 
-	public float getFourth(){
+	public float getFourth() {
 		return fourth;
 	}
 
-	public boolean getFifth(){
+	public boolean getFifth() {
 		return fifth;
 	}
 
-	public boolean getSixth(){
+	public boolean getSixth() {
 		return sixth;
 	}
 

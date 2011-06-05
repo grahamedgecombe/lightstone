@@ -12,8 +12,9 @@ public final class ChangeStateMessage extends Message {
 		this.state = state;
 	}
 
-	public int getState(){
+	public int getState() {
 		return state;
 	}
+
 }
 

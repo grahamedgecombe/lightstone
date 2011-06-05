@@ -1,11 +1,7 @@
 package net.lightstone.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import net.lightstone.msg.Message;
 import net.lightstone.msg.SpawnMobMessage;
-import net.lightstone.util.Parameter;
 import net.lightstone.world.World;
 
 /**
@@ -18,11 +14,6 @@ public final class Monster extends Mob {
 	 * The type of monster.
 	 */
 	private final int type;
-
-	/**
-	 * The monster's metadata.
-	 */
-	private final List<Parameter<?>> metadata = new ArrayList<Parameter<?>>();
 
 	/**
 	 * Creates a new monster.
@@ -49,7 +40,7 @@ public final class Monster extends Mob {
 		int z = position.getPixelZ();
 		int yaw = rotation.getIntYaw();
 		int pitch = rotation.getIntPitch();
-		return new SpawnMobMessage(id, type, x, y, z, yaw, pitch, metadata);
+		return new SpawnMobMessage(id, type, x, y, z, yaw, pitch, metadata.clone());
 	}
 
 }

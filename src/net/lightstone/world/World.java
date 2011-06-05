@@ -119,7 +119,7 @@ public class World {
 	 * Sets the current time.
 	 * @param time The current time.
 	 */
-	public void setTime(long time){
+	public void setTime(long time) {
 		this.time = time % PULSES_PER_DAY;
 
 		TimeMessage msg = new TimeMessage(time);

@@ -141,7 +141,7 @@ public final class Chunk {
 	 * Sets the types of all tiles within the chunk.
 	 * @param types The array of types.
 	 */
-	public void setTypes(byte[] types){
+	public void setTypes(byte[] types) {
 		if (types.length != WIDTH * HEIGHT * DEPTH) {
 			throw new IllegalArgumentException();
 		}

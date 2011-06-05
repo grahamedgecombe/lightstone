@@ -2,7 +2,6 @@ package net.lightstone.util;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.lightstone.model.Coordinate;
@@ -25,14 +24,14 @@ public final class ChannelBufferUtilsTest {
 	 */
 	@Test
 	public void testWriteParameters() {
-		List<Parameter<?>> params = new ArrayList<Parameter<?>>();
-		params.add(new Parameter<Byte>(Parameter.TYPE_BYTE, 0, (byte) 0x12));
-		params.add(new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 0x1234));
-		params.add(new Parameter<Integer>(Parameter.TYPE_INT, 2, (int) 0x12345678));
-		params.add(new Parameter<Float>(Parameter.TYPE_FLOAT, 3, 1234.5678F));
-		params.add(new Parameter<String>(Parameter.TYPE_STRING, 4, "test"));
-		params.add(new Parameter<Item>(Parameter.TYPE_ITEM, 5, new Item(1, 64, 0)));
-		params.add(new Parameter<Coordinate>(Parameter.TYPE_COORDINATE, 6, new Coordinate(10, 11, 12)));
+		Parameter<?>[] params = new Parameter<?>[Parameter.METADATA_SIZE];
+		params[0] = new Parameter<Byte>(Parameter.TYPE_BYTE, 0, (byte) 0x12);
+		params[1] = new Parameter<Short>(Parameter.TYPE_SHORT, 1, (short) 0x1234);
+		params[2] = new Parameter<Integer>(Parameter.TYPE_INT, 2, (int) 0x12345678);
+		params[3] = new Parameter<Float>(Parameter.TYPE_FLOAT, 3, 1234.5678F);
+		params[4] = new Parameter<String>(Parameter.TYPE_STRING, 4, "test");
+		params[5] = new Parameter<Item>(Parameter.TYPE_ITEM, 5, new Item(1, 64, 0));
+		params[6] = new Parameter<Coordinate>(Parameter.TYPE_COORDINATE, 6, new Coordinate(10, 11, 12));
 
 		ChannelBuffer buffer = ChannelBuffers.buffer(46);
 		ChannelBufferUtils.writeParameters(buffer, params);
@@ -99,38 +98,42 @@ public final class ChannelBufferUtilsTest {
 
 		buffer.writeByte(0x7F); // end of list
 
-		List<Parameter<?>> params = ChannelBufferUtils.readParameters(buffer);
-		assertEquals(7, params.size());
+		Parameter<?>[] params = ChannelBufferUtils.readParameters(buffer);
+		int size = 0;
+		for (Parameter<?> param : params)
+			if (param != null)
+				size++;
+		assertEquals(7, size);
 
-		for (int index = 0; index < params.size(); index++) {
-			assertEquals(index, params.get(index).getIndex());
+		for (int index = 0; index < size; index++) {
+			assertEquals(index, params[index].getIndex());
 		}
 
-		Parameter<?> byteParam = params.get(0);
+		Parameter<?> byteParam = params[0];
 		assertEquals(Parameter.TYPE_BYTE, byteParam.getType());
 		assertEquals((byte) 0x12, byteParam.getValue());
 
-		Parameter<?> shortParam = params.get(1);
+		Parameter<?> shortParam = params[1];
 		assertEquals(Parameter.TYPE_SHORT, shortParam.getType());
 		assertEquals((short) 0x1234, shortParam.getValue());
 
-		Parameter<?> intParam = params.get(2);
+		Parameter<?> intParam = params[2];
 		assertEquals(Parameter.TYPE_INT, intParam.getType());
 		assertEquals((int) 0x12345678, intParam.getValue());
 
-		Parameter<?> floatParam = params.get(3);
+		Parameter<?> floatParam = params[3];
 		assertEquals(Parameter.TYPE_FLOAT, floatParam.getType());
 		assertEquals(1234.5678F, floatParam.getValue());
 
-		Parameter<?> stringParam = params.get(4);
+		Parameter<?> stringParam = params[4];
 		assertEquals(Parameter.TYPE_STRING, stringParam.getType());
 		assertEquals("test", stringParam.getValue());
 
-		Parameter<?> itemParam = params.get(5);
+		Parameter<?> itemParam = params[5];
 		assertEquals(Parameter.TYPE_ITEM, itemParam.getType());
 		assertEquals(new Item(1, 64, 0), itemParam.getValue());
 
-		Parameter<?> coordinateParam = params.get(6);
+		Parameter<?> coordinateParam = params[6];
 		assertEquals(Parameter.TYPE_COORDINATE, coordinateParam.getType());
 		assertEquals(new Coordinate(10, 11, 12), coordinateParam.getValue());
 	}

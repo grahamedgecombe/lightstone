@@ -66,5 +66,15 @@ public final class ChunkManager {
 		return chunk;
 	}
 
+	/**
+	 * Saves all chunks loaded.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	public void saveAll() throws IOException {
+		for (Chunk chunk: chunks.values()) {
+			service.write(chunk.getX(), chunk.getZ(), chunk);
+		}
+	}
+
 }
 

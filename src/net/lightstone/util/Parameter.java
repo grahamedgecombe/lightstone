@@ -8,6 +8,11 @@ package net.lightstone.util;
 public class Parameter<T> {
 
 	/**
+	 * The maximum number of parameters in each group.
+	 */
+	public static final int METADATA_SIZE = 32;
+
+	/**
 	 * The id which represents a byte parameter.
 	 */
 	public static final int TYPE_BYTE = 0;

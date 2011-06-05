@@ -46,7 +46,7 @@ public final class ForestWorldGenerator extends FlatGrassWorldGenerator {
 	}
 
 	/** Grows a tree in a chunk. */
-	private static void makeTree(Chunk chunk, int x, int z, int y, int height, int type){
+	private static void makeTree(Chunk chunk, int x, int z, int y, int height, int type) {
 		if (type != TREE_TYPE_NORMAL && type != TREE_TYPE_BIRCH && type != TREE_TYPE_REDWOOD) {
 			throw new IllegalArgumentException("Type of tree not valid");
 		}

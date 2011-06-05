@@ -1,8 +1,6 @@
 package net.lightstone.util;
 
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
 
 import net.lightstone.model.Coordinate;
 import net.lightstone.model.Item;
@@ -26,8 +24,11 @@ public final class ChannelBufferUtils {
 	 * @param parameters The parameters.
 	 */
 	@SuppressWarnings("unchecked")
-	public static void writeParameters(ChannelBuffer buf, List<Parameter<?>> parameters) {
+	public static void writeParameters(ChannelBuffer buf, Parameter<?>[] parameters) {
 		for (Parameter<?> parameter : parameters) {
+			if (parameter == null)
+				continue;
+
 			int type  = parameter.getType();
 			int index = parameter.getIndex();
 
@@ -72,8 +73,8 @@ public final class ChannelBufferUtils {
 	 * @param buf The buffer.
 	 * @return The parameters.
 	 */
-	public static List<Parameter<?>> readParameters(ChannelBuffer buf) {
-		List<Parameter<?>> parameters = new ArrayList<Parameter<?>>();
+	public static Parameter<?>[] readParameters(ChannelBuffer buf) {
+		Parameter<?>[] parameters = new Parameter<?>[Parameter.METADATA_SIZE];
 
 		int b;
 		while ((b = buf.readUnsignedByte()) != 0x7F) {
@@ -82,33 +83,33 @@ public final class ChannelBufferUtils {
 
 			switch (type) {
 			case Parameter.TYPE_BYTE:
-				parameters.add(new Parameter<Byte>(type, index, buf.readByte()));
+				parameters[index] = new Parameter<Byte>(type, index, buf.readByte());
 				break;
 			case Parameter.TYPE_SHORT:
-				parameters.add(new Parameter<Short>(type, index, buf.readShort()));
+				parameters[index] = new Parameter<Short>(type, index, buf.readShort());
 				break;
 			case Parameter.TYPE_INT:
-				parameters.add(new Parameter<Integer>(type, index, buf.readInt()));
+				parameters[index] = new Parameter<Integer>(type, index, buf.readInt());
 				break;
 			case Parameter.TYPE_FLOAT:
-				parameters.add(new Parameter<Float>(type, index, buf.readFloat()));
+				parameters[index] = new Parameter<Float>(type, index, buf.readFloat());
 				break;
 			case Parameter.TYPE_STRING:
-				parameters.add(new Parameter<String>(type, index, readString(buf)));
+				parameters[index] = new Parameter<String>(type, index, readString(buf));
 				break;
 			case Parameter.TYPE_ITEM:
 				int id = buf.readShort();
 				int count = buf.readByte();
 				int damage = buf.readShort();
 				Item item = new Item(id, count, damage);
-				parameters.add(new Parameter<Item>(type, index, item));
+				parameters[index] = new Parameter<Item>(type, index, item);
 				break;
 			case Parameter.TYPE_COORDINATE:
 				int x = buf.readInt();
 				int y = buf.readInt();
 				int z = buf.readInt();
 				Coordinate coordinate = new Coordinate(x, y, z);
-				parameters.add(new Parameter<Coordinate>(type, index, coordinate));
+				parameters[index] = new Parameter<Coordinate>(type, index, coordinate);
 				break;
 			}
 		}
