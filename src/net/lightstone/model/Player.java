@@ -54,8 +54,14 @@ public final class Player extends Mob {
 	 */
 	private boolean crouching = false;
 
+	/**
+	 * This player's inventory.
+	 */
 	private Inventory inventory = new Inventory(this);
 
+	/**
+	 * The active slot of the player's inventory.
+	 */
 	private int activeSlot = 0;
 
 	/**
@@ -188,15 +194,28 @@ public final class Player extends Mob {
 		return crouching;
 	}
 
+	/**
+	 * Gets the Inventory associated with this player.
+	 * @return This player's inventory.
+	 */
 	public Inventory getInventory() {
 		return inventory;
 	}
 
+	/**
+	 * Gets the current activated slot of the player's inventory.
+	 * @return The index of the active slot. 
+	 */
 	public int getActiveSlot() {
 		return activeSlot;
 	}
+
+	/**
+	 * Sets this player's active inventory slot.
+	 * @param slot The index of the activated slot.
+	 */
 	public void setActiveSlot(int slot) {
-		if(!(slot>=0 && slot<=9)){
+		if (!(slot>=0 && slot<=9)) {
 			throw new IllegalArgumentException("Not a valid slot");
 		}
 		activeSlot = slot;
