@@ -5,6 +5,7 @@ import net.lightstone.model.Player;
 import net.lightstone.msg.DiggingMessage;
 import net.lightstone.model.Chunk;
 import net.lightstone.msg.BlockChangeMessage;
+import net.lightstone.msg.SoundEffectMessage;
 import net.lightstone.net.Session;
 import net.lightstone.world.World;
 
@@ -34,12 +35,17 @@ public final class DiggingMessageHandler extends MessageHandler<DiggingMessage> 
 			int localZ = (z - chunkZ * Chunk.HEIGHT) % Chunk.HEIGHT;
 
 			Chunk chunk = world.getChunks().getChunk(chunkX, chunkZ);
+			int oldType = chunk.getType(localX, localZ, y);
 			chunk.setType(localX, localZ, y, Blocks.TYPE_AIR);
 
 			// TODO this should also be somewhere else as well... perhaps in the chunk.setType() method itself?
 			BlockChangeMessage bcmsg = new BlockChangeMessage(x, y, z, 0, 0);
+			SoundEffectMessage soundMsg = new SoundEffectMessage(SoundEffectMessage.DIG_SOUND, x, y, z, oldType);
 			for (Player p: world.getPlayers()) {
 				p.getSession().send(bcmsg);
+				if(p != player && player.isWithinDistance(p)) {
+					p.getSession().send(soundMsg);
+				}
 			}
 		}
 	}
