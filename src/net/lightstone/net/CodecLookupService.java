@@ -30,6 +30,7 @@ import net.lightstone.net.codec.IdentificationCodec;
 import net.lightstone.net.codec.IncrementStatisticCodec;
 import net.lightstone.net.codec.KickCodec;
 import net.lightstone.net.codec.LoadChunkCodec;
+import net.lightstone.net.codec.MapDataCodec;
 import net.lightstone.net.codec.MessageCodec;
 import net.lightstone.net.codec.MultiBlockChangeCodec;
 import net.lightstone.net.codec.OpenWindowCodec;
@@ -46,6 +47,7 @@ import net.lightstone.net.codec.RespawnCodec;
 import net.lightstone.net.codec.RotationCodec;
 import net.lightstone.net.codec.SetWindowSlotCodec;
 import net.lightstone.net.codec.SetWindowSlotsCodec;
+import net.lightstone.net.codec.SoundEffectCodec;
 import net.lightstone.net.codec.SpawnItemCodec;
 import net.lightstone.net.codec.SpawnMobCodec;
 import net.lightstone.net.codec.SpawnPaintingCodec;
@@ -127,6 +129,7 @@ public final class CodecLookupService {
 			/* 0x35 */ bind(BlockChangeCodec.class);
 			/* 0x36 */ bind(PlayNoteCodec.class);
 			/* 0x3C */ bind(ExplosionCodec.class);
+			/* 0x3D */ bind(SoundEffectCodec.class);
 			/* 0x46 */ bind(ChangeStateCodec.class);
 			/* 0x47 */ bind(WeatherCodec.class);
 			/* 0x64 */ bind(OpenWindowCodec.class);
@@ -137,6 +140,7 @@ public final class CodecLookupService {
 			/* 0x69 */ bind(ProgressBarCodec.class);
 			/* 0x6A */ bind(TransactionCodec.class);
 			/* 0x82 */ bind(UpdateSignCodec.class);
+			/* 0x83 */ bind(MapDataCodec.class);
 			/* 0xC8 */ bind(IncrementStatisticCodec.class);
 			/* 0xFF */ bind(KickCodec.class);
 		} catch (Exception ex) {
