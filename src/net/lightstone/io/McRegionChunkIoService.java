@@ -108,7 +108,7 @@ public final class McRegionChunkIoService implements ChunkIoService {
 				}
 			}
 		}
-
+		nbt.close();
 		return chunk;
 	}
 
